@@ -39,6 +39,4 @@ export class AuthController {
         return this.authService.undoDeleteAccount(id);
     }
 
-    // ! features for user
-
 }

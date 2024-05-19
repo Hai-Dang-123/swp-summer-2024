@@ -21,12 +21,5 @@ export class CategoryEntity extends BaseEntity{
         nullable: false,
     })
     description: string;
-
-    @Column({
-        type: 'varchar',
-        nullable: true,
-        name: 'image'
-    })
-    image: string;
     
 }

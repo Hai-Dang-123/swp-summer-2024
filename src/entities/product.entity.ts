@@ -36,6 +36,22 @@ export class ProductEntity extends BaseEntity {
     image: string;
 
     @Column({
+        name: "price",
+        type: "decimal",
+        precision: 10,
+        scale: 2,
+        nullable: false,
+    })
+    price: number;
+
+    @Column({
+        name: "quantity",
+        type: "int",
+        nullable: false,
+    })
+    quantity: number;
+
+    @Column({
         name: "status",
         type: "enum",
         enum: ProductStatus,
