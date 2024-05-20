@@ -1,5 +1,4 @@
-// auth.guard.ts
-import { Injectable, CanActivate, ExecutionContext, Inject } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException, Inject } from '@nestjs/common';
 import { AuthService } from '../auth.service';
 
 @Injectable()
@@ -15,10 +14,11 @@ export class AdminGuard implements CanActivate {
       var response = await this.AuthService.verifyAdminToken(accessToken)
       if (response) {
         return true;
-      } else return false;
+      } else {
+        throw new UnauthorizedException(); // Throw UnauthorizedException if access is denied
+      }
     } catch (error) {
-      return false;
+      throw new UnauthorizedException(); // Throw UnauthorizedException for any errors
     }
   }
-
 }

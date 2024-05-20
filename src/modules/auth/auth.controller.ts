@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Headers, HttpCode, HttpStatus, Inject, Param, Post, Put, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Headers, HttpCode, HttpStatus, Inject, Param, Post, Put, Render, Req, Res, UseGuards } from "@nestjs/common";
 import { AdminGuard } from "./guards/admin.guard";
 import { AuthService } from "./auth.service";
 
@@ -9,14 +9,36 @@ export class AuthController {
         @Inject('AUTH_SERVICE_TIENNT') private readonly authService: AuthService,
     ) { }
 
-    @Post('register')
-    register(@Body() data: any) {
-        return this.authService.register(data);
+    @Get('create-account')
+    @Render('create-account')
+    createAccountPage() {
+        return {};
+    }
+
+    @Post('create-account')
+    async register(@Body() data: {
+        email: string,    
+        password: string,
+        username: string,
+        phone: string,
+    }){
+        var result = await this.authService.register(data);
+        console.log(result);
+        
+        return {message: 'success'};
+    }
+
+    @Get('login')
+    @Render('login')
+    loginPage() {
+        return {};
     }
 
     @Post('login')
-    login(@Body() data: any) {
-        return this.authService.login(data.email, data.password);
+    async login(@Body() data: { email: string, password: string }, @Res() res: any){
+        var result = await this.authService.login(data.email, data.password);
+        res.cookie('token', result, { httpOnly: true });
+        res.send({status: 'success'});
     }
 
     // ! apis for admin
@@ -30,7 +52,6 @@ export class AuthController {
     @Delete('admin/delete-account/:id')
     @UseGuards(AdminGuard)
     deleteAccount(@Param('id') id: string) {
-
         return this.authService.softDeleteAccount(id);
     }
     @Put('admin/undo-delete-account/:id')

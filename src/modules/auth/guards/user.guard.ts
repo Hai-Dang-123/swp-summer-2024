@@ -1,5 +1,5 @@
 // auth.guard.ts
-import { Injectable, CanActivate, ExecutionContext, Inject } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, Inject, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from '../auth.service';
 
 @Injectable()
@@ -15,9 +15,9 @@ export class UserGuard implements CanActivate {
       var response = await this.AuthService.verifyUserToken(accessToken)
       if (response) {
         return true;
-      } else return false;
+      } else throw new UnauthorizedException();
     } catch (error) {
-      return false;
+      throw new UnauthorizedException();
     }
   }
 

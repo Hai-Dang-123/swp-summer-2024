@@ -1,6 +1,5 @@
 import { BaseEntity } from "src/common/base/entity.base";
 import { Column, Entity, OneToOne, Unique } from "typeorm";
-import { OrderEntity } from "./order.entity";
 @Unique(["order"])
 @Entity({
     name: "REFUND_TRANSACTION",
