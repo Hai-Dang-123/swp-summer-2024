@@ -17,15 +17,13 @@ export class AuthController {
 
     @Post('create-account')
     async register(@Body() data: {
-        email: string,    
+        email: string,
         password: string,
         username: string,
         phone: string,
-    }){
+    }) {
         var result = await this.authService.register(data);
-        console.log(result);
-        
-        return {message: 'success'};
+        return { message: 'success' };
     }
 
     @Get('login')
@@ -35,10 +33,10 @@ export class AuthController {
     }
 
     @Post('login')
-    async login(@Body() data: { email: string, password: string }, @Res() res: any){
+    async login(@Body() data: { email: string, password: string }, @Res() res: any) {
         var result = await this.authService.login(data.email, data.password);
-        res.cookie('token', result, { httpOnly: true });
-        res.send({status: 'success'});
+        res.cookie('token', result, { httpOnly: true, maxAge: 60 * 60 });
+        res.send({ status: 'success' });
     }
 
     // ! apis for admin
