@@ -9,6 +9,7 @@ import { ClientModule } from './modules/client/client.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { SearchModule } from './search/search.module';
 
+
 @Module({
   imports: [
     TypeOrmModule.forRoot(TYPE_ORM_CONFIG),
@@ -19,6 +20,7 @@ import { SearchModule } from './search/search.module';
     StaffModule,
     DashboardModule,
     SearchModule,
+  
   ],
 })
 export class AppModule {}
