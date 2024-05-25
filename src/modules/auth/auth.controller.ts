@@ -65,5 +65,11 @@ export class AuthController {
    homePage(){
     return;
    } 
-
+   
+   
+    @Get('dashboard')
+    @Render('admin/dashboard') 
+    getDashboard() {
+      return { message: 'Welcome to the admin dashboard!' }; 
+    }
 }
