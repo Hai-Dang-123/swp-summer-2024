@@ -119,6 +119,89 @@
         .text-shadow-lg {
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
+
+        /*brand image*/
+        .brand-image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+
+        .brand-image-container:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .brand-image-container img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            
+        }
+
+        .brand-image-container .brand-name {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            border-radius: 8px;
+        }
+
+        .brand-image-container:hover .brand-name {
+            opacity: 1;
+        }
+
+        /*search bar*/
+        .search-container {
+            position: relative;
+            margin-top: 50px;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        #search-bar {
+            width: calc(50% - 50px);
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        #search-button {
+            width: 100px;
+            padding: 12px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.15s ease-in-out;
+        }
+
+        #search-button:hover {
+            background-color: #0056b3;
+        }
+        .search-text {
+            font-size: 25px;
+            color: #666;
+            margin-top: 5px;
+            display: block;
+        }
     </style>
 
 </head>
@@ -299,265 +382,405 @@
 
         </div>
     </div>
-
-
-    <!-- Filters -->
-    <section class="bg-white py-4 border-t border-b text-center">
-        <div class="container mx-auto flex justify-center items-center">
-            <div class="flex space-x-4">
-                <div>
-                    <label class="block text-gray-700">Brands</label>
-                    <select id="filter-brand"
-                        class="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                        <option value="All">All Brands</option>
-                        <option value="Brand A">Brand A</option>
-                        <option value="Brand B">Brand B</option>
-                        <option value="Brand C">Brand C</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Series</label>
-                    <select id="filter-series"
-                        class="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                        <option value="All">All Series</option>
-                        <option value="Series 1">Series 1</option>
-                        <option value="Series 2">Series 2</option>
-                        <option value="Series 3">Series 3</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Case Size</label>
-                    <select id="filter-case-size"
-                        class="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                        <option value="All">All Sizes</option>
-                        <option value="Small">Small</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Large">Large</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Price</label>
-                    <select id="filter-price"
-                        class="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                        <option value="All">All Prices</option>
-                        <option value="Low">Low</option>
-                        <option value="Medium">Medium</option>
-                        <option value="High">High</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Year</label>
-                    <select id="filter-year"
-                        class="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                        <option value="All">All Years</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
-                        <option value="2023">2023</option>
-                    </select>
-                </div>
-            </div>
-            <div class="ml-4">
-                <label class="block text-gray-700">Sort</label>
-                <select id="sort"
-                    class="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                    <option value="default">Sort by</option>
-                    <option value="price-low-high">Price: Low to High</option>
-                    <option value="price-high-low">Price: High to Low</option>
-                    <option value="newest">Newest</option>
-                    <option value="best-selling">Best Selling</option>
-                </select>
-            </div>
-        </div>
-    </section>
-
-
-
-    <section class="bg-white py-8">
-        <div class="container mx-auto flex items-center flex-wrap pt-4 pb-12 justify-center">
-
-            </style>
-
-            <a class="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl store-link"
-                href="#">
-                Store
-            </a>
-
-            </nav>
-
-
-            <!-- Sản phẩm -->
-            <div id="store-items" class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <!-- Sản phẩm sẽ được thêm vào đây bằng JavaScript -->
+<!--search bar-->
+<div class="search-container">
+     <span class="search-text">SEARCH BY KEYWORD</span>
+                <input id="search-bar" type="text" placeholder="Search products...">
+                <button id="search-button">Search</button>
             </div>
 
-            <!-- Phân trang -->
-            <nav id="pagination" aria-label="Page navigation example" class="mt-6">
-                <ul class="pagination justify-content-center flex-wrap">
-                    <!-- Các liên kết phân trang sẽ được thêm vào đây bằng JavaScript -->
-                </ul>
-            </nav>
-        </div>
-    </section>
 
-    <div id="product-details" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white p-4 rounded shadow-lg">
-            <script>
-                const products = [
-                    { imageSrc: 'https://www.watchstore.vn/images/products/others/2024/large/210-30-42-20-03-001-1-1666596729737-1712588659.webp', title: 'Product 1', description: 'Description for Product 1', brand: 'Brand A', series: 'Series 1', caseSize: 'Small', price: 'Low', year: '2021' },
-                    { imageSrc: 'https://www.watchstore.vn/images/products/others/2024/large/thiet-ke-chua-co-ten-20-2146312254-1324928843-1712670831.webp', title: 'Product 2', description: 'Description for Product 2', brand: 'Brand B', series: 'Series 2', caseSize: 'Medium', price: 'Medium', year: '2022' },
-                    { imageSrc: 'https://www.watchstore.vn/images/products/others/2024/large/220-937454151-757291838-1712588972.webp', title: 'Product 3', description: 'Description for Product 3', brand: 'Brand C', series: 'Series 3', caseSize: 'Large', price: 'High', year: '2023' },
-                    { imageSrc: 'https://www.watchstore.vn/images/products/others/2024/large/thiet-ke-chua-co-ten-20-2146312254-1324928843-1712670831.webp', title: 'Product 4', description: 'Description for Product 4', brand: 'Brand A', series: 'Series 1', caseSize: 'Small', price: 'Low', year: '2021' },
-                    { imageSrc: 'https://www.watchstore.vn/images/products/others/2024/large/untitled-1-1658644560459-1712587025.webp', title: 'Product 5', description: 'Description for Product 5', brand: 'Brand B', series: 'Series 2', caseSize: 'Medium', price: 'Medium', year: '2022' },
-                    { imageSrc: 'https://www.watchstore.vn/images/products/others/2024/large/210.22-1712726137.webp', title: 'Product 6', description: 'Description for Product 6', brand: 'Brand C', series: 'Series 3', caseSize: 'Large', price: 'High', year: '2023' },
-                    { imageSrc: 'https://www.watchstore.vn/images/products/others/2024/large/210-22-42-20-03-002-1-1665630830972-1712588236.webp', title: 'Product 7', description: 'Description for Product 7', brand: 'Brand A', series: 'Series 1', caseSize: 'Small', price: 'Low', year: '2021' },
-                    { imageSrc: 'https://www.watchstore.vn/images/products/others/2024/large/1-1665112134329-1712588421.webp', title: 'Product 8', description: 'Description for Product 8', brand: 'Brand B', series: 'Series 2', caseSize: 'Medium', price: 'Medium', year: '2022' },
-                    { imageSrc: 'https://www.watchstore.vn/images/products/others/2024/large/67-1679291689156-1712661798.webp', title: 'Product 9', description: 'Description for Product 9', brand: 'Brand C', series: 'Series 3', caseSize: 'Large', price: 'High', year: '2023' },
-                    // Thêm các sản phẩm khác vào đây nếu cần
-                ];
+<!-- Danh sách thương hiệu -->
+    <div id="brand-list" class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-4"></div>
+    <!-- Chi tiết sản phẩm -->
+    <div id="product-details" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"></div>
+    <script>
+        const products = [
+    // Rolex
+    { 
+        id: 1,
+        title: "Submariner Date",
+        imageSrc: "https://frodos.com.vn/wp-content/uploads/2021/03/Capture-83.png.webp",
+        brand: "Rolex",
+        series: "Submariner",
+        caseSize: "40mm",
+        price: "$8,950",
+        year: "2023",
+        description: "Classic diving watch."
+    },
+    { 
+        id: 2,
+        title: "GMT-Master II",
+        imageSrc: "https://rolex.dafc.com.vn/wp-content/uploads/watch-assets-front-facing/landscape_assets/m126711chnr-0002_modelpage_front_facing_landscape.png",
+        brand: "Rolex",
+        series: "GMT-Master",
+        caseSize: "42mm",
+        price: "$9,450",
+        year: "2022",
+        description: "Pilot's watch with dual timezone."
+    },
+    { 
+        id: 3,
+        title: "Daytona",
+        imageSrc: "https://rolex.dafc.com.vn/wp-content/uploads/watch-assets-front-facing/landscape_assets/m126503-0003_modelpage_front_facing_landscape.png",
+        brand: "Rolex",
+        series: "Daytona",
+        caseSize: "44mm",
+        price: "$12,500",
+        year: "2021",
+        description: "Chronograph racing watch."
+    },
+    { 
+        id: 4,
+        title: "Yacht-Master",
+        imageSrc: "https://rolex.dafc.com.vn/wp-content/uploads/watch-assets-front-facing/landscape_assets/m226658-0001_modelpage_front_facing_landscape.png",
+        brand: "Rolex",
+        series: "Yacht-Master",
+        caseSize: "41mm",
+        price: "$11,800",
+        year: "2020",
+        description: "Sailing watch."
+    },
+    { 
+        id: 5,
+        title: "Explorer",
+        imageSrc: "https://rolex.dafc.com.vn/wp-content/uploads/watch-assets-front-facing/landscape_assets/m124273-0001_modelpage_front_facing_landscape.png",
+        brand: "Rolex",
+        series: "Explorer",
+        caseSize: "39mm",
+        price: "$7,800",
+        year: "2024",
+        description: "Outdoor adventure watch."
+    },
+    // Omega
+    { 
+        id: 6,
+        title: "Speedmaster Moonwatch",
+        imageSrc: "https://product.hstatic.net/1000358848/product/omega-speedmaster-moonwatch-31133423001001-l_3982675c3f57497f94d4bb32b89a2913_master.png",
+        brand: "Omega",
+        series: "Speedmaster",
+        caseSize: "42mm",
+        price: "$6,500",
+        year: "2023",
+        description: "Moon landing watch."
+    },
+    { 
+        id: 7,
+        title: "Seamaster Diver 300M",
+        imageSrc: "https://cdn.luxshopping.vn/Thumnails/Uploads/News/omega-seamaster-diver-300m-210-20-42-20-03-002-co-axial-42.png_980_980.webp",
+        brand: "Omega",
+        series: "Seamaster",
+        caseSize: "41mm",
+        price: "$4,200",
+        year: "2022",
+        description: "Diving watch."
+    },
+    { 
+        id: 8,
+        title: "Constellation",
+        imageSrc: "https://watches-service.vn/wp-content/uploads/2023/04/Dong-ho-Omega-13158292053003-400x500.jpg",
+        brand: "Omega",
+        series: "Constellation",
+        caseSize: "39mm",
+        price: "$5,800",
+        year: "2021",
+        description: "Luxury dress watch."
+    },
+    { 
+        id: 9,
+        title: "De Ville Prestige",
+        imageSrc: "https://itimeauthentic.com/wp-content/uploads/2023/06/omega-de-ville-prestige-42410372003001-l-min.png",
+        brand: "Omega",
+        series: "De Ville",
+        caseSize: "38mm",
+        price: "$4,000",
+        year: "2020",
+        description: "Elegant dress watch."
+    },
+    { 
+        id: 10,
+        title: "Aqua Terra",
+        imageSrc: "https://cdn.luxshopping.vn/Thumnails/Uploads/News/aqua-terra-150m-co-axial-master-chronometer-41mm20.png_980_980.webp",
+        brand: "Omega",
+        series: "Aqua Terra",
+        caseSize: "40mm",
+        price: "$5,300",
+        year: "2024",
+        description: "Sporty everyday watch."
+    },
+    // IWC
+    { 
+        id: 11,
+        title: "Big Pilot's Watch",
+        imageSrc: "https://www.iwc.com/content/dam/rcq/iwc/21/49/85/9/2149859.png.transform.global_image_480_2x.png",
+        brand: "IWC",
+        series: "Big Pilot",
+        caseSize: "46mm",
+        price: "$13,000",
+        year: "2023",
+        description: "Large pilot's watch."
+    },
+    { 
+        id: 12,
+        title: "Portugieser Chronograph",
+        imageSrc: "https://cdn.luxshopping.vn/Thumnails/Uploads/News/iwc-portugieser-chronograph-41mm.png_980_980.webp",
+        brand: "IWC",
+        series: "Portugieser",
+        caseSize: "42mm",
+        price: "$9,800",
+        year: "2022",
+        description: "Classic chronograph watch."
+    },
+    { 
+        id: 13,
+        title: "Pilot's Watch Mark XVIII",
+        imageSrc: "https://product.hstatic.net/1000332793/product/iw3270014-900x900_large.jpg",
+        brand: "IWC",
+        series: "Pilot's Watch",
+        caseSize: "40mm",
+        price: "$7,500",
+        year: "2021",
+        description: "Aviator's watch."
+    },
+    { 
+        id: 14,
+        title: "Portofino Automatic",
+        imageSrc: "https://product.hstatic.net/1000332793/product/iw3565114-900x900_large.jpg",
+        brand: "IWC",
+        series: "Portofino",
+        caseSize: "39mm",
+        price: "$6,200",
+        year: "2020",
+        description: "Elegant dress watch."
+    },
+    { 
+        id: 15,
+        title: "Ingenieur Automatic",
+        imageSrc: "https://cdn.luxshopping.vn/Thumnails/Uploads/News/iwc-ingenieur-automatic-iw328901-watch-40mm.png_980_980.webp",
+        brand: "IWC",
+        series: "Ingenieur",
+        caseSize: "42mm",
+        price: "$8,400",
+        year: "2024",
+        description: "Engineer's watch."
+    },
+    // Cartier
+    { 
+        id: 16,
+        title: "Tank Solo",
+        imageSrc: "https://itimeauthentic.com/wp-content/uploads/2023/05/cartier-w5200027-tank-solo-xl-automatic-watch-31-x-41-mm-min.jpg",
+        brand: "Cartier",
+        series: "Tank",
+        caseSize: "34mm",
+        price: "$4,900",
+        year: "2023",
+        description: "Classic dress watch."
+    },
+    { 
+        id: 17,
+        title: "Ballon Bleu",
+        imageSrc: "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw4281831c/images/large/e4d3cab83d375b0a890932933e090eba.png?sw=750&sh=750&sm=fit&sfrm=png",
+        brand: "Cartier",
+        series: "Ballon Bleu",
+        caseSize: "36mm",
+        price: "$6,200",
+        year: "2022",
+        description: "Luxury fashion watch."
+    },
+    { 
+        id: 18,
+        title: "Santos de Cartier",
+        imageSrc: "https://empireluxury.vn/wp-content/uploads/2024/01/dong-ho-cartier-santos-de-cartier-39-8mm-crwssa0037-sao-chep-4.jpg",
+        brand: "Cartier",
+        series: "Santos",
+        caseSize: "35mm",
+        price: "$5,800",
+        year: "2021",
+        description: "Aviator's watch."
+    },
+    { 
+        id: 19,
+        title: "Clé de Cartier",
+        imageSrc: "https://product.hstatic.net/1000384063/product/untitled-11_49ad441f78dc45cdadb372b17f3762ff_master.png",
+        brand: "Cartier",
+        series: "Clé",
+        caseSize: "38mm",
+        price: "$7,500",
+        year: "2020",
+        description: "Elegant timepiece."
+    },
+    { 
+        id: 20,
+        title: "Drive de Cartier",
+        imageSrc: "https://product.hstatic.net/1000332793/product/wgnm0003-900x900_large.png",
+        brand: "Cartier",
+        series: "Drive",
+        caseSize: "41mm",
+        price: "$9,200",
+        year: "2024",
+        description: "Luxury driver's watch."
+    },
+];
 
-                const itemsPerPage = 4;
 
-                function getFilteredProducts() {
-                    const brand = document.getElementById('filter-brand').value;
-                    const series = document.getElementById('filter-series').value;
-                    const caseSize = document.getElementById('filter-case-size').value;
-                    const price = document.getElementById('filter-price').value;
-                    const year = document.getElementById('filter-year').value;
+        const itemsPerPage = 4;
 
-                    return products.filter(product => {
-                        return (brand === 'All' || product.brand === brand) &&
-                            (series === 'All' || product.series === series) &&
-                            (caseSize === 'All' || product.caseSize === caseSize) &&
-                            (price === 'All' || product.price === price) &&
-                            (year === 'All' || product.year === year);
-                    });
-                }
+        function renderBrands() {
+            const brands = [...new Set(products.map(product => product.brand))];
 
-                function renderProducts(page) {
-                    const filteredProducts = getFilteredProducts();
-                    const startIndex = (page - 1) * itemsPerPage;
-                    const endIndex = startIndex + itemsPerPage;
-                    const items = filteredProducts.slice(startIndex, endIndex);
+            const brandImages = {
+                'Rolex': 'https://www.bobswatches.com/rolex-blog/wp-content/uploads/2017/01/Green-Gold-Rolex-GMT-Master.jpg',
+                'Omega': 'https://www.watchesworld.com/wp-content/uploads/2023/10/OMEGA-Speedmaster-Moonwatch-Professional-Chronograph-06.jpg',
+                'IWC': 'https://www.analogshift.com/cdn/shop/files/AS08946_40970079_IWC_PILOT_SWATCHCHRONOTOPGUNCERTATANIUM_IW388106-7.jpg?v=1695152008',
+                'Cartier': 'https://www.swisswatchexpo.com/TheWatchClub/wp-content/uploads/2023/01/Santos-Dumont.png',
+                // Add more brand images as needed
+            };
 
-                    const storeItems = document.getElementById('store-items');
-                    storeItems.innerHTML = '';
-                    items.forEach(item => {
-                        const div = document.createElement('div');
-                        div.classList.add('hover:grow', 'relative', 'overflow-hidden');
-                        const img = document.createElement('img');
-                        img.classList.add('w-full', 'object-cover');
-                        img.src = item.imageSrc;
-                        img.alt = 'product image';
+            const brandList = document.getElementById('brand-list');
+            brandList.innerHTML = brands.slice(0, 5).map(brand => `
+                <div class="brand-image-container cursor-pointer" data-brand="${brand}">
+                    <img src="${brandImages[brand]}" alt="${brand}">
+                    <div class="brand-name">${brand}</div>
+                </div>
+            `).join('');
 
-                        const overlay = document.createElement('div');
-                        overlay.classList.add('absolute', 'inset-0', 'bg-black', 'opacity-25', 'transition-opacity', 'duration-300', 'ease-in-out');
+            brandList.querySelectorAll('.brand-image-container').forEach(container => {
+                container.addEventListener('click', () => {
+                    const brand = container.dataset.brand;
+                    showBrandProducts(brand);
+                });
+            });
+        }
 
-                        const details = document.createElement('div');
-                        details.classList.add('absolute', 'inset-0', 'flex', 'items-center', 'justify-center', 'text-white', 'text-xl', 'opacity-0', 'hover:opacity-100', 'transition-opacity', 'duration-300', 'ease-in-out');
-                        details.textContent = 'View Details';
-                        details.addEventListener('click', () => {
-                            showProductDetails(item);
-                        });
+        function renderProducts(page) {
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const items = products.slice(startIndex, endIndex);
 
-                        div.appendChild(img);
-                        div.appendChild(overlay);
-                        div.appendChild(details);
-                        storeItems.appendChild(div);
-                    });
-                }
+            const storeItems = document.getElementById('store-items');
+            storeItems.innerHTML = '';
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.classList.add('hover:grow', 'relative', 'overflow-hidden');
+                const img = document.createElement('img');
+                img.classList.add('w-full', 'object-cover');
+                img.src = item.imageSrc;
+                img.alt = 'product image';
+                img.dataset.brand = item.brand;
 
-                function renderPagination() {
-                    const filteredProducts = getFilteredProducts();
-                    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-                    const pagination = document.querySelector('#pagination ul');
-                    pagination.innerHTML = '';
+                const overlay = document.createElement('div');
+                overlay.classList.add('absolute', 'inset-0', 'bg-black', 'opacity-25', 'transition-opacity', 'duration-300', 'ease-in-out');
 
-                    for (let i = 1; i <= totalPages; i++) {
-                        const li = document.createElement('li');
-                        li.classList.add('page-item');
-                        if (i === 1) {
-                            li.classList.add('active');
-                        }
-                        const a = document.createElement('a');
-                        a.classList.add('page-link');
-                        a.href = '#';
-                        a.textContent = i;
-                        a.addEventListener('click', function () {
-                            const currentPage = parseInt(this.textContent);
-                            renderProducts(currentPage);
-                            const paginationLinks = document.querySelectorAll('#pagination .page-item');
-                            paginationLinks.forEach(link => link.classList.remove('active'));
-                            this.parentElement.classList.add('active');
-                        });
-                        li.appendChild(a);
-                        pagination.appendChild(li);
-                    }
-
-                    const prevButton = document.createElement('li');
-                    prevButton.classList.add('page-item');
-                    prevButton.innerHTML = '<a class="page-link" href="#">Previous</a>';
-                    prevButton.addEventListener('click', function () {
-                        const currentPage = document.querySelector('#pagination .active');
-                        if (currentPage.previousElementSibling) {
-                            currentPage.previousElementSibling.firstChild.click();
-                        }
-                    });
-                    pagination.insertBefore(prevButton, pagination.firstChild);
-
-                    const nextButton = document.createElement('li');
-                    nextButton.classList.add('page-item');
-                    nextButton.innerHTML = '<a class="page-link" href="#">Next</a>';
-                    nextButton.addEventListener('click', function () {
-                        const currentPage = document.querySelector('#pagination .active');
-                        if (currentPage.nextElementSibling) {
-                            currentPage.nextElementSibling.firstChild.click();
-                        }
-                    });
-                    pagination.appendChild(nextButton);
-                }
-                // chức năng show detail -- tạm thời ko cần
-                //             function showProductDetails(product) {
-                //                    const productDetails = document.getElementById('product-details');
-                //                    productDetails.innerHTML = `
-                //            <div class="p-4 bg-white shadow-md rounded-lg">
-                //                <h2 class="text-2xl font-bold mb-4">${product.title}</h2>
-                //                <img src="${product.imageSrc}" alt="product image" class="w-full h-64 object-cover mb-4">
-                //                <p class="text-gray-700 mb-2"><strong>Brand:</strong> ${product.brand}</p>
-                //                <p class="text-gray-700 mb-2"><strong>Series:</strong> ${product.series}</p>
-                //                <p class="text-gray-700 mb-2"><strong>Case Size:</strong> ${product.caseSize}</p>
-                //                <p class="text-gray-700 mb-2"><strong>Price:</strong> ${product.price}</p>
-                //                <p class="text-gray-700 mb-2"><strong>Year:</strong> ${product.year}</p>
-                //                <p class="text-gray-700 mb-4">${product.description}</p>
-                //                <button id="close-details" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Close</button>
-                //            </div>
-                //        `;
-                //                    productDetails.classList.remove('hidden');
-                //                    document.getElementById('close-details').addEventListener('click', () => {
-                //                        productDetails.classList.add('hidden');
-                //                    });
-                //                }  --}}
-                //----------------------------------------------------------------------------------------------
-
-                // Lắng nghe thay đổi trên các filter và cập nhật sản phẩm
-                document.querySelectorAll('#filter-brand, #filter-series, #filter-case-size, #filter-price, #filter-year, #sort').forEach(filter => {
-                    filter.addEventListener('change', () => {
-                        renderProducts(1);
-                        renderPagination();
-                    });
+                const details = document.createElement('div');
+                details.classList.add('absolute', 'inset-0', 'flex', 'items-center', 'justify-center', 'text-white', 'text-xl', 'opacity-0', 'hover:opacity-100', 'transition-opacity', 'duration-300', 'ease-in-out');
+                details.textContent = 'View Details';
+                details.addEventListener('click', () => {
+                    showBrandProducts(item.brand);
                 });
 
-                // Gọi hai hàm để hiển thị sản phẩm ban đầu và phân trang
-                renderProducts(1);
-                renderPagination();
-            </script>
+                div.appendChild(img);
+                div.appendChild(overlay);
+                div.appendChild(details);
+                storeItems.appendChild(div);
+            });
+        }
 
+        function renderPagination() {
+            const totalPages = Math.ceil(products.length / itemsPerPage);
+            const pagination = document.querySelector('#pagination ul');
+            pagination.innerHTML = '';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const li = document.createElement('li');
+                li.classList.add('page-item');
+                if (i === 1) {
+                    li.classList.add('active');
+                }
+                const a = document.createElement('a');
+                a.classList.add('page-link');
+                a.href = '#';
+                a.textContent = i;
+                a.addEventListener('click', function () {
+                    const currentPage = parseInt(this.textContent);
+                    renderProducts(currentPage);
+                    const paginationLinks = document.querySelectorAll('#pagination .page-item');
+                    paginationLinks.forEach(link => link.classList.remove('active'));
+                    this.parentElement.classList.add('active');
+                });
+                li.appendChild(a);
+                pagination.appendChild(li);
+            }
+
+            const prevButton = document.createElement('li');
+            prevButton.classList.add('page-item');
+            prevButton.innerHTML = '<a class="page-link" href="#">Previous</a>';
+            prevButton.addEventListener('click', function () {
+                const currentPage = document.querySelector('#pagination .active');
+                if (currentPage.previousElementSibling) {
+                    currentPage.previousElementSibling.firstChild.click();
+                }
+            });
+            pagination.insertBefore(prevButton, pagination.firstChild);
+
+            const nextButton = document.createElement('li');
+            nextButton.classList.add('page-item');
+            nextButton.innerHTML = '<a class="page-link" href="#">Next</a>';
+            nextButton.addEventListener('click', function () {
+                const currentPage = document.querySelector('#pagination .active');
+                if (currentPage.nextElementSibling) {
+                    currentPage.nextElementSibling.firstChild.click();
+                }
+            });
+            pagination.appendChild(nextButton);
+        }
+
+function showBrandProducts(brand) {
+    const brandProducts = products.filter(product => product.brand === brand);
+
+    const productDetails = document.getElementById('product-details');
+    productDetails.innerHTML = `
+        <div class="p-4 bg-white shadow-md rounded-lg max-w-4xl w-full">
+            <h2 class="text-2xl font-bold mb-4">${brand}</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                ${brandProducts.map(product => `
+                    <div class="hover:grow relative overflow-hidden">
+                        <img class="w-full object-cover" src="${product.imageSrc}" alt="${product.title}">
+                        <div class="absolute inset-0 flex items-center justify-center text-white text-xl opacity-0 hover:opacity-100 transition-opacity duration-300 ease-in-out">
+                            <div class="p-4 bg-white shadow-md rounded-lg">
+                                <h2 class="text-2xl font-bold mb-4 text-black">${product.title}</h2>
+                            </div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            <button id="close-details" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+                Close
+            </button>
         </div>
+    `;
+    productDetails.classList.remove('hidden');
+
+    document.getElementById('close-details').addEventListener('click', () => {
+        productDetails.classList.add('hidden');
+    });
+}
 
 
+
+        function initializeStore() {
+            renderBrands();
+            renderProducts(1);
+            renderPagination();
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeStore);
+
+
+    </script>
 
 
 <!--footer-->
-    </div>
+
     <footer class="container mx-auto bg-white py-8 border-t border-gray-400">
         <div class="container flex px-3 py-8 ">
             <div class="w-full mx-auto flex flex-wrap">

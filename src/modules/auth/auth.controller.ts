@@ -47,7 +47,7 @@ export class AuthController {
         res.send({status: 'success'});
     }
 
-    // check
+    // check -----------------------------------------------------
     @Get('home')
     @Render('client/home') 
     homePage() {
@@ -66,6 +66,17 @@ export class AuthController {
       return;
     }
 
+    @Get('page6')
+    @Render('check-page6') 
+    page6Page() {
+      return;
+    }
+
+    @Get('page7')
+    @Render('check-page7') 
+    page7Page() {
+      return;
+    }
     // -----------------------------------
 
     // ! apis for admin
