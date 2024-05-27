@@ -6,7 +6,7 @@ export class DashboardController {
   constructor(private readonly dashboardService: DashboardService) {}
 
   @Get()
-  @Render('dashboard')
+  @Render('admin/dashboard')
   getDashboard() {
     const data = this.dashboardService.getDashboardData();
     return { data };

@@ -8,6 +8,7 @@ import { AdminModule } from './modules/admin/admin.module';
 import { ClientModule } from './modules/client/client.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { SearchModule } from './search/search.module';
+import { BuyModule } from './buy/buy.module';
 
 
 
@@ -22,6 +23,7 @@ import { SearchModule } from './search/search.module';
     StaffModule,
     DashboardModule,
     SearchModule,
+    BuyModule,
   
   ],
 })

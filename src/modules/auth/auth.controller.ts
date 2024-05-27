@@ -60,11 +60,7 @@ export class AuthController {
         return this.authService.undoDeleteAccount(id);
     }
 
-   @Get('home')
-   @Render('client/home')
-   homePage(){
-    return;
-   } 
+   
    
    
     @Get('dashboard')
