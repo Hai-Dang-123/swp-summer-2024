@@ -5,7 +5,7 @@ import { ProductService } from './product.service';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
-  @Get(':id')
+  @Get('')
   @Render('product/product-detail')
   findProduct(@Param('id') id: string) {
     return this.productService.findOne(id);
