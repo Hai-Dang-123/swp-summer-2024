@@ -10,15 +10,22 @@ export class ProductService {
     private productRepository: Repository<ProductEntity>,
   ) {}
 
-  findAll(): Promise<ProductEntity[]> {
+  async findAll(): Promise<ProductEntity[]> {
     return this.productRepository.find();
   }
 
-  findOne(id: string): Promise<any | null> {
+  async findOne(id: string): Promise<any | null> {
     return this.productRepository.findOne({
       where: { id },
       relations: ['owner'],
     });
-    // return this.productRepository.findOneBy({ id });
+  }
+
+  async createProduct(product: any): Promise<any> {
+    return this.productRepository.save(product);
+  }
+
+  async updateProduct(update: any): Promise<any> {
+    
   }
 }

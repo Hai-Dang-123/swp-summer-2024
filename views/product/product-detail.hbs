@@ -20,6 +20,89 @@
             font-optical-sizing: auto;
             font-style: normal;
         }
+<<<<<<< HEAD
+
+        .menuItem::before {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0px;
+            left: 0;
+            background-color: #565656;
+            transition: ease-in-out 0.1s;
+        }
+
+        .menuItem:hover:before {
+            width: 100%;
+        }
+    </style>
+
+    <body>
+        <nav class="h-16 w-screen flex flex-row justify-between border-b border-[#7d7d7d] mb-8">
+            <div class="hidden md:flex w-full items-center justify-center ml-4 gap-4 text-sm lg:text-lg">
+                <a href="#"
+                    class="w-max text-center font-bold ease-in-out duration-100 hover:text-[#565656] relative menuItem">PURCHASE</a>
+                <a href="#"
+                    class="w-max text-center font-bold ease-in-out duration-100 hover:text-[#565656] relative menuItem">SELL</a>
+                <a href="#"
+                    class="w-max text-center font-bold ease-in-out duration-100 hover:text-[#565656] relative menuItem">ABOUT</a>
+                <a href="#"
+                    class="w-max text-center font-bold ease-in-out duration-100 hover:text-[#565656] relative menuItem">CONTACT</a>
+            </div>
+
+            <div class="flex md:hidden w-full items-center justify-start ml-4">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                    <path d="M3 4H21V6H3V4ZM3 11H21V13H3V11ZM3 18H21V20H3V18Z"></path>
+                </svg>
+            </div>
+
+            <a href="/" class="min-w-fit w-full flex items-center justify-center gap-2 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="#000">
+                    <path
+                        d="M4 2H20V6.45994L13.5366 12L20 17.5401V22H4V17.5401L10.4634 12L4 6.45994V2ZM16.2967 7L18 5.54007V4H6V5.54007L7.70326 7H16.2967ZM12 13.3171L6 18.4599V20H7L12 17L17 20H18V18.4599L12 13.3171Z">
+                    </path>
+                </svg>
+                <p class="min-w-fit text-2xl text-black">VINTAGE TIMEPIECE</p>
+            </a>
+
+            <div class="w-full flex items-center justify-end gap-4 mr-16">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                    <path
+                        d="M20 22H4C3.44772 22 3 21.5523 3 21V3C3 2.44772 3.44772 2 4 2H20C20.5523 2 21 2.44772 21 3V21C21 21.5523 20.5523 22 20 22ZM19 20V4H5V20H19ZM8 9H16V11H8V9ZM8 13H16V15H8V13Z">
+                    </path>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                    <path
+                        d="M4.00436 6.41686L0.761719 3.17422L2.17593 1.76001L5.41857 5.00265H20.6603C21.2126 5.00265 21.6603 5.45037 21.6603 6.00265C21.6603 6.09997 21.6461 6.19678 21.6182 6.29L19.2182 14.29C19.0913 14.713 18.7019 15.0027 18.2603 15.0027H6.00436V17.0027H17.0044V19.0027H5.00436C4.45207 19.0027 4.00436 18.5549 4.00436 18.0027V6.41686ZM6.00436 7.00265V13.0027H17.5163L19.3163 7.00265H6.00436ZM5.50436 23.0027C4.67593 23.0027 4.00436 22.3311 4.00436 21.5027C4.00436 20.6742 4.67593 20.0027 5.50436 20.0027C6.33279 20.0027 7.00436 20.6742 7.00436 21.5027C7.00436 22.3311 6.33279 23.0027 5.50436 23.0027ZM17.5044 23.0027C16.6759 23.0027 16.0044 22.3311 16.0044 21.5027C16.0044 20.6742 16.6759 20.0027 17.5044 20.0027C18.3328 20.0027 19.0044 20.6742 19.0044 21.5027C19.0044 22.3311 18.3328 23.0027 17.5044 23.0027Z">
+                    </path>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                    <path
+                        d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H18C18 18.6863 15.3137 16 12 16C8.68629 16 6 18.6863 6 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11Z">
+                    </path>
+                </svg>
+            </div>
+        </nav>
+        <div class="fontClass w-screen flex flex-row justify-center">
+            <div class="flex flex-col items-center gap-4 w-full">
+                <img src="{{image}}" alt="" class="w-56" />
+                <div class="flex flex-col ml-8 gap-4">
+                    <p class="text-xl font-bold">SPECIFICATION</p>
+                    <div class="flex flex-wrap justify-start gap-x-4 gap-y-2 text-xs">
+                        <div
+                            class="flex flex-row items-center justify-between flex-[100%] sm:flex-[45%] md:flex-[30%] lg:flex-[20%]">
+                            <p class="font-bold">Type:</p>
+                            <p class="font-extralight">{{type}}</p>
+                        </div>
+                        <div
+                            class="flex flex-row items-center justify-between flex-[100%] sm:flex-[45%] md:flex-[30%] lg:flex-[20%]">
+                            <p class="font-bold">Dial color:</p>
+                            <p class="font-extralight">{{dialColor}}</p>
+                        </div>
+                        <div
+                            class="flex flex-row items-center justify-between flex-[100%] sm:flex-[45%] md:flex-[30%] lg:flex-[20%]">
+=======
     </style>
 
     <body>
@@ -38,6 +121,7 @@
                             <p class="font-extralight">{{dialColor}}</p>
                         </div>
                         <div class="flex flex-row w-1/4 items-center justify-between">
+>>>>>>> 0df0897b533820ab0f0db94a2ac26f13a125f70d
                             <p class="font-bold">Box:</p>
                             <div class="font-extralight">
                                 {{#if box}}
@@ -47,7 +131,12 @@
                                 {{/if}}
                             </div>
                         </div>
+<<<<<<< HEAD
+                        <div
+                            class="flex flex-row items-center justify-between flex-[100%] sm:flex-[45%] md:flex-[30%] lg:flex-[20%]">
+=======
                         <div class="flex flex-row w-1/4 items-center justify-between">
+>>>>>>> 0df0897b533820ab0f0db94a2ac26f13a125f70d
                             <p class="font-bold">Papers:</p>
                             <div class="font-extralight">
                                 {{#if papers}}
@@ -57,6 +146,30 @@
                                 {{/if}}
                             </div>
                         </div>
+<<<<<<< HEAD
+                        <div
+                            class="flex flex-row items-center justify-between flex-[100%] sm:flex-[45%] md:flex-[30%] lg:flex-[20%]">
+                            <p class="font-bold">Year of production:</p>
+                            <p class="font-extralight">{{yearOfProduction}}</p>
+                        </div>
+                        <div
+                            class="flex flex-row items-center justify-between flex-[100%] sm:flex-[45%] md:flex-[30%] lg:flex-[20%]">
+                            <p class="font-bold">Remaining Insurance:</p>
+                            <p class="font-extralight">{{remainingInsurance}}</p>
+                        </div>
+                        <div
+                            class="flex flex-row items-center justify-between flex-[100%] sm:flex-[45%] md:flex-[30%] lg:flex-[20%]">
+                            <p class="font-bold">Case material:</p>
+                            <p class="font-extralight">{{caseMaterial}}</p>
+                        </div>
+                        <div
+                            class="flex flex-row items-center justify-between flex-[100%] sm:flex-[45%] md:flex-[30%] lg:flex-[20%]">
+                            <p class="font-bold">Case size:</p>
+                            <p class="font-extralight">{{caseSize}} mm</p>
+                        </div>
+                        <div
+                            class="flex flex-row items-center justify-between grow-0 flex-[100%] sm:flex-[45%] md:flex-[30%] lg:hidden">
+=======
                         <div class="flex flex-row w-1/4 items-center justify-between">
                             <p class="font-bold">Year of production:</p>
                             <p class="font-extralight">{{yearOfProduction}}</p>
@@ -74,6 +187,7 @@
                             <p class="font-extralight">{{caseSize}}</p>
                         </div>
                         <div class="flex flex-row w-1/4 items-center justify-between">
+>>>>>>> 0df0897b533820ab0f0db94a2ac26f13a125f70d
                             <p class="font-bold">Water resistance:</p>
                             <p class="font-extralight">{{waterResistance}} mm</p>
                         </div>
@@ -107,6 +221,14 @@
                             <p class="font-bold">Year</p>
                             <p class="font-extralight">{{yearOfProduction}}</p>
                         </div>
+<<<<<<< HEAD
+                    </div>
+                    <p class="text-2xl font-bold">$ {{price}}</p>
+                </div>
+                <button class="w-5/6 rounded-md font-bold text-sm text-white bg-[#CD4E73] mx-auto py-2">Add to
+                    cart</button>
+                <div class="flex flex-row gap-1 font-light text-xs mx-auto mt-6">
+=======
                         <p class="text-xs font-thin">{{owner.email}}</p>
                     </div>
                     <p class="text-2xl font-bold">$ {{price}}</p>
@@ -114,6 +236,7 @@
                 <button class="w-5/6 rounded-sm font-bold text-sm text-white bg-[#CD4E73] mx-auto py-2">Add to
                     cart</button>
                 <div class="flex flex-row gap-1 font-light text-xs mx-auto">
+>>>>>>> 0df0897b533820ab0f0db94a2ac26f13a125f70d
                     <div class="flex flex-col gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"
                             fill="currentColor">
