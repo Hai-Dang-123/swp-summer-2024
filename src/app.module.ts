@@ -18,5 +18,6 @@ import { ProductModule } from './modules/product/product.module';
     StaffModule,
     ProductModule,
   ],
+  providers: [],
 })
 export class AppModule {}
