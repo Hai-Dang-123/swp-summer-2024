@@ -22,10 +22,16 @@ export class AuthController {
         username: string,
         phone: string,
     }){
+       try {
+        console.log(data);
+        
         var result = await this.authService.register(data);
         console.log(result);
         
         return {message: 'success'};
+       } catch (error) {
+        console.log(error);
+       }
     }
 
     @Get('login')
@@ -40,6 +46,47 @@ export class AuthController {
         res.cookie('token', result, { httpOnly: true });
         res.send({status: 'success'});
     }
+
+    // check -----------------------------------------------------
+    @Get('home')
+    @Render('client/home') 
+    homePage() {
+      return;
+    }
+
+    @Get('dashboard')
+    @Render('admin/dashboard') 
+    dashboardPage() {
+      return;
+    }
+
+    @Get('page2')
+    @Render('check-page2') 
+    page2Page() {
+      return;
+    }
+
+    @Get('page6')
+    @Render('check-page6') 
+    page6Page() {
+      return;
+    }
+
+    @Get('page7')
+    @Render('check-page7') 
+    page7Page() {
+      return;
+    }
+    @Get('viewProduct')
+    @Render('viewProduct') 
+    viewProductPage() {
+      return;
+    }
+    
+    
+
+    
+    // -----------------------------------
 
     // ! apis for admin
 
@@ -59,13 +106,5 @@ export class AuthController {
     undoDeleteAccount(@Param('id') id: string) {
         return this.authService.undoDeleteAccount(id);
     }
-
-   
-   
-   
-    @Get('dashboard')
-    @Render('admin/dashboard') 
-    getDashboard() {
-      return { message: 'Welcome to the admin dashboard!' }; 
-    }
+ 
 }

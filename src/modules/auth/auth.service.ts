@@ -21,12 +21,16 @@ export class AuthService {
     async register(data: any): Promise<any> {
         // check email is exist
         var account = await this.repositoryAccount.findOne({ where: { email: data.email } });
+        console.log(account);
         if (account) throw new HttpException('Email is exist', HttpStatus.BAD_REQUEST);
         data.password = await this.hashPassword(data.password);
         var result = await this.repositoryAccount.save(data);
         result.password = undefined;
         return result;
-    }
+    }    
+
+ 
+
     async login(email: string, password: string): Promise<any> {
         var account = await this.repositoryAccount.findOne({ where: { email: email } });
         if (!account) throw new HttpException('Account not found', HttpStatus.NOT_FOUND);

@@ -12,6 +12,8 @@ import { BuyModule } from './buy/buy.module';
 
 
 
+import { CartModule } from './modules/cart/cart.module';
+import { ProductModule } from './modules/product/product.module';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { BuyModule } from './buy/buy.module';
     SearchModule,
     BuyModule,
   
+    CartModule,
+    ProductModule,
   ],
 })
 export class AppModule {}
