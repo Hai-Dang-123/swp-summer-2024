@@ -24,6 +24,14 @@ export class ProductController {
     return;
   }
 
+  @Get('home')
+  @Render('client/home')
+getHome(){}
+  
+   @Get('buy')
+   @Render('buy/buy')
+   getBuy(){}
+
   @Get(':id') //56c06978-b984-44f9-aff6-ee03a0da0787
   @Render('product/product-detail')
   findProduct(@Param('id') id: string) {
