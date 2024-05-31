@@ -77,12 +77,15 @@ export class AuthController {
     page7Page() {
       return;
     }
-
     @Get('viewProduct')
     @Render('viewProduct') 
     viewProductPage() {
       return;
     }
+    
+    
+
+    
     // -----------------------------------
 
     // ! apis for admin

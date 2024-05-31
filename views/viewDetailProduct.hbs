@@ -119,6 +119,138 @@
         .text-shadow-lg {
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
+
+        /*thiết kế details*/
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .main-content {
+            width: 100%;
+            max-width: 1200px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-container-show {
+            display: flex;
+            flex-wrap: wrap;
+            /* Chia hàng */
+            background-color: #fff;
+            border-radius: 8px;
+        }
+
+        .product-left {
+            flex: 1;
+            padding: 20px;
+            /* Thêm padding cho căn giữa */
+        }
+
+        .product-image {
+            text-align: center;
+            /* Căn hình ảnh vào giữa */
+            margin-bottom: 20px;
+        }
+
+        .product-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .product-specification {
+            padding: 20px;
+        }
+
+        .product-info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 250px;
+            /* Khoảng cách giữa các grid */
+            white-space: nowrap;
+            /* Ngăn thông tin xuống hàng */
+        }
+
+        .grid-column-1 {
+            grid-column: 1;
+        }
+
+        .grid-column-2 {
+            grid-column: 2;
+        }
+
+        .grid-column-3 {
+            grid-column: 3;
+        }
+
+
+
+        .product-right {
+            flex: 1;
+            padding: 20px;
+            /* Thêm padding cho căn giữa */
+            margin-left: 60px;
+        }
+
+        .product-details {
+            margin-bottom: 20px;
+            font-weight: bold;
+            /* In đậm */
+            font-size: 20px;
+            /* Kích thước lớn hơn */
+        }
+
+
+        .product-details h1 {
+            margin-bottom: 10px;
+        }
+
+        .product-details p {
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .product-action {
+            margin-bottom: 20px;
+        }
+
+        .product-action button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #e6007e;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 0 auto;
+            /* Thêm dòng này để căn giữa nút */
+            display: block;
+            /* Đảm bảo nút sẽ chiếm toàn bộ chiều rộng của container */
+        }
+
+
+        .product-action button:hover {
+            background-color: #c6006b;
+        }
+
+        .product-info {
+            padding: 10px;
+            margin-top: auto;
+            /* Đẩy lên dưới khi thông tin không đủ dài */
+            margin-bottom: 30px;
+        }
     </style>
 
 </head>
@@ -185,7 +317,7 @@
                     </svg>
                 </a>
 
-                <a class="pl-3 inline-block no-underline hover:text-black" href="#">
+                <a class="pl-3 inline-block no-underline hover:text-black" href="/viewCart">
                     <svg class="fill-current hover:text-black" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                         viewBox="0 0 24 24">
                         <path
@@ -193,14 +325,14 @@
                         <circle cx="10.5" cy="18.5" r="1.5" />
                         <circle cx="17.5" cy="18.5" r="1.5" />
                     </svg>
+                    <!-- Hiển thị số lượng sản phẩm đã thêm vào giỏ hàng -->
                 </a>
+
+
 
             </div>
         </div>
     </nav>
-
-
-
     <div class="carousel relative container mx-auto" style="max-width:1600px;">
         <div class="carousel-inner relative overflow-hidden w-full">
             <!--Slide 1-->
@@ -301,283 +433,167 @@
     </div>
 
 
-    <!-- Filters -->
-    <section class="bg-white py-4 border-t border-b text-center">
-        <div class="container mx-auto flex justify-center items-center">
-            <div class="flex space-x-4">
-                <div>
-                    <label class="block text-gray-700">Brands</label>
-                    <select id="filter-brand"
-                        class="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                        <!-- Cập nhật các lựa chọn dựa trên dữ liệu sản phẩm -->
-                        <option value="All">All Brands</option>
-                        <option value="Brand A">Brand A</option>
-                        <option value="Brand B">Brand B</option>
-                        <option value="Brand C">Brand C</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Price</label>
-                    <select id="filter-price"
-                        class="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                        <!-- Cập nhật các lựa chọn dựa trên dữ liệu sản phẩm -->
-                        <option value="All">All Prices</option>
-                        <option value="Low">Low</option>
-                        <option value="Medium">Medium</option>
-                        <option value="High">High</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Type</label>
-                    <select id="filter-type"
-                        class="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                        <!-- Cập nhật các lựa chọn dựa trên dữ liệu sản phẩm -->
-                        <option value="All">All Types</option>
-                        <option value="Type A">Type A</option>
-                        <option value="Type B">Type B</option>
-                        <option value="Type C">Type C</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Dial Color</label>
-                    <select id="filter-dial-color"
-                        class="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                        <!-- Cập nhật các lựa chọn dựa trên dữ liệu sản phẩm -->
-                        <option value="All">All Colors</option>
-                        <option value="Color A">Color A</option>
-                        <option value="Color B">Color B</option>
-                        <option value="Color C">Color C</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Water Resistant</label>
-                    <select id="filter-water-resistant"
-                        class="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                        <!-- Cập nhật các lựa chọn dựa trên dữ liệu sản phẩm -->
-                        <option value="All">All Levels</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Case Material</label>
-                    <select id="filter-case-material"
-                        class="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                        <!-- Cập nhật các lựa chọn dựa trên dữ liệu sản phẩm -->
-                        <option value="All">All Materials</option>
-                        <option value="Material A">Material A</option>
-                        <option value="Material B">Material B</option>
-                        <option value="Material C">Material C</option>
-                    </select>
-                </div>
-            </div>
-            <div class="ml-4">
-                <label class="block text-gray-700">Sort</label>
-                <select id="sort"
-                    class="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                    <option value="default">Sort by</option>
-                    <option value="price-low-high">Price: Low to High</option>
-                    <option value="price-high-low">Price: High to Low</option>
-                    <option value="newest">Newest</option>
-                    <option value="best-selling">Best Selling</option>
-                </select>
-            </div>
-        </div>
-    </section>
-    <!--end filter-->
-
     <!--code-->
-
-    <section class="bg-white py-8">
-        <div class="container mx-auto flex items-center flex-wrap pt-4 pb-12 justify-center">
-            <a class="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl store-link"
-                href="#">Store</a>
-
-            <div id="store-items" class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div class="main-content">
+        <div class="product-container-show">
+            <div class="product-left">
+                <div class="product-image">
+                    <img src="{{ product.image }}" alt="Product Image">
+                </div>
+                <div class="product-specification">
+                    <h2>Specification</h2>
+                    <div class="product-info-grid">
+                        <div class="grid-column-1">
+                            <p><strong>Type:</strong> {{ product.type }}</p>
+                            <p><strong>Dial Color:</strong> {{ product.dialColor }}</p>
+                            <p><strong>Water Resistance:</strong> {{ product.waterResistance }}m</p>
+                            <p><strong>Case Material:</strong> {{ product.caseMaterial }}</p>
+                        </div>
+                        <div class="grid-column-2">
+                            <p><strong>Case Size:</strong> {{ product.caseSize }}mm</p>
+                            <p><strong>Past Usage Time:</strong> {{ product.pastUsageTime }}</p>
+                            <p><strong>Year Of Production:</strong> {{ product.yearOfProduction }}</p>
+                            <p><strong>Remaining Insurance:</strong> {{ product.remainingInsurance }}</p>
+                        </div>
+                        <div class="grid-column-3">
+                            <p><strong>Status:</strong> {{ product.status }}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <div class="product-right">
+                <div class="product-details">
+                    <h1>{{ product.name }}</h1>
+                    <p>Year: {{ product.yearOfProduction }}</p>
+                </div>
+                <div class="product-price">
+                    ${{ product.price }}
+                </div>
+                <!--add to cart-->
+                <div class="product-action">
+                    <button id="addToCartBtn">Add to Basket</button>
+                </div>
 
-            <nav id="pagination" aria-label="Page navigation example" class="mt-6">
-                <ul class="pagination justify-content-center flex-wrap">
-                </ul>
-            </nav>
-        </div>
-    </section>
+                <script>
+                    // Hàm để lấy giá trị của query parameter từ URL
+                    function getQueryParam(name) {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        return urlParams.get(name);
+                    }
 
-    <div id="product-details" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white p-4 rounded shadow-lg">
-            <!-- Product details will be shown here -->
+                    // Kiểm tra nếu có thông báo từ URL
+                    const message = getQueryParam('message');
+                    if (message) {
+                        // Nếu có, hiển thị thông báo ra màn hình
+                        alert(message);
+                    }
+                </script>
+
+                <script>
+                    document.getElementById('addToCartBtn').addEventListener('click', addToCart);
+
+                    async function addToCart() {
+                        const productId = product.id; // Thay thế 'YOUR_PRODUCT_ID' bằng ID của sản phẩm bạn muốn thêm vào giỏ hàng
+                        const quantity = 1; // Số lượng sản phẩm bạn muốn thêm vào giỏ hàng
+
+                        try {
+                            const response = await fetch(`/cart/add-to-cart/${productId}`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ quantity })
+                            });
+
+                            if (response.ok) {
+
+                                window.location.href = `/products/${productId}?message=Successful`;
+                            } else {
+
+                                console.error('Failed to add product to cart:', response.statusText);
+
+                            }
+                        } catch (error) {
+                            console.error('Failed to add product to cart:', error.message);
+
+                        }
+                    }
+                </script>
+                <!--end add to cart-->
+
+
+                <div class="product-info">
+                    <p><strong>Delivery:</strong> Free delivery within 1-2 business days</p>
+                    <p><strong>Returns:</strong> 14-day returns for your peace of mind</p>
+                    <p><strong>Authenticity:</strong> Guaranteed authentic by Watchfinder</p>
+                    <p><strong>Warranty:</strong> Watchfinder 24-month warranty</p>
+                </div>
+            </div>
         </div>
     </div>
-    <!--code-->
+
     <script>
-        const itemsPerPage = 4;
-        let products = [];
+        document.addEventListener("DOMContentLoaded", function () {
+            // Lấy tham chiếu của nút "Add to Basket"
+            var addToCartBtn = document.getElementById("addToCartBtn");
 
-        
-        fetch('/products')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                products = data;
-                renderProducts(1);
-                renderPagination();
-            })
-            .catch(error => console.error('Error fetching products:', error));
-        //----
-
-
-
-        function getFilteredProducts() {
-            const brand = document.getElementById('filter-brand').value;
-            const price = document.getElementById('filter-price').value;
-            const type = document.getElementById('filter-type').value;
-            const dialColor = document.getElementById('filter-dial-color').value;
-            const waterResistant = document.getElementById('filter-water-resistant').value;
-            const caseMaterial = document.getElementById('filter-case-material').value;
-
-            return products.filter(product => {
-                return (brand === 'All' || product.brand === brand) &&
-                    (price === 'All' || product.price === price) &&
-                    (type === 'All' || product.type === type) &&
-                    (dialColor === 'All' || product.dialColor === dialColor) &&
-                    (waterResistant === 'All' || product.waterResistant === waterResistant) &&
-                    (caseMaterial === 'All' || product.caseMaterial === caseMaterial);
+            // Thêm sự kiện click vào nút
+            addToCartBtn.addEventListener("click", function () {
+                // Gửi yêu cầu POST khi người dùng nhấp vào nút
+                fetch('/cart/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        // Thêm dữ liệu sản phẩm cần thêm vào giỏ hàng ở đây nếu cần
+                    })
+                })
+                    .then(response => {
+                        // Kiểm tra nếu yêu cầu được xử lý thành công
+                        if (response.ok) {
+                            // Chuyển hướng người dùng trở lại trang viewProduct
+                            window.location.href = '/viewProduct';
+                        } else {
+                            // Xử lý lỗi nếu cần
+                            console.error('Failed to add item to cart');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error adding item to cart:', error);
+                    });
             });
-        }
+        });
 
-        function renderProducts(page) {
-            const filteredProducts = getFilteredProducts();
-            const startIndex = (page - 1) * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
-            const items = filteredProducts.slice(startIndex, endIndex);
+        //--------------- xử lý icon
+        // Đợi tất cả các tài liệu được tải trước khi thực hiện mã JavaScript
+        document.addEventListener("DOMContentLoaded", function () {
+            // Lấy tham chiếu của thẻ span hiển thị số lượng sản phẩm trong giỏ hàng
+            var cartItemCount = document.getElementById("cartItemCount");
 
-            const storeItems = document.getElementById('store-items');
-            storeItems.innerHTML = '';
-            items.forEach(item => {
-                const div = document.createElement('div');
-                div.classList.add('hover:grow', 'relative', 'overflow-hidden');
-                const img = document.createElement('img');
-                img.classList.add('w-full', 'object-cover');
-                img.src = item.image;
-                img.alt = 'product image';
-
-                const overlay = document.createElement('div');
-                overlay.classList.add('absolute', 'inset-0', 'bg-black', 'opacity-25', 'transition-opacity', 'duration-300', 'ease-in-out');
-
-                const details = document.createElement('div');
-                details.classList.add('absolute', 'inset-0', 'flex', 'items-center', 'justify-center', 'text-white', 'text-xl', 'opacity-0', 'hover:opacity-100', 'transition-opacity', 'duration-300', 'ease-in-out');
-                details.textContent = 'View Details';
-
-                details.addEventListener('click', () => {
-                    showProductDetails(item);
+            // Gửi yêu cầu GET để lấy thông tin giỏ hàng từ máy chủ
+            fetch('/cart')
+                .then(response => response.json())
+                .then(data => {
+                    // Tính tổng số lượng sản phẩm trong giỏ hàng
+                    var totalItems = data.reduce((acc, curr) => acc + curr.quantity, 0);
+                    // Cập nhật số lượng sản phẩm trong giỏ hàng trên icon
+                    cartItemCount.textContent = totalItems;
+                })
+                .catch(error => {
+                    console.error('Error fetching cart data:', error);
                 });
-
-                div.appendChild(img);
-                div.appendChild(overlay);
-                div.appendChild(details);
-                storeItems.appendChild(div);
-            });
-        }
-
-        function renderPagination() {
-            const filteredProducts = getFilteredProducts();
-            const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-            const pagination = document.querySelector('#pagination ul');
-            pagination.innerHTML = '';
-
-            for (let i = 1; i <= totalPages; i++) {
-                const li = document.createElement('li');
-                li.classList.add('page-item');
-                if (i === 1) {
-                    li.classList.add('active');
-                }
-                const a = document.createElement('a');
-                a.classList.add('page-link');
-                a.href = '#';
-                a.textContent = i;
-                a.addEventListener('click', function () {
-                    const currentPage = parseInt(this.textContent);
-                    renderProducts(currentPage);
-                    const paginationLinks = document.querySelectorAll('#pagination .page-item');
-                    paginationLinks.forEach(link => link.classList.remove('active'));
-                    this.parentElement.classList.add('active');
-                });
-                li.appendChild(a);
-                pagination.appendChild(li);
-            }
-
-            const prevButton = document.createElement('li');
-            prevButton.classList.add('page-item');
-            prevButton.innerHTML = '<a class="page-link" href="#">Previous</a>';
-            prevButton.addEventListener('click', function () {
-                const currentPage = document.querySelector('#pagination .active');
-                if (currentPage.previousElementSibling) {
-                    currentPage.previousElementSibling.firstChild.click();
-                }
-            });
-            pagination.insertBefore(prevButton, pagination.firstChild);
-
-            const nextButton = document.createElement('li');
-            nextButton.classList.add('page-item');
-            nextButton.innerHTML = '<a class="page-link" href="#">Next</a>';
-            nextButton.addEventListener('click', function () {
-                const currentPage = document.querySelector('#pagination .active');
-                if (currentPage.nextElementSibling) {
-                    currentPage.nextElementSibling.firstChild.click();
-                }
-            });
-            pagination.appendChild(nextButton);
-        }
-        //-------------------------------------------
-
-        function showProductDetails(product) {
-            const productDetails = document.getElementById('product-details');
-            productDetails.innerHTML = `
-                            <div class="p-4 bg-white shadow-md rounded-lg">
-                                <h2 class="text-2xl font-bold mb-4">${product.name}</h2>
-                               <img src="${product.image}" alt="product image" class="w-full h-64 object-cover mb-4">
-                                <p class="text-gray-700 mb-2"><strong>Brand:</strong> ${product.brand}</p>
-                                <p class="text-gray-700 mb-2"><strong>Series:</strong> ${product.series}</p>
-                                <p class="text-gray-700 mb-2"><strong>Case Size:</strong> ${product.caseSize}</p>
-                                <p class="text-gray-700 mb-2"><strong>Price:</strong> ${product.price}</p>
-                                <p class="text-gray-700 mb-2"><strong>Year:</strong> ${product.year}</p>
-                                <p class="text-gray-700 mb-4">${product.description}</p>
-                                <button id="close-details" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Close</button>
-                                <button id="view-details" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">View Detail</button>
-                            </div>
-                        `;
-            productDetails.classList.remove('hidden');
-            document.getElementById('close-details').addEventListener('click', () => {
-                productDetails.classList.add('hidden');
-            });
-            document.getElementById('view-details').addEventListener('click', () => {
-                const productId = product.id;
-                window.location.href = `/products/${productId}`;
-            });
-
-
-
-        }
-        //----------------------------------------------------------------------------------------------
-        //-------------------------------------------
-
-        document.querySelectorAll('#filter-brand, #filter-price, #filter-type, #filter-dial-color, #filter-water-resistant, #filter-case-material').forEach(filter => {
-            filter.addEventListener('change', () => {
-                renderProducts(1);
-                renderPagination();
-            });
         });
 
 
     </script>
-    <!--end code-->
+
+
+
+    <!--code-->
 
     <!--footer-->
-    </div>
+
     <footer class="container mx-auto bg-white py-8 border-t border-gray-400">
         <div class="container flex px-3 py-8 ">
             <div class="w-full mx-auto flex flex-wrap">
