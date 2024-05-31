@@ -1,3 +1,4 @@
+
 import { BaseEntity } from 'src/common/base/entity.base';
 import { Column, Entity, ManyToOne, OneToMany, Unique } from 'typeorm';
 import { CategoryEntity } from './category.entity';
@@ -8,6 +9,7 @@ export enum ProductStatus {
   AVAILABLE = 'AVAILABLE',
   ORDERED = 'ORDERED',
   SOLD = 'SOLD',
+  
 }
 @Unique(['name'])
 @Entity({
@@ -15,7 +17,7 @@ export enum ProductStatus {
 })
 export class ProductEntity extends BaseEntity {
   @ManyToOne(() => AccountEntity, (account) => account.id)
-  owner: AccountEntity;
+  owner: string;
 
   @Column({
     name: 'name',
@@ -24,8 +26,15 @@ export class ProductEntity extends BaseEntity {
     nullable: false,
   })
   name: string;
-
   
+
+  @Column({
+    name: 'description',
+    type: 'text',
+    nullable: false,
+  })
+  description: string;
+
   @Column({
     type: 'varchar',
     nullable: false,
@@ -41,13 +50,7 @@ export class ProductEntity extends BaseEntity {
     nullable: false,
   })
   price: number;
-
-  @Column({
-    name: 'description',
-    type: 'text',
-    nullable: false,
-  })
-  description: string;
+  
 
   @Column({
     name: 'type',
@@ -100,11 +103,12 @@ export class ProductEntity extends BaseEntity {
 
   @Column({
     name: 'caseSize',
-    type: 'varchar',
-    length: 20,
+    type: 'decimal',
+    precision: 10,
     nullable: false,
+    default: 0,
   })
-  caseSize: string;
+  caseSize: number;
 
   @Column({
     name: 'pastUsageTime',
@@ -129,6 +133,7 @@ export class ProductEntity extends BaseEntity {
     nullable: true,
   })
   remainingInsurance: string;
+
 
   @Column({
     name: 'status',

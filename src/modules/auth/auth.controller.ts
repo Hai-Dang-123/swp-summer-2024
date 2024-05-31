@@ -15,9 +15,12 @@ export class AuthController {
         return {};
     }
 
+  
+    
+
     @Post('create-account')
     async register(@Body() data: {
-        email: string,    
+        email: string,
         password: string,
         username: string,
         phone: string,
@@ -41,10 +44,10 @@ export class AuthController {
     }
 
     @Post('login')
-    async login(@Body() data: { email: string, password: string }, @Res() res: any){
+    async login(@Body() data: { email: string, password: string }, @Res() res: any) {
         var result = await this.authService.login(data.email, data.password);
-        res.cookie('token', result, { httpOnly: true });
-        res.send({status: 'success'});
+        res.cookie('token', result, { httpOnly: true, maxAge: 60 * 60 });
+        res.send({ status: 'success' });
     }
 
     // check -----------------------------------------------------

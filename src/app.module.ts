@@ -30,5 +30,6 @@ import { ProductModule } from './modules/product/product.module';
     CartModule,
     ProductModule,
   ],
+  providers: [],
 })
 export class AppModule {}
