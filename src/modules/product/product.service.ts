@@ -40,4 +40,7 @@
         throw new Error('Error retrieving products');
       }
     }
+    async createProduct(product: any): Promise<any> {
+      return this.productRepository.save(product);
+    }
   }
