@@ -15,12 +15,6 @@ export class AuthController {
         return {};
     }
 
-    @Get('home')
-    @Render('client/home')
-    homePage() {
-        return {};
-    }
-
     @Post('create-account')
     async register(@Body() data: {
         email: string,

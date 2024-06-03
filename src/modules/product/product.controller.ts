@@ -30,7 +30,7 @@ export class ProductController {
     return this.productService.findOne(id);
   }
 
-  @Post()
+  @Post('')
   async createProduct(
     @Body()
     product: {
