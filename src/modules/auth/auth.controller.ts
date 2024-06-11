@@ -39,7 +39,7 @@ export class AuthController {
     loginPage() {
         return {};
     }
-
+    
     @Post('login')
     async login(@Body() data: { email: string, password: string }, @Res() res: any){
         var result = await this.authService.login(data.email, data.password);
