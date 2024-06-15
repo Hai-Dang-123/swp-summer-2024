@@ -10,6 +10,8 @@ async function bootstrap() {
   );
 
   app.useGlobalFilters(new UnauthorizedExceptionFilter());
+  const cors = require('cors')
+  app.use(cors())
 
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));

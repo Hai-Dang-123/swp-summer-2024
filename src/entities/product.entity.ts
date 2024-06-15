@@ -102,7 +102,7 @@ export class ProductEntity extends BaseEntity {
     name: 'caseSize',
     type: 'varchar',
     length: 20,
-    nullable: false,
+    nullable: true,
   })
   caseSize: string;
 

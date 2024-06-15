@@ -1,54 +1,50 @@
-// sell-request.controller.ts
-import { Controller, Post, Get, Param, Query, UseGuards, Req, Res, NotFoundException, Body } from '@nestjs/common';
-import { Request, Response, response } from 'express';
+import { Controller, Post, Get, Param, Req, Res, Body, UseGuards, NotFoundException } from '@nestjs/common';
 import { SellRequestService } from './sell-request.service';
+import { Request, Response } from 'express';
 import { CreateSellRequestDto } from './create-sell-request.dto';
-// import { JwtAuthGuard } from './jwt-auth.guard'; // Import JwtAuthGuard để sử dụng middleware xác thực JWT
+import { UserGuard } from '../auth/guards/user.guard';
+import { StaffGuard } from '../auth/guards/staff.guard';
+
 
 @Controller('sell-request')
 export class SellRequestController {
   constructor(private readonly sellRequestService: SellRequestService) {}
 
-  // Tạo một sell request mới và lưu vào cơ sở dữ liệu
-  @Post()
-  async createSellRequest(
-    @Req() request: Request,
-    @Res() response: Response,
-    @Body() createSellRequestDto: CreateSellRequestDto
-  ) {
-    const user = request['user'];
-    if (user) {
-      const sellRequest = await this.sellRequestService.createSellRequest(user.id, createSellRequestDto);
-      return response.status(201).json({ message: 'Sell request created successfully', sellRequest });
-    } else {
-      return response.status(401).send('Unauthorized');
-    }
+  @Post('create')
+  // @UseGuards(UserGuard) // Apply user guard here
+  async createSellRequest(@Req() request: Request, @Res() response: Response, @Body() createSellRequestDto: CreateSellRequestDto) {
+    
+    
+    const sellRequest = await this.sellRequestService.createSellRequest(createSellRequestDto);
+    
+    return response.status(201).json(sellRequest);
   }
 
-  // Lấy danh sách tất cả các sell request dựa trên vai trò của nhân viên.
-//   @UseGuards(JwtAuthGuard)
-  @Get()
-  async getAllSellRequestsByRole(@Req() request: Request) {
-    const user = request['user'];
-    if (user) {
-      const sellRequests = await this.sellRequestService.getAllSellRequestsByRole(user.role); // Lấy danh sách sell request dựa trên vai trò của nhân viên
-      return { sellRequests };
-    } else {
-      return response.status(401).send('Unauthorized');
+
+  @Get('view/:role')
+  async getAllSellRequestsByRole(@Param('role') role: string, @Res() res: Response): Promise<void> {
+    try {
+      const sellRequests = await this.sellRequestService.getAllSellRequestsByRole(role);
+      if (!sellRequests) {
+        throw new NotFoundException('Sell requests not found');
+      }
+
+      res.status(200).json({ sellRequests });
+    } catch (error) {
+      console.error('Error:', error);
+      res.status(500).json({ message: 'Internal server error' });
     }
+  
   }
 
-  // Lấy một sell request cụ thể dựa trên ID.
-//   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  async getSellRequestById(@Param('id') id: number) {
+  // @UseGuards(StaffGuard) // Apply staff guard here
+  async getSellRequestById(@Req() request: Request, @Res() response: Response, @Param('id') id: number) {
     const sellRequest = await this.sellRequestService.getSellRequestById(id);
     if (sellRequest) {
-      return sellRequest;
+      response.status(200).json(sellRequest);
     } else {
-      throw new NotFoundException('Sell request not found');
+      response.status(404).send('Sell request not found');
     }
   }
-
-  // Bổ sung các endpoint khác cần thiết cho việc lấy và sửa sellRequest
 }

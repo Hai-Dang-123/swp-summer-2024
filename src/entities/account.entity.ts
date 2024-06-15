@@ -5,6 +5,8 @@ export enum Role {
     admin = 'admin',
     staff = 'staff',
     user = 'user',
+    staff1 = 'staff1', // cho staff ở quầy để lấy SellRequest 
+    staff2 = 'staff2', // cho staff ở quầy để lấy SellRequest
 }
 
 @Unique(["email"])

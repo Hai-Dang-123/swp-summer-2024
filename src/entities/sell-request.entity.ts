@@ -1,25 +1,24 @@
-// sell-request.entity.ts
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Unique } from 'typeorm';
 
-@Entity()
+@Entity({
+    name: "SELL_REQUEST",
+})
 export class SellRequest {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  userId: string;
 
-  @Column('json', { nullable: true }) // Sử dụng kiểu dữ liệu 'json' cho cột watchForm
+  @Column('json', { nullable: true })
   watchForm: any;
 
-  @Column('json', { nullable: true }) // Sử dụng kiểu dữ liệu 'json' cho cột sellForm
+  @Column('json', { nullable: true })
   sellForm: any;
 
-  @Column()
+  @Column({ type: 'varchar', length: 255, nullable: false })
   address: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 50, nullable: false })
   role: string;
 
-  // Các trường dữ liệu khác của SellRequest
+  // Các trường dữ liệu khác của SellRequest (nếu có)
 }
