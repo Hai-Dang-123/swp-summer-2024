@@ -2,6 +2,7 @@ import { Controller, Get, Param, Render, Post, Body } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 
+
 export enum ProductStatus {
   IN_APPRAISAL = 'IN APPRAISAL',
   AVAILABLE = 'AVAILABLE',
@@ -10,7 +11,7 @@ export enum ProductStatus {
 }
 @Controller('product')
 export class ProductController {
-  constructor(private readonly productService: ProductService) {}
+  constructor(private readonly productService: ProductService) { }
 
   @Get('')
   // @Render('product/product-detail')
@@ -25,18 +26,26 @@ export class ProductController {
   }
 
   @Get('home')
-  @Render('client/home')
-getHome(){}
-  
-   @Get('buy')
-   @Render('buy/buy')
-   getBuy(){}
+  // @Render('client/home')
+  getHome() { }
+
+  @Get('buy')
+  //  @Render('buy/buy')
+  getBuy() { }
+
+  @Get('related/:id') 
+  //56c06978-b984-44f9-aff6-ee03a0da0787
+  // @Render('product/product-detail')  
+  findRelatedProducts(@Param('id') id: string) {
+    return this.productService.findRelatedProducts(id);
+  }
 
   @Get(':id') //56c06978-b984-44f9-aff6-ee03a0da0787
-  @Render('product/product-detail')
+  // @Render('product/product-detail')  
   findProduct(@Param('id') id: string) {
     return this.productService.findOne(id);
   }
+
 
   @Post()
   async createProduct(
