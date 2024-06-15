@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Param, Req, Res, Body, UseGuards, NotFoundException } from '@nestjs/common';
+import { Controller, Post, Get, Param, Req, Res, Body, UseGuards, NotFoundException, InternalServerErrorException, Put } from '@nestjs/common';
 import { SellRequestService } from './sell-request.service';
 import { Request, Response } from 'express';
 import { CreateSellRequestDto } from './create-sell-request.dto';
@@ -25,6 +25,7 @@ export class SellRequestController {
   async getAllSellRequestsByRole(@Param('role') role: string, @Res() res: Response): Promise<void> {
     try {
       const sellRequests = await this.sellRequestService.getAllSellRequestsByRole(role);
+      console.log(sellRequests);
       if (!sellRequests) {
         throw new NotFoundException('Sell requests not found');
       }
@@ -47,4 +48,15 @@ export class SellRequestController {
       response.status(404).send('Sell request not found');
     }
   }
+  @Put(':id')
+async updateSellRequest(@Param('id') id: number, @Body() updatedSellRequestDto: CreateSellRequestDto) {
+    // Thực hiện việc cập nhật sell request với updatedSellRequestDto
+    try {
+        const updatedSellRequest = await this.sellRequestService.updateSellRequest(id, updatedSellRequestDto);
+        return { message: 'Sell request updated successfully', sellRequest: updatedSellRequest };
+    } catch (error) {
+        throw new InternalServerErrorException('Failed to update sell request');
+    }
+}
+
 }

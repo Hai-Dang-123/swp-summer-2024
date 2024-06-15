@@ -42,4 +42,28 @@ export class SellRequestService {
     // Get sell request by id
     return await this.sellRequestRepository.findOne({ where: { id } });
   }
+  async updateSellRequest(id: number, updatedSellRequestDto: CreateSellRequestDto): Promise<SellRequest> {
+    // Xử lý logic cập nhật dựa trên id và updatedSellRequestDto
+    const sellRequest = await this.sellRequestRepository.findOne({where: { id}});
+    if (!sellRequest) {
+        throw new NotFoundException('Sell request not found');
+    }
+
+    // Áp dụng các thay đổi từ updatedSellRequestDto vào sellRequest
+    if (updatedSellRequestDto.sellForm) {
+        sellRequest.sellForm = { ...sellRequest.sellForm, ...updatedSellRequestDto.sellForm };
+    }
+    if (updatedSellRequestDto.watchForm) {
+        sellRequest.watchForm = { ...sellRequest.watchForm, ...updatedSellRequestDto.watchForm };
+    }
+    if (updatedSellRequestDto.address) {
+        sellRequest.address = updatedSellRequestDto.address;
+    }
+
+    // Lưu sellRequest đã được cập nhật
+    await this.sellRequestRepository.save(sellRequest);
+
+    return sellRequest;
+}
+
 }
