@@ -31,8 +31,10 @@ export class ProductService {
       },
       {
         type: product.type,
+      },{
+        id: Not(productId),
       }],
-      take: 4, // Giới hạn số lượng sản phẩm liên quan trả về
+      take: 8, // Giới hạn số lượng sản phẩm liên quan trả về
     })
   }
 
@@ -41,29 +43,29 @@ export class ProductService {
     return this.productRepository.find();
   }
   //gốc
-  async findOne(id: string): Promise<any | null> {
-    return this.productRepository.findOne({
-      where: { id },
-      relations: ['owner'],
-    });
-  }
-
-  //phần trung sửa 
-  // async findOne(id: string): Promise<any> {
-  //   const product = await this.productRepository.findOne({
+  // async findOne(id: string): Promise<any | null> {
+  //   return this.productRepository.findOne({
   //     where: { id },
   //     relations: ['owner'],
   //   });
-
-  //   if (!product) {
-  //     throw new NotFoundException('Product not found');
-  //   }
-
-  //   const relatedProducts = await this.findRelatedProducts(id);
-
-  //   return { product, relatedProducts };
-
   // }
+
+  //phần trung sửa 
+  async findOne(id: string): Promise<any> {
+    const product = await this.productRepository.findOne({
+      where: { id },
+      relations: ['owner'],
+    });
+
+    if (!product) {
+      throw new NotFoundException('Product not found');
+    }
+
+    const relatedProducts = await this.findRelatedProducts(id);
+
+    return { product, relatedProducts };
+
+  }
 
 
   async createProduct(product: any): Promise<any> {
