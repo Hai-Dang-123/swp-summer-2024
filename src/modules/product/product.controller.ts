@@ -33,7 +33,8 @@ export class ProductController {
   //  @Render('buy/buy')
   getBuy() { }
 
-  @Get('related/:id') //56c06978-b984-44f9-aff6-ee03a0da0787
+  @Get('related/:id') 
+  //56c06978-b984-44f9-aff6-ee03a0da0787
   // @Render('product/product-detail')  
   findRelatedProducts(@Param('id') id: string) {
     return this.productService.findRelatedProducts(id);
