@@ -32,7 +32,7 @@ export class ProductService {
       {
         type: product.type,
       }],
-      take: 8, // Giới hạn số lượng sản phẩm liên quan trả về
+      
     })
     
   }
