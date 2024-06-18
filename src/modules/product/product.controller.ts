@@ -29,9 +29,18 @@ export class ProductController {
   // @Render('client/home')
   getHome() { }
 
+  //chưa đổi 
+  // @Get('buy')
+  // //  @Render('buy/buy')
+  // getBuy() { }
+
+  // trung thêm trang buy 
   @Get('buy')
-  //  @Render('buy/buy')
-  getBuy() { }
+  // @Render('buy/buy')
+  async getBuy() {
+    const products = await this.productService.findAll();
+    return { products };
+  }
 
   @Get('related/:id') 
   //56c06978-b984-44f9-aff6-ee03a0da0787
