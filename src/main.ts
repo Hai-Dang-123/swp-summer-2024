@@ -5,13 +5,13 @@ import { AppModule } from './app.module';
 import { UnauthorizedExceptionFilter } from './common/exception/unauthorized.exception';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(
-    AppModule,
-  );
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.useGlobalFilters(new UnauthorizedExceptionFilter());
-  const cors = require('cors')
-  app.use(cors())
+
+  const cors = require('cors');
+  app.use(cors());
+
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('hbs');

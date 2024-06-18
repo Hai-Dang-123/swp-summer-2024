@@ -24,7 +24,10 @@ export class AuthService {
       where: { email: data.email },
     });
     if (account)
-      throw new HttpException('Email is exist', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'Email has already existed',
+        HttpStatus.BAD_REQUEST,
+      );
     data.password = await this.hashPassword(data.password);
     var result = await this.repositoryAccount.save(data);
     result.password = undefined;
@@ -147,6 +150,25 @@ export class AuthService {
     });
   }
 
+  async getAccountByEmail(email: string): Promise<any> {
+    const found = this.repositoryAccount.findOne({
+      where: { email: email },
+      select: [
+        'id',
+        'createdAt',
+        'updatedAt',
+        'deletedAt',
+        'username',
+        'email',
+        'phone',
+        'role',
+      ],
+    });
+    return found
+      ? found
+      : new HttpException('Account not found', HttpStatus.NOT_FOUND);
+  }
+
   async softDeleteAccount(id: string): Promise<any> {
     // block admin account to delete another admin account
     var account = await this.repositoryAccount.findOne({ where: { id: id } });
@@ -160,7 +182,7 @@ export class AuthService {
     }
     return await this.repositoryAccount.update(id, { deletedAt: new Date() });
   }
-  
+
   async undoDeleteAccount(id: string): Promise<any> {
     return await this.repositoryAccount.update(id, { deletedAt: null });
   }
