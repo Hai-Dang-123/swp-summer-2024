@@ -7,6 +7,7 @@ import { StaffModule } from './modules/staff/staff.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { ClientModule } from './modules/client/client.module';
 import { ProductModule } from './modules/product/product.module';
+import { ProvinceModule } from './modules/province/province.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { ProductModule } from './modules/product/product.module';
     ClientModule,
     StaffModule,
     ProductModule,
+    ProvinceModule,
   ],
   providers: [],
 })

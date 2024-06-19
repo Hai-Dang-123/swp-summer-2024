@@ -38,11 +38,17 @@ export class OrderEntity extends BaseEntity {
     type: 'simple-json',
     nullable: false,
     default: {
-      method: '',
+      email: "",
+      phone: "",
+      address: "",
+      method: "",
       cost: 0,
     },
   })
   delivery: {
+    email: "",
+    phone: "",
+    address: "",
     method: string;
     cost: number;
   };
