@@ -22,6 +22,7 @@ export class OrderEntity extends BaseEntity {
     name: 'code',
     type: 'varchar',
     length: 8,
+    unique: true,
     nullable: false,
   })
   code: string; //Code 8 kí tự generate bên frontend
@@ -34,32 +35,30 @@ export class OrderEntity extends BaseEntity {
   total: number;
 
   @Column({
-    name: 'delivery',
+    name: 'contact',
     type: 'simple-json',
     nullable: false,
-    default: {
-      email: "",
-      phone: "",
-      address: "",
-      method: "",
-      cost: 0,
-    },
   })
-  delivery: {
-    email: "",
-    phone: "",
-    address: "",
-    method: string;
-    cost: number;
+  contact: {
+    email: '';
+    phone: '';
   };
 
   @Column({
-    name: 'paymentMethod',
+    name: 'purchaseMethod',
     type: 'varchar',
     nullable: false,
-    default: 'COD',
+    default: 'offline',
   })
-  paymentMethod: string;
+  purchaseMethod: string;
+
+  @Column({
+    name: 'address',
+    type: 'varchar',
+    nullable: false,
+    default: '',
+  })
+  address: string;
 
   @ManyToOne(() => VoucherEntity, (voucher) => voucher.id)
   voucher: string;

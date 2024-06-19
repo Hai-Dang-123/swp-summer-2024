@@ -136,5 +136,5 @@ export class ProductEntity extends BaseEntity {
     enum: ProductStatus,
     default: ProductStatus.IN_APPRAISAL,
   })
-  status: ProductStatus;
+  status: string;
 }
