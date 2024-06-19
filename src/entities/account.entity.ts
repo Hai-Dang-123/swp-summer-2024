@@ -52,4 +52,13 @@ export class AccountEntity extends BaseEntity {
     nullable: false,
   })
   role: Role;
+
+  @Column({
+    name: 'Avatar',
+    type: 'text',
+    nullable: false,
+    default:
+      'https://i.pinimg.com/736x/7e/a4/af/7ea4af7d8401d2b43ee841bfa2abe89d.jpg',
+  })
+  avatar: string;
 }
