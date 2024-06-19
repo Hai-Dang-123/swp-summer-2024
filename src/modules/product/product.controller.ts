@@ -19,6 +19,11 @@ export class ProductController {
     return this.productService.findAll();
   }
 
+  @Get('latest')
+  findLatest() {
+    return this.productService.findLatest();
+  }
+
   @Get('cart')
   @Render('cart/cart')
   getCart() {
