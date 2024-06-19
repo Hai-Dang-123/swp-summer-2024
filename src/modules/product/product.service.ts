@@ -44,7 +44,7 @@ export class ProductService {
     return { product, relatedProducts };
   }
 
-  async findRelatedProducts(productId) {
+  async findRelatedProducts(productId: string) {
     const product = await this.productRepository.findOne({
       where: {
         id: productId,
@@ -57,18 +57,22 @@ export class ProductService {
     return await this.productRepository.find({
       where: [
         {
+          id: Not(product.id),
           dialColor: product.dialColor,
           status: 'AVAILABLE',
         },
         {
+          id: Not(product.id),
           caseMaterial: product.caseMaterial,
           status: 'AVAILABLE',
         },
         {
+          id: Not(product.id),
           type: product.type,
           status: 'AVAILABLE',
         },
       ],
+      take: 10,
     });
   }
 
