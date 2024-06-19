@@ -14,7 +14,6 @@ export class ProductController {
   constructor(private readonly productService: ProductService) { }
 
   @Get('')
-  // @Render('product/product-detail')
   findAll() {
     return this.productService.findAll();
   }
@@ -29,10 +28,6 @@ export class ProductController {
   getCart() {
     return;
   }
-
-  @Get('home')
-  // @Render('client/home')
-  getHome() { }
 
   //chưa đổi 
   // @Get('buy')
@@ -49,13 +44,11 @@ export class ProductController {
 
   @Get('related/:id') 
   //56c06978-b984-44f9-aff6-ee03a0da0787
-  // @Render('product/product-detail')  
   findRelatedProducts(@Param('id') id: string) {
     return this.productService.findRelatedProducts(id);
   }
 
   @Get(':id') //56c06978-b984-44f9-aff6-ee03a0da0787
-  // @Render('product/product-detail')  
   findProduct(@Param('id') id: string) {
     return this.productService.findOne(id);
   }

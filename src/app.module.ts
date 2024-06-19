@@ -7,6 +7,7 @@ import { StaffModule } from './modules/staff/staff.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { ClientModule } from './modules/client/client.module';
 import { ProductModule } from './modules/product/product.module';
+import { ProvinceModule } from './modules/province/province.module';
 import { ContactModule } from './modules/contact/contact.module';
 import { ContactService } from './modules/contact/contact.service';
 import { ContactController } from './modules/contact/contact.controller';
@@ -20,6 +21,7 @@ import { ContactController } from './modules/contact/contact.controller';
     ClientModule,
     StaffModule,
     ProductModule,
+    ProvinceModule,
     ContactModule,
   ],
   providers: [ContactService],
