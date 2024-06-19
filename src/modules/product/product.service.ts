@@ -31,11 +31,10 @@ export class ProductService {
       },
       {
         type: product.type,
-      },{
-        id: Not(productId),
       }],
-      take: 8, // Giới hạn số lượng sản phẩm liên quan trả về
+      
     })
+    
   }
 
 
@@ -74,5 +73,15 @@ export class ProductService {
 
   async updateProduct(update: any): Promise<any> {
     return null;
+  }
+
+  async findLatest(): Promise<any | null> {
+    return this.productRepository.find({
+      order:{
+        createdAt:"DESC"
+      },
+      relations: ['owner'],
+      take: 8
+    })
   }
 }
