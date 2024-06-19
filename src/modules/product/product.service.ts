@@ -74,4 +74,14 @@ export class ProductService {
   async updateProduct(update: any): Promise<any> {
     return null;
   }
+
+  async findLatest(): Promise<any | null> {
+    return this.productRepository.find({
+      order:{
+        createdAt:"DESC"
+      },
+      relations: ['owner'],
+      take: 8
+    })
+  }
 }
