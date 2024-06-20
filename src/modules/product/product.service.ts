@@ -76,6 +76,23 @@ export class ProductService {
     });
   }
 
+  async getFeaturedList(): Promise<any | null> {
+    return this.productRepository.find({
+      where: [
+        {
+          id: '92aff6ca-17d2-40db-bbcb-44bead71f964',
+        },
+        {
+          id: '58d6bbc1-3fce-4f27-b948-14474b8eb3a8',
+        },
+        {
+          id: '027acdb9-8b99-4c45-8041-31a3c0f8d569',
+        },
+      ],
+      relations: ['owner'],
+    });
+  }
+
   async createProduct(product: any): Promise<any> {
     return this.productRepository.save(product);
   }
