@@ -30,13 +30,9 @@ export class AuthController {
     return this.authService.getAllAccounts();
   }
 
-  @Get('email')
-  async getAccountByEmail(@Body() data: { email: string }) {
-    const account = await this.authService.getAccountByEmail(data.email);
-    return {
-      message: `Account found by email ${data.email}`,
-      metadata: account,
-    };
+  @Get('email/:email')
+  getAccountByEmail(@Param('email') email: string) {
+    return this.authService.getAccountByEmail(email);
   }
 
   @Post('create-account')
