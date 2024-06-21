@@ -12,37 +12,13 @@ export class ProductService {
   ) { }
 
 
-  //sản phẩm liên quan trung thêm nè
-  async findRelatedProducts(productId) {
-    const product = await this.productRepository.findOne({
-      where: {
-        id: productId
-      }
-    });
-    if (!product) {
-      throw new Error('Product not found');
-    }
-
-    return await this.productRepository.find({
-      where: [{
-        dialColor: product.dialColor,
-      },
-      {
-        caseMaterial: product.caseMaterial,
-      },
-      {
-        type: product.type,
-      }],
-      
-    })
-    
-  }
-
 
   async findAll(): Promise<ProductEntity[]> {
-    return this.productRepository.find();
+    return this.productRepository.find({
+      where: { status: ProductStatus.AVAILABLE },
+      relations: ['owner'], // Lấy thông tin chủ sở hữu
+    });
   }
-
   async findAllAvailable(): Promise<ProductEntity[]> {
     return this.productRepository.find({
       where: {

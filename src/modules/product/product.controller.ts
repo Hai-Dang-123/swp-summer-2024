@@ -53,13 +53,6 @@ export class ProductController {
     return this.productService.findOneWithRelated(id);
   }
 
-
-  @Get('withRelated/:id')
-  //56c06978-b984-44f9-aff6-ee03a0da0787
-  findWithRelatedProducts(@Param('id') id: string) {
-    return this.productService.findOneWithRelated(id);
-  }
-
   @Get('related/:id')
   //56c06978-b984-44f9-aff6-ee03a0da0787
   findRelatedProducts(@Param('id') id: string) {
