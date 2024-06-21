@@ -35,6 +35,11 @@ export class ProductController {
     return this.productService.findLatest();
   }
 
+  @Get('featured')
+  getFeaturedList() {
+    return this.productService.getFeaturedList();
+  }
+
   @Get('buy')
   // @Render('buy/buy')
   async getBuy() {
