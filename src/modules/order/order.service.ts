@@ -19,7 +19,22 @@ export class OrderService {
     });
   }
 
+  async getOrdersByUser(userId: string): Promise<any | null> {
+    return this.orderRepository.find({
+      relations: ['user'],
+      where: {
+        user: {
+          id: userId,
+        },
+      },
+    });
+  }
+
   async createOrder(order: any): Promise<any> {
     return this.orderRepository.save(order);
+  }
+
+  async updateOrder(id: string, update: any): Promise<any> {
+    return this.orderRepository.update(id, update);
   }
 }

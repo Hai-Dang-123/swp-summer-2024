@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Post, Body } from '@nestjs/common';
 import { OrderItemService } from './orderItem.service';
-import { UUID } from 'typeorm/driver/mongodb/bson.typings';
+import { UUID } from 'crypto';
 
 @Controller('orderItem')
 export class OrderItemController {
@@ -9,6 +9,11 @@ export class OrderItemController {
   @Get()
   findAll() {
     return this.orderItemService.findAll();
+  }
+
+  @Get('order/:id')
+  findByOrder(@Param('id') orderId: string) {
+    return this.orderItemService.findByOrder(orderId);
   }
 
   @Post()

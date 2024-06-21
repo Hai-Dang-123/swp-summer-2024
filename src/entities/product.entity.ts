@@ -1,7 +1,7 @@
 import { BaseEntity } from 'src/common/base/entity.base';
-import { Column, Entity, ManyToOne, OneToMany, Unique } from 'typeorm';
-import { CategoryEntity } from './category.entity';
+import { Column, Entity, ManyToOne, OneToOne, Unique } from 'typeorm';
 import { AccountEntity } from './account.entity';
+import { OrderItemEntity } from './order-item.entity';
 
 export enum ProductStatus {
   IN_APPRAISAL = 'IN APPRAISAL',
@@ -14,8 +14,8 @@ export enum ProductStatus {
   name: 'PRODUCT',
 })
 export class ProductEntity extends BaseEntity {
-  @ManyToOne(() => AccountEntity, (account) => account.id)
-  owner: string;
+  @ManyToOne(() => AccountEntity, (account) => account.products)
+  owner: AccountEntity;
 
   @Column({
     name: 'name',
@@ -100,8 +100,8 @@ export class ProductEntity extends BaseEntity {
   @Column({
     name: 'caseMaterial',
     type: 'varchar',
-    length: 20,
-    nullable: true,
+    nullable: false,
+    default: 'Steel',
   })
   caseMaterial: string;
 
@@ -145,4 +145,7 @@ export class ProductEntity extends BaseEntity {
     default: ProductStatus.IN_APPRAISAL,
   })
   status: string;
+
+  @OneToOne(() => OrderItemEntity, (orderItem) => orderItem.product)
+  orderItem: OrderItemEntity;
 }

@@ -1,4 +1,12 @@
-import { Controller, Get, Param, Render, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Render,
+  Post,
+  Body,
+  Patch,
+} from '@nestjs/common';
 import { OrderService } from './order.service';
 import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 
@@ -43,5 +51,33 @@ export class OrderController {
       : {
           message: 'Failed to create new order',
         };
+  }
+
+  @Get('/user/:id')
+  getOrdersByUser(@Param('id') userId: string) {
+    return this.orderService.getOrdersByUser(userId);
+  }
+
+  @Patch(':id')
+  updateOrder(
+    @Param('id') id: string,
+    @Body()
+    update: {
+      user: UUID;
+      code: string;
+      total: number;
+      contact: {
+        email: string;
+        phone: string;
+      };
+      purchaseMethod: string;
+      address: string;
+      voucher: string;
+      paidStatus: boolean;
+      status: OrderStatus;
+      note: string;
+    },
+  ) {
+    return this.orderService.updateOrder(id, update);
   }
 }

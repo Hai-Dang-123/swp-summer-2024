@@ -1,5 +1,7 @@
 import { BaseEntity } from 'src/common/base/entity.base';
-import { Column, Entity, Unique } from 'typeorm';
+import { Column, Entity, OneToMany, Unique } from 'typeorm';
+import { ProductEntity } from './product.entity';
+import { OrderEntity } from './order.entity';
 
 export enum Role {
   admin = 'admin',
@@ -61,4 +63,10 @@ export class AccountEntity extends BaseEntity {
       'https://i.pinimg.com/736x/7e/a4/af/7ea4af7d8401d2b43ee841bfa2abe89d.jpg',
   })
   avatar: string;
+
+  @OneToMany(() => ProductEntity, (product) => product.owner)
+  products: ProductEntity[];
+
+  @OneToMany(() => OrderEntity, (order) => order.user)
+  orders: OrderEntity[];
 }

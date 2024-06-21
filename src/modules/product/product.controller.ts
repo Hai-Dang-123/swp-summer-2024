@@ -2,7 +2,6 @@ import {
   Controller,
   Get,
   Param,
-  Render,
   Post,
   Body,
   Patch,
@@ -45,6 +44,12 @@ export class ProductController {
   async getBuy() {
     const products = await this.productService.findAll();
     return { products };
+  }
+
+  @Get('user/:id')
+  // @Render('buy/buy')
+  getProductByUser(@Param('id') userId: string) {
+    return this.productService.findByUser(userId);
   }
 
   @Get('withRelated/:id')
