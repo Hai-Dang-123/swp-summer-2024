@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from 'src/entities/product.entity';
 import { FindManyOptions, Not, Repository } from 'typeorm';
+import { ProductStatus } from './product.controller';
 
 @Injectable()
 export class ProductService {
@@ -14,9 +15,10 @@ export class ProductService {
   //sản phẩm liên quan trung thêm nè
   async findRelatedProducts(productId) {
     const product = await this.productRepository.findOne({
-      where: {
+      where: [{
         id: productId
-      }
+
+      },]
     });
     if (!product) {
       throw new Error('Product not found');
@@ -31,7 +33,7 @@ export class ProductService {
       },
       {
         type: product.type,
-      }],
+      },],
       
     })
     
@@ -39,20 +41,22 @@ export class ProductService {
 
 
   async findAll(): Promise<ProductEntity[]> {
-    return this.productRepository.find();
+    return this.productRepository.find({
+      where: { status: ProductStatus.AVAILABLE },
+      relations: ['owner'], // Lấy thông tin chủ sở hữu
+    });
   }
-  //gốc
-  // async findOne(id: string): Promise<any | null> {
-  //   return this.productRepository.findOne({
-  //     where: { id },
-  //     relations: ['owner'],
-  //   });
-  // }
 
-  //phần trung sửa 
-  async findOne(id: string): Promise<any> {
+  async findOne(id: string): Promise<any | null> {
+    return this.productRepository.findOne({
+      where: { id, status: ProductStatus.AVAILABLE },
+      relations: ['owner'],
+    });
+  }
+
+  async findOneWithRelated(id: string): Promise<any> {
     const product = await this.productRepository.findOne({
-      where: { id },
+      where: { id, status: ProductStatus.AVAILABLE },
       relations: ['owner'],
     });
 
