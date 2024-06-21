@@ -14,6 +14,7 @@ import { ContactController } from './modules/contact/contact.controller';
 import { OrderModule } from './modules/order/order.module';
 import { OrderItemModule } from './modules/orderItem/orderItem.module';
 import { SellModule } from './modules/sell/sell.module';
+import { ZaloPayModule } from './modules/zalo/zalo.module';
 
 
 @Module({
@@ -29,7 +30,9 @@ import { SellModule } from './modules/sell/sell.module';
     ContactModule,
     OrderModule,
     OrderItemModule,
-    SellModule
+    SellModule,
+    // ImageModule,
+    ZaloPayModule,
   ],
   providers: [ContactService],
   controllers: [ContactController],
