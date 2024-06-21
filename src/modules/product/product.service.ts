@@ -29,6 +29,16 @@ export class ProductService {
     });
   }
 
+  async findByUser(userId: string): Promise<any | null> {
+    return this.productRepository.find({
+      where: {
+        owner: {
+          id: userId,
+        },
+      },
+    });
+  }
+
   async findOneWithRelated(id: string): Promise<any> {
     const product = await this.productRepository.findOne({
       where: { id },
@@ -80,13 +90,13 @@ export class ProductService {
     return this.productRepository.find({
       where: [
         {
-          id: '92aff6ca-17d2-40db-bbcb-44bead71f964',
+          id: 'b965b951-16ca-4981-a84f-cfd16d2294c1',
         },
         {
-          id: '58d6bbc1-3fce-4f27-b948-14474b8eb3a8',
+          id: 'fd8f8bcf-3fdf-4dd1-a00f-426235be8e1c',
         },
         {
-          id: '027acdb9-8b99-4c45-8041-31a3c0f8d569',
+          id: '763075de-f40a-40fc-b50b-965e5abbd5a7',
         },
       ],
       relations: ['owner'],

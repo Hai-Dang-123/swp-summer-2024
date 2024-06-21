@@ -19,6 +19,17 @@ export class OrderItemService {
     });
   }
 
+  async findByOrder(orderId: string): Promise<any | null> {
+    return this.orderItemRepository.find({
+      relations: ['order', 'order.user', 'product'],
+      where: {
+        order: {
+          id: orderId,
+        },
+      },
+    });
+  }
+
   async createOrderItem(orderItem: any): Promise<any> {
     return this.orderItemRepository.save(orderItem);
   }
