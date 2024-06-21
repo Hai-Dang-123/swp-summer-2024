@@ -26,6 +26,14 @@ export class ProductEntity extends BaseEntity {
   name: string;
 
   @Column({
+    name: 'brand',
+    type: 'varchar',
+    nullable: false,
+    default: '',
+  })
+  brand: string;
+
+  @Column({
     name: 'description',
     type: 'text',
     nullable: false,
@@ -136,5 +144,5 @@ export class ProductEntity extends BaseEntity {
     enum: ProductStatus,
     default: ProductStatus.IN_APPRAISAL,
   })
-  status: ProductStatus;
+  status: string;
 }

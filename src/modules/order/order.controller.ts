@@ -1,32 +1,47 @@
 import { Controller, Get, Param, Render, Post, Body } from '@nestjs/common';
 import { OrderService } from './order.service';
-// import { AuthGuard } from '@nestjs/passport';
-import { OrderEntity } from 'src/entities/order.entity';
 import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 
+export enum OrderStatus {
+  PENDING = 'PENDING',
+  IN_DELIVERY = 'IN DELIVERY',
+  COMPLETED = 'COMPLETED',
+  CANCELED = 'CANCELED',
+  REFUNDED = 'REFUNDED',
+}
 
-@Controller('orders')
+@Controller('order')
 export class OrderController {
-    constructor(private readonly orderService: OrderService) {}
+  constructor(private readonly orderService: OrderService) {}
 
-    @Get('/history/:userId')
-    getOrderHistory(@Param('userId') userId: string) {
-        return this.orderService.getOrderHistory(userId);
-    }
-//   @Get(':id') 
-//   findProduct(@Param('id') id: string) {
-//     return this.productService.findOne(id);
-//   }
+  @Get()
+  findAll() {
+    return this.orderService.findAll();
+  }
 
-    @Get('all')
-    async getAllOrders() {
-    return await this.orderService.getAllOrders();
-    }
-
-    @Get(':id')
-     getOrderById(@Param('id') id: string) {
-        return this.orderService.getOrderById(id);
-    }
-
-
+  @Post()
+  createOrder(
+    @Body()
+    order: {
+      user: UUID;
+      code: string;
+      total: number;
+      contact: {
+        email: string;
+        phone: string;
+      };
+      purchaseMethod: string;
+      address: string;
+      voucher: UUID;
+      paidStatus: boolean;
+      status: OrderStatus;
+    },
+  ) {
+    const result = this.orderService.createOrder(order);
+    return result
+      ? result
+      : {
+          message: 'Failed to create new order',
+        };
+  }
 }

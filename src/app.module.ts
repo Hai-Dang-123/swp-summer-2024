@@ -11,6 +11,8 @@ import { ProvinceModule } from './modules/province/province.module';
 import { ContactModule } from './modules/contact/contact.module';
 import { ContactService } from './modules/contact/contact.service';
 import { ContactController } from './modules/contact/contact.controller';
+import { OrderModule } from './modules/order/order.module';
+import { OrderItemModule } from './modules/orderItem/orderItem.module';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { ContactController } from './modules/contact/contact.controller';
     ProductModule,
     ProvinceModule,
     ContactModule,
+    OrderModule,
+    OrderItemModule,
   ],
   providers: [ContactService],
   controllers: [ContactController],

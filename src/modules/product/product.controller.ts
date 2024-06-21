@@ -1,7 +1,14 @@
-import { Controller, Get, Param, Render, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Render,
+  Post,
+  Body,
+  Patch,
+} from '@nestjs/common';
 import { ProductService } from './product.service';
 import { UUID } from 'typeorm/driver/mongodb/bson.typings';
-
 
 export enum ProductStatus {
   IN_APPRAISAL = 'IN APPRAISAL',
@@ -11,11 +18,16 @@ export enum ProductStatus {
 }
 @Controller('product')
 export class ProductController {
-  constructor(private readonly productService: ProductService) { }
+  constructor(private readonly productService: ProductService) {}
 
   @Get('')
   findAll() {
     return this.productService.findAll();
+  }
+
+  @Get('available')
+  findAllAvailable() {
+    return this.productService.findAllAvailable();
   }
 
   @Get('latest')
@@ -23,23 +35,29 @@ export class ProductController {
     return this.productService.findLatest();
   }
 
-  @Get('cart')
-  @Render('cart/cart')
-  getCart() {
-    return;
+  @Get('featured')
+  getFeaturedList() {
+    return this.productService.getFeaturedList();
   }
 
-  //chưa đổi 
-  // @Get('buy')
-  // //  @Render('buy/buy')
-  // getBuy() { }
-
-  // trung thêm trang buy 
   @Get('buy')
   // @Render('buy/buy')
   async getBuy() {
     const products = await this.productService.findAll();
     return { products };
+  }
+
+  @Get('withRelated/:id')
+  //56c06978-b984-44f9-aff6-ee03a0da0787
+  findWithRelatedProducts(@Param('id') id: string) {
+    return this.productService.findOneWithRelated(id);
+  }
+
+
+  @Get('withRelated/:id')
+  //56c06978-b984-44f9-aff6-ee03a0da0787
+  findWithRelatedProducts(@Param('id') id: string) {
+    return this.productService.findOneWithRelated(id);
   }
 
   @Get('related/:id')
@@ -52,7 +70,6 @@ export class ProductController {
   findProduct(@Param('id') id: string) {
     return this.productService.findOne(id);
   }
-
 
   @Post()
   async createProduct(
@@ -83,5 +100,37 @@ export class ProductController {
     } else {
       return { message: 'Failed to create new product' };
     }
+  }
+
+  @Patch(':id')
+  updateProduct(
+    @Param('id') id: string,
+    @Body()
+    update: {
+      owner: UUID;
+      name: string;
+      brand: string;
+      price: number;
+      description: string;
+      type: string;
+      image: string;
+      dialColor: string;
+      box: boolean;
+      papers: boolean;
+      waterResistance: number;
+      caseMaterial: string;
+      caseSize: number;
+      pastUsageTime: string;
+      yearOfProduction: string;
+      remainingInsurance: string;
+      status: ProductStatus;
+    },
+  ) {
+    const result = this.productService.updateProduct(id, update);
+    return result
+      ? result
+      : {
+          message: 'Failed to update product ',
+        };
   }
 }

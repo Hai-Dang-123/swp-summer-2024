@@ -1,8 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindManyOptions, Repository } from 'typeorm';
 import { OrderEntity } from 'src/entities/order.entity';
-import { AccountEntity } from 'src/entities/account.entity';
+import { FindManyOptions, Not, Repository } from 'typeorm';
 
 @Injectable()
 export class OrderService {
@@ -10,25 +9,17 @@ export class OrderService {
     @InjectRepository(OrderEntity)
     private orderRepository: Repository<OrderEntity>,
   ) {}
-
-
-//   async getOrderById(id: string): Promise<OrderEntity | undefined> {
-    async getOrderById(id: string): Promise<OrderEntity | undefined> {
-    return await this.orderRepository.findOne({
-        where: { id }});
+  async findAll(): Promise<OrderEntity[]> {
+    return this.orderRepository.find();
   }
 
-
-  async getOrderHistory(userId: string): Promise<OrderEntity[]> {
-    return await this.orderRepository.find({
-      where: { user: userId },
-      relations: ['user', 'voucher'], // Thay 'user' bằng tên relation giữa OrderEntity và AccountEntity trong entity definition
+  async findOne(id: string): Promise<any | null> {
+    return this.orderRepository.findOne({
+      where: { id },
     });
   }
 
-  async getAllOrders(): Promise<OrderEntity[]> {
-    return await this.orderRepository.find({
-      relations: ['user'], // Thay 'user' bằng tên relation giữa OrderEntity và AccountEntity trong entity definition
-    });
+  async createOrder(order: any): Promise<any> {
+    return this.orderRepository.save(order);
   }
 }

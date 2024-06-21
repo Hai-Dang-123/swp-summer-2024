@@ -146,12 +146,13 @@ export class AuthService {
         'email',
         'phone',
         'role',
+        'avatar',
       ],
     });
   }
 
   async getAccountByEmail(email: string): Promise<any> {
-    const found = this.repositoryAccount.findOne({
+    const found = await this.repositoryAccount.findOne({
       where: { email: email },
       select: [
         'id',
@@ -162,11 +163,11 @@ export class AuthService {
         'email',
         'phone',
         'role',
+        'avatar',
       ],
     });
-    return found
-      ? found
-      : new HttpException('Account not found', HttpStatus.NOT_FOUND);
+    if (found) return found;
+    else throw new HttpException('Account not found', HttpStatus.NOT_FOUND);
   }
 
   async softDeleteAccount(id: string): Promise<any> {
