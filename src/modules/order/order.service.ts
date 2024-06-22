@@ -27,6 +27,9 @@ export class OrderService {
           id: userId,
         },
       },
+      order: {
+        createdAt: -1
+      }
     });
   }
 
