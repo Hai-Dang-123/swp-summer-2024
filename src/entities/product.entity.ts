@@ -48,6 +48,13 @@ export class ProductEntity extends BaseEntity {
   image: string;
 
   @Column({
+    type: 'simple-array',
+    nullable: true,
+    name: 'imageSet',
+  })
+  imageSet: string[];
+
+  @Column({
     name: 'price',
     type: 'decimal',
     precision: 10,
@@ -116,27 +123,24 @@ export class ProductEntity extends BaseEntity {
 
   @Column({
     name: 'pastUsageTime',
-    type: 'varchar',
-    length: 20,
+    type: 'int',
     nullable: true,
   })
-  pastUsageTime: string;
+  pastUsageTime: number;
 
   @Column({
     name: 'yearOfProduction',
-    type: 'varchar',
-    length: 4,
+    type: 'int',
     nullable: true,
   })
-  yearOfProduction: string;
+  yearOfProduction: number;
 
   @Column({
     name: 'remainingInsurance',
-    type: 'varchar',
-    length: 20,
+    type: 'int',
     nullable: true,
   })
-  remainingInsurance: string;
+  remainingInsurance: number;
 
   @Column({
     name: 'status',
