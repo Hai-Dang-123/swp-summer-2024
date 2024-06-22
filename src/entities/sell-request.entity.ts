@@ -21,4 +21,6 @@ export class SellRequest {
   role: string;
 
   // Các trường dữ liệu khác của SellRequest (nếu có)
+
+  //thiếu id user
 }

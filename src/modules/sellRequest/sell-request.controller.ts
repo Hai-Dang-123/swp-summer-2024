@@ -8,15 +8,15 @@ import { StaffGuard } from '../auth/guards/staff.guard';
 
 @Controller('sell-request')
 export class SellRequestController {
-  constructor(private readonly sellRequestService: SellRequestService) {}
+  constructor(private readonly sellRequestService: SellRequestService) { }
 
   @Post('create')
-  // @UseGuards(UserGuard) // Apply user guard here
+  // @UseGuards(UserGuard) // Apply user guard 
   async createSellRequest(@Req() request: Request, @Res() response: Response, @Body() createSellRequestDto: CreateSellRequestDto) {
-    
-    
+
+
     const sellRequest = await this.sellRequestService.createSellRequest(createSellRequestDto);
-    
+
     return response.status(201).json(sellRequest);
   }
 
@@ -35,11 +35,11 @@ export class SellRequestController {
       console.error('Error:', error);
       res.status(500).json({ message: 'Internal server error' });
     }
-  
+
   }
 
   @Get(':id')
-  // @UseGuards(StaffGuard) // Apply staff guard here
+  // @UseGuards(StaffGuard) // Apply staff guard 
   async getSellRequestById(@Req() request: Request, @Res() response: Response, @Param('id') id: number) {
     const sellRequest = await this.sellRequestService.getSellRequestById(id);
     if (sellRequest) {
@@ -49,14 +49,14 @@ export class SellRequestController {
     }
   }
   @Put(':id')
-async updateSellRequest(@Param('id') id: number, @Body() updatedSellRequestDto: CreateSellRequestDto) {
-    // Thực hiện việc cập nhật sell request với updatedSellRequestDto
+  async updateSellRequest(@Param('id') id: number, @Body() updatedSellRequestDto: CreateSellRequestDto) {
+
     try {
-        const updatedSellRequest = await this.sellRequestService.updateSellRequest(id, updatedSellRequestDto);
-        return { message: 'Sell request updated successfully', sellRequest: updatedSellRequest };
+      const updatedSellRequest = await this.sellRequestService.updateSellRequest(id, updatedSellRequestDto);
+      return { message: 'Sell request updated successfully', sellRequest: updatedSellRequest };
     } catch (error) {
-        throw new InternalServerErrorException('Failed to update sell request');
+      throw new InternalServerErrorException('Failed to update sell request');
     }
-}
+  }
 
 }
