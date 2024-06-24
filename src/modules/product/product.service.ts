@@ -19,6 +19,7 @@ export class ProductService {
       where: {
         status: 'AVAILABLE',
       },
+      relations: ['owner'],
     });
   }
 
