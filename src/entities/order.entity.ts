@@ -1,22 +1,21 @@
 import { BaseEntity } from 'src/common/base/entity.base';
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
-import { OrderItemEntity } from './order-item.entity';
 import { VoucherEntity } from './voucher.entity';
 import { AccountEntity } from './account.entity';
+import { OrderItemEntity } from './order-item.entity';
 
 export enum OrderStatus {
   PENDING = 'PENDING',
   IN_DELIVERY = 'IN DELIVERY',
   COMPLETED = 'COMPLETED',
   CANCELED = 'CANCELED',
-  REFUNDED = 'REFUNDED',
 }
 @Entity({
   name: 'ORDER',
 })
 export class OrderEntity extends BaseEntity {
-  @ManyToOne(() => AccountEntity, (account) => account.id)
-  user: string;
+  @ManyToOne(() => AccountEntity, (account) => account.orders)
+  user: AccountEntity;
 
   @Column({
     name: 'code',
@@ -77,7 +76,7 @@ export class OrderEntity extends BaseEntity {
     enum: OrderStatus,
     default: OrderStatus.PENDING,
   })
-  status: OrderStatus;
+  status: string;
 
   @Column({
     name: 'note',
@@ -85,4 +84,7 @@ export class OrderEntity extends BaseEntity {
     nullable: true,
   })
   note: string;
+
+  @OneToMany(() => OrderItemEntity, (orderItem) => orderItem.order)
+  orderItems: OrderItemEntity[];
 }
