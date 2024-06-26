@@ -1,5 +1,5 @@
 import { BaseEntity } from 'src/common/base/entity.base';
-import { Column, Entity, ManyToOne, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
 import { OrderEntity } from './order.entity';
 import { ProductEntity } from './product.entity';
 
@@ -7,12 +7,13 @@ import { ProductEntity } from './product.entity';
   name: 'ORDER_ITEM',
 })
 export class OrderItemEntity extends BaseEntity {
-  @ManyToOne(() => OrderEntity, (order) => order.id)
-  order: string;
+  @ManyToOne(() => OrderEntity, (order) => order.orderItems)
+  order: OrderEntity;
 
-  @OneToOne(() => ProductEntity, (product) => product.id)
-  product: string;
-  
+  @OneToOne(() => ProductEntity)
+  @JoinColumn()
+  product: ProductEntity;
+
   @Column({
     name: 'price',
     type: 'float',

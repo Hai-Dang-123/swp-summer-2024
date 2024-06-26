@@ -1,7 +1,7 @@
 import { BaseEntity } from 'src/common/base/entity.base';
-import { Column, Entity, ManyToOne, OneToMany, Unique } from 'typeorm';
-import { CategoryEntity } from './category.entity';
+import { Column, Entity, ManyToOne, OneToOne, Unique } from 'typeorm';
 import { AccountEntity } from './account.entity';
+import { OrderItemEntity } from './order-item.entity';
 
 export enum ProductStatus {
   IN_APPRAISAL = 'IN APPRAISAL',
@@ -14,8 +14,8 @@ export enum ProductStatus {
   name: 'PRODUCT',
 })
 export class ProductEntity extends BaseEntity {
-  @ManyToOne(() => AccountEntity, (account) => account.id)
-  owner: string;
+  @ManyToOne(() => AccountEntity, (account) => account.products)
+  owner: AccountEntity;
 
   @Column({
     name: 'name',
@@ -46,6 +46,13 @@ export class ProductEntity extends BaseEntity {
     name: 'image',
   })
   image: string;
+
+  @Column({
+    type: 'simple-array',
+    nullable: true,
+    name: 'imageSet',
+  })
+  imageSet: string[];
 
   @Column({
     name: 'price',
@@ -100,8 +107,8 @@ export class ProductEntity extends BaseEntity {
   @Column({
     name: 'caseMaterial',
     type: 'varchar',
-    length: 20,
     nullable: false,
+    default: 'Steel',
   })
   caseMaterial: string;
 
@@ -116,27 +123,24 @@ export class ProductEntity extends BaseEntity {
 
   @Column({
     name: 'pastUsageTime',
-    type: 'varchar',
-    length: 20,
+    type: 'int',
     nullable: true,
   })
-  pastUsageTime: string;
+  pastUsageTime: number;
 
   @Column({
     name: 'yearOfProduction',
-    type: 'varchar',
-    length: 4,
+    type: 'int',
     nullable: true,
   })
-  yearOfProduction: string;
+  yearOfProduction: number;
 
   @Column({
     name: 'remainingInsurance',
-    type: 'varchar',
-    length: 20,
+    type: 'int',
     nullable: true,
   })
-  remainingInsurance: string;
+  remainingInsurance: number;
 
   @Column({
     name: 'status',
@@ -145,4 +149,7 @@ export class ProductEntity extends BaseEntity {
     default: ProductStatus.IN_APPRAISAL,
   })
   status: string;
+
+  @OneToOne(() => OrderItemEntity, (orderItem) => orderItem.product)
+  orderItem: OrderItemEntity;
 }
