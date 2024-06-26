@@ -1,7 +1,9 @@
 import { BaseEntity } from 'src/common/base/entity.base';
-import { Column, Entity, OneToMany, Unique } from 'typeorm';
+import { Column, Entity, ManyToMany, OneToMany, Unique } from 'typeorm';
 import { ProductEntity } from './product.entity';
 import { OrderEntity } from './order.entity';
+import { MessageEntity } from './message.entity';
+import { ChatRoomEntity } from './chatRoom.entity';
 
 export enum Role {
   admin = 'admin',
@@ -69,4 +71,13 @@ export class AccountEntity extends BaseEntity {
 
   @OneToMany(() => OrderEntity, (order) => order.user)
   orders: OrderEntity[];
+
+  @OneToMany(() => MessageEntity, (message) => message.sender)
+  sentMessages: MessageEntity[];
+
+  @OneToMany(() => MessageEntity, (message) => message.recipient)
+  receivedMessages: MessageEntity[];
+
+  @OneToMany(() => ChatRoomEntity, (chatRoom) => chatRoom.participant)
+  chatRooms: ChatRoomEntity[];
 }

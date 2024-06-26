@@ -37,6 +37,10 @@ export class ProductService {
           id: userId,
         },
       },
+      relations: ['owner'],
+      order: {
+        createdAt: -1,
+      },
     });
   }
 

@@ -15,7 +15,8 @@ import { OrderModule } from './modules/order/order.module';
 import { OrderItemModule } from './modules/orderItem/orderItem.module';
 import { SellModule } from './modules/sell/sell.module';
 import { ZaloPayModule } from './modules/zalo/zalo.module';
-
+import { MessageModule } from './modules/message/message.module';
+import { ChatRoomModule } from './modules/chatRoom/chatRoom.module';
 
 @Module({
   imports: [
@@ -33,6 +34,8 @@ import { ZaloPayModule } from './modules/zalo/zalo.module';
     SellModule,
     // ImageModule,
     ZaloPayModule,
+    MessageModule,
+    ChatRoomModule,
   ],
   providers: [ContactService],
   controllers: [ContactController],

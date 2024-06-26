@@ -2,6 +2,7 @@ import { BaseEntity } from 'src/common/base/entity.base';
 import { Column, Entity, ManyToOne, OneToOne, Unique } from 'typeorm';
 import { AccountEntity } from './account.entity';
 import { OrderItemEntity } from './order-item.entity';
+import { ChatRoomEntity } from './chatRoom.entity';
 
 export enum ProductStatus {
   IN_APPRAISAL = 'IN APPRAISAL',
