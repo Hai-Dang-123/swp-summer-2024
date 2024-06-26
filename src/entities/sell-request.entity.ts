@@ -1,26 +1,77 @@
-import { Entity, PrimaryGeneratedColumn, Column, Unique } from 'typeorm';
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+
+export enum SellRequestStatus {
+  PENDING = 'pending',
+  APPROVED = 'approved',
+  REJECTED = 'rejected',
+}
 
 @Entity({
-    name: "SELL_REQUEST",
+  name: "SELL_REQUEST",
 })
-export class SellRequest {
+export class SellRequest extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column()
+  watchName: string;
 
-  @Column('json', { nullable: true })
-  watchForm: any;
+  @Column()
+  name: string;
 
-  @Column('json', { nullable: true })
-  sellForm: any;
+  @Column()
+  phoneNumber: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: false })
-  address: string;
+  @Column()
+  image: string;
 
-  @Column({ type: 'varchar', length: 50, nullable: false })
-  role: string;
+  @Column()
+  priceWantToSell: number;
 
-  // Các trường dữ liệu khác của SellRequest (nếu có)
+  @Column({ nullable: true })
+  originalBox?: string;
 
-  //thiếu id user
+  @Column({ nullable: true })
+  documents?: string;
+
+  @Column({ nullable: true })
+  limitedEdition?: string;
+
+  @Column({ nullable: true })
+  paper?: string;
+
+  // Fields from ProductEntity (if needed)
+  @Column({ nullable: true })
+  description?: string;
+
+  @Column({ nullable: true })
+  type?: string;
+
+  @Column({ nullable: true })
+  dialColor?: string;
+
+  @Column({ nullable: true })
+  waterResistance?: number;
+
+  @Column({ nullable: true })
+  caseMaterial?: string;
+
+  @Column({ nullable: true })
+  caseSize?: string;
+
+  @Column({ nullable: true })
+  pastUsageTime?: string;
+
+  @Column({ nullable: true })
+  yearOfProduction?: string;
+
+  @Column({ nullable: true })
+  remainingInsurance?: string;
+
+  @Column({
+    type: 'enum',
+    enum: SellRequestStatus,
+    default: SellRequestStatus.PENDING,
+  })
+  status: SellRequestStatus;
 }

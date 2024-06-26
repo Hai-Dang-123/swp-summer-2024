@@ -1,34 +1,42 @@
 // create-sell-request.dto.ts
+
+import { IsString, IsNumber, IsOptional, IsEnum } from 'class-validator';
+import { SellRequestStatus } from 'src/entities/sell-request.entity';
+
+
+
 export class CreateSellRequestDto {
-  address: string;
-  role: string;
-  sellForm: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    telephone: string;
-    initialOffer: number;
-    hasOriginalBox: boolean;
-    hasOriginalPapers: boolean;
-    hasFactoryStickers: boolean;
-    isLimitedEdition: boolean;
-    minimumServicingFee: number;
-    total: number;
-  };
-  watchForm: {
-    name: string;
-    image: string;
-    description: string;
-    modelNumber: string;
-    serialNumber: string;
-    type: string;
-    caseMaterial: string;
-    braceletMaterial: string;
-    caseColor: string;
-    dialColor: string;
-    caseSize: string;
-    yearOfManufacture: string;
-    limitedEdition: boolean;
-    marketValue: number;
-  };
+  @IsString()
+  watchName: string;
+
+  @IsString()
+  name: string;
+
+  @IsString()
+  phoneNumber: string;
+
+  @IsOptional()
+  @IsString()
+  documents?: string;
+
+  @IsString()
+  image: string;
+
+  @IsNumber()
+  priceWantToSell: number;
+
+  @IsOptional()
+  @IsString()
+  originalBox?: string;
+
+  @IsOptional()
+  @IsString()
+  paper?: string;
+
+  @IsOptional()
+  @IsString()
+  limitedEdition?: string;
+
+  @IsEnum(SellRequestStatus)
+  status: SellRequestStatus; // Trạng thái của yêu cầu bán hàng
 }

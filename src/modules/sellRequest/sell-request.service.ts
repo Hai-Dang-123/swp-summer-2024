@@ -1,7 +1,8 @@
-import { Injectable, HttpException, HttpStatus, Inject, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateSellRequestDto } from './create-sell-request.dto';
+import { SellRequestStatus } from 'src/entities/sell-request.entity';
 import { SellRequest } from 'src/entities/sell-request.entity';
 
 @Injectable()
@@ -12,21 +13,33 @@ export class SellRequestService {
   ) {}
 
   async createSellRequest(createSellRequestDto: CreateSellRequestDto): Promise<SellRequest> {
-    // Create sell request
-    const sellRequest = new SellRequest();
-    sellRequest.role = createSellRequestDto.role;
-    sellRequest.address = createSellRequestDto.address;
-    sellRequest.sellForm = createSellRequestDto.sellForm;
-    sellRequest.watchForm = createSellRequestDto.watchForm;
+    const { watchName, name, phoneNumber, image, documents, priceWantToSell, originalBox, paper, limitedEdition, status } = createSellRequestDto;
 
-    // Save sell request
-    return await this.sellRequestRepository.save(sellRequest);
+    const sellRequest = this.sellRequestRepository.create({
+      watchName,
+      name,
+      phoneNumber,
+      image,
+      documents,
+      priceWantToSell,
+      originalBox,
+      paper,
+      limitedEdition,
+      status: status || SellRequestStatus.PENDING,
+    } as Partial<SellRequest>); // Explicitly cast to Partial<SellRequest>
+
+    try {
+      return await this.sellRequestRepository.save(sellRequest);
+    } catch (error) {
+      console.error('Error saving sell request:', error);
+      throw new InternalServerErrorException('Failed to create sell request');
+    }
   }
 
-  async getAllSellRequestsByRole(role: string): Promise<SellRequest[]> {
+  async getAllSellRequests(): Promise<SellRequest[]> {
     try {
-      const sellRequests = await this.sellRequestRepository.find({ where: { role } });
-      
+      const sellRequests = await this.sellRequestRepository.find();
+
       if (!sellRequests || sellRequests.length === 0) {
         throw new NotFoundException('Sell requests not found');
       }
@@ -39,31 +52,42 @@ export class SellRequestService {
   }
 
   async getSellRequestById(id: number): Promise<SellRequest> {
-    // Get sell request by id
-    return await this.sellRequestRepository.findOne({ where: { id } });
-  }
-  async updateSellRequest(id: number, updatedSellRequestDto: CreateSellRequestDto): Promise<SellRequest> {
-    // Xử lý logic cập nhật dựa trên id và updatedSellRequestDto
-    const sellRequest = await this.sellRequestRepository.findOne({where: { id}});
+    const sellRequest = await this.sellRequestRepository.findOne({ where: { id } });
+
     if (!sellRequest) {
-        throw new NotFoundException('Sell request not found');
+      throw new NotFoundException('Sell request not found');
     }
-
-    // Áp dụng các thay đổi từ updatedSellRequestDto vào sellRequest
-    if (updatedSellRequestDto.sellForm) {
-        sellRequest.sellForm = { ...sellRequest.sellForm, ...updatedSellRequestDto.sellForm };
-    }
-    if (updatedSellRequestDto.watchForm) {
-        sellRequest.watchForm = { ...sellRequest.watchForm, ...updatedSellRequestDto.watchForm };
-    }
-    if (updatedSellRequestDto.address) {
-        sellRequest.address = updatedSellRequestDto.address;
-    }
-
-    // Lưu sellRequest đã được cập nhật
-    await this.sellRequestRepository.save(sellRequest);
 
     return sellRequest;
-}
+  }
 
+  async updateSellRequest(id: number, updatedSellRequestDto: CreateSellRequestDto): Promise<SellRequest> {
+    const sellRequest = await this.sellRequestRepository.findOne({ where: { id } });
+
+    if (!sellRequest) {
+      throw new NotFoundException('Sell request not found');
+    }
+
+    // Update fields from updatedSellRequestDto, including nullable fields
+    const { watchName, name, phoneNumber, image, documents, priceWantToSell, originalBox, paper, limitedEdition, status } = updatedSellRequestDto;
+
+    sellRequest.watchName = watchName !== undefined ? watchName : sellRequest.watchName;
+    sellRequest.name = name !== undefined ? name : sellRequest.name;
+    sellRequest.phoneNumber = phoneNumber !== undefined ? phoneNumber : sellRequest.phoneNumber;
+    sellRequest.image = image !== undefined ? image : sellRequest.image;
+    sellRequest.documents = documents !== undefined ? documents : sellRequest.documents;
+    sellRequest.priceWantToSell = priceWantToSell !== undefined ? priceWantToSell : sellRequest.priceWantToSell;
+    sellRequest.originalBox = originalBox !== undefined ? originalBox : sellRequest.originalBox;
+    sellRequest.paper = paper !== undefined ? paper : sellRequest.paper;
+    sellRequest.limitedEdition = limitedEdition !== undefined ? limitedEdition : sellRequest.limitedEdition;
+    sellRequest.status = status !== undefined ? status : sellRequest.status || SellRequestStatus.PENDING;
+
+    try {
+      await this.sellRequestRepository.save(sellRequest);
+      return sellRequest;
+    } catch (error) {
+      console.error('Error updating sell request:', error);
+      throw new InternalServerErrorException('Failed to update sell request');
+    }
+  }
 }
