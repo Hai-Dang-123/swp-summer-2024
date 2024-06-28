@@ -2,20 +2,22 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from 'src/entities/product.entity';
 import { FindManyOptions, Not, Repository } from 'typeorm';
+import { ProductStatus } from './product.controller';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectRepository(ProductEntity)
     private productRepository: Repository<ProductEntity>,
-  ) {}
+  ) { }
+
+
 
   async findAll(): Promise<ProductEntity[]> {
     return await this.productRepository.find({
       relations: ['owner'],
     });
   }
-
   async findAllAvailable(): Promise<ProductEntity[]> {
     return await this.productRepository.find({
       where: {
@@ -59,7 +61,7 @@ export class ProductService {
 
   async findOneWithRelated(id: string): Promise<any> {
     const product = await this.productRepository.findOne({
-      where: { id },
+      where: { id, status: ProductStatus.AVAILABLE },
       relations: ['owner'],
     });
 
