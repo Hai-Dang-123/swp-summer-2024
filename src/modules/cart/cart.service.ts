@@ -1,42 +1,44 @@
 import { Injectable } from '@nestjs/common';
-import { Request, Response } from 'express';
-import { getCartFromCookie, saveCartToCookie, convertCartToString } from './utils';
+import { Cart, CartItem } from 'src/entities/cart.entity';
+
 
 @Injectable()
 export class CartService {
-  getCart(req: Request) {
-    const cart = getCartFromCookie(req);
-    return cart || [];
-  }
+  private carts: Map<string, Cart> = new Map();
 
-  addToCart(item: any, req: Request, res: Response) {
-    let cart = getCartFromCookie(req);
-    cart = cart || [];
-    cart.push(item);
-    saveCartToCookie(cart, res);
-    return cart;
-  }
-
-  removeFromCart(id: string, req: Request, res: Response) {
-    let cart = getCartFromCookie(req);
-    cart = cart.filter(item => item.id !== id);
-    saveCartToCookie(cart, res);
-    return cart;
-  }
-
-  updateCartItem(id: string, item: any, req: Request, res: Response) {
-    let cart = getCartFromCookie(req);
-    const index = cart.findIndex(i => i.id === id);
-    if (index !== -1) {
-      cart[index] = item;
+  async addToCart(userId: string, productId: string, quantity: number): Promise<void> {
+    let cart = this.carts.get(userId);
+    if (!cart) {
+      cart = { userId, items: [] };
+      this.carts.set(userId, cart);
     }
-    saveCartToCookie(cart, res);
-    return cart;
+
+    const existingItem = cart.items.find(item => item.productId === productId);
+    if (existingItem) {
+      existingItem.quantity += quantity;
+    } else {
+      const newItem: CartItem = { productId, quantity };
+      cart.items.push(newItem);
+    }
   }
 
-  saveCart(req: Request, res: Response) {
-    const cart = getCartFromCookie(req);
-    saveCartToCookie(cart, res);
-    return cart;
+  async getCart(userId: string): Promise<Cart> {
+    return this.carts.get(userId) || { userId, items: [] };
+  }
+
+  async removeFromCart(userId: string, productId: string): Promise<void> {
+    const cart = this.carts.get(userId);
+    if (cart) {
+      cart.items = cart.items.filter(item => item.productId !== productId);
+    }
+  }
+  async updateQuantity(userId: string, productId: string, quantity: number): Promise<void> {
+    const cart = this.carts.get(userId);
+    if (cart) {
+      const existingItem = cart.items.find(item => item.productId === productId);
+      if (existingItem) {
+        existingItem.quantity = quantity;
+      }
+    }
   }
 }

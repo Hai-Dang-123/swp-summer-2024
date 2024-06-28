@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Put, Body, Param, Req, Res } from '@nestjs/common';
+import { Controller, Post, Get, Param, Req, Res, Body } from '@nestjs/common';
 import { CartService } from './cart.service';
 import { Request, Response } from 'express';
 
@@ -6,28 +6,48 @@ import { Request, Response } from 'express';
 export class CartController {
   constructor(private readonly cartService: CartService) {}
 
-  @Get()
-  viewCart(@Req() req: Request) {
-    return this.cartService.getCart(req);
+  @Post('add-to-cart/:productId')
+  async addToCart(@Req() request: Request, @Res() response: Response, @Param('productId') productId: string, @Body() body: { quantity: number }) {
+    const user = request['user'];
+    const quantity = parseInt(body.quantity.toString(), 10);
+
+    if (user) {
+      await this.cartService.addToCart(user.id, productId, quantity);
+      return response.redirect(`/viewDetailProduct/${productId}?message=Successful`);
+    } else {
+      response.status(401).send('Unauthorized');
+    }
   }
 
-  @Post('add')
-  addToCart(@Body() item: any, @Req() req: Request, @Res() res: Response) {
-    return this.cartService.addToCart(item, req, res);
+  @Get('viewCart')
+  async viewCart(@Req() request: Request, @Res() response: Response) {
+    const user = request['user'];
+    if (user) {
+      const cart = await this.cartService.getCart(user.id);
+      response.render('viewCart', { cart });
+    } else {
+      response.status(401).send('Unauthorized');
+    }
   }
 
-  @Delete('remove/:id')
-  removeFromCart(@Param('id') id: string, @Req() req: Request, @Res() res: Response) {
-    return this.cartService.removeFromCart(id, req, res);
+  @Post('remove-from-cart/:productId')
+  async removeFromCart(@Req() request: Request, @Res() response: Response, @Param('productId') productId: string) {
+    const user = request['user'];
+    if (user) {
+      await this.cartService.removeFromCart(user.id, productId);
+      response.redirect('/cart');
+    } else {
+      response.status(401).send('Unauthorized');
+    }
   }
-
-  @Put('update/:id')
-  updateCartItem(@Param('id') id: string, @Body() item: any, @Req() req: Request, @Res() res: Response) {
-    return this.cartService.updateCartItem(id, item, req, res);
-  }
-
-  @Post('save')
-  saveCart(@Req() req: Request, @Res() res: Response) {
-    return this.cartService.saveCart(req, res);
+  @Post('update-quantity/:productId')
+  async updateQuantity(@Req() request: Request, @Res() response: Response, @Param('productId') productId: string, @Body() body: { quantity: number }) {
+    const user = request['user'];
+    if (user) {
+      await this.cartService.updateQuantity(user.id, productId, body.quantity);
+      response.status(200).send();
+    } else {
+      response.status(401).send('Unauthorized');
+    }
   }
 }
