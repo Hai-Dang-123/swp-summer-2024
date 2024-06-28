@@ -14,13 +14,12 @@ export class ProductService {
 
 
   async findAll(): Promise<ProductEntity[]> {
-    return this.productRepository.find({
-      where: { status: ProductStatus.AVAILABLE },
-      relations: ['owner'], // Lấy thông tin chủ sở hữu
+    return await this.productRepository.find({
+      relations: ['owner'],
     });
   }
   async findAllAvailable(): Promise<ProductEntity[]> {
-    return this.productRepository.find({
+    return await this.productRepository.find({
       where: {
         status: 'AVAILABLE',
       },
@@ -28,8 +27,19 @@ export class ProductService {
     });
   }
 
+  async getSearchList(key: string): Promise<ProductEntity[]> {
+    const searched = await this.productRepository
+      .createQueryBuilder('product')
+      .leftJoinAndSelect('product.owner', 'account')
+      .where('product.name ILIKE :key OR product.brand ILIKE :key', {
+        key: `%${key}%`,
+      })
+      .getMany();
+    return searched.filter((item) => item.status === 'AVAILABLE');
+  }
+
   async findOne(id: string): Promise<any | null> {
-    return this.productRepository.findOne({
+    return await this.productRepository.findOne({
       where: { id },
       relations: ['owner'],
     });
@@ -41,6 +51,10 @@ export class ProductService {
         owner: {
           id: userId,
         },
+      },
+      relations: ['owner'],
+      order: {
+        createdAt: -1,
       },
     });
   }
@@ -88,6 +102,7 @@ export class ProductService {
           status: 'AVAILABLE',
         },
       ],
+      relations: ['owner'],
       take: 10,
     });
   }

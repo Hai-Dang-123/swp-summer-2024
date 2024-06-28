@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Get,
-  Param,
-  Post,
-  Body,
-  Patch,
-} from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Patch } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 
@@ -44,6 +37,11 @@ export class ProductController {
   async getBuy() {
     const products = await this.productService.findAll();
     return { products };
+  }
+
+  @Get('/search/:key')
+  getSearchList(@Param('key') key: string) {
+    return this.productService.getSearchList(key);
   }
 
   @Get('user/:id')
