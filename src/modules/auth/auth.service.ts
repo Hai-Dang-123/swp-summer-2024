@@ -148,6 +148,7 @@ export class AuthService {
         'phone',
         'role',
         'avatar',
+        'lastActive',
       ],
     });
   }
@@ -165,10 +166,21 @@ export class AuthService {
         'phone',
         'role',
         'avatar',
+        'lastActive',
       ],
     });
     if (found) return found;
     else throw new HttpException('Account not found', HttpStatus.NOT_FOUND);
+  }
+
+  async updateActiveStatus(id: string): Promise<any> {
+    const update = await this.repositoryAccount.update(id, {
+      lastActive: new Date(Date.now()),
+    });
+    return {
+      message: 'Updated active status successfully.',
+      metadata: update,
+    };
   }
 
   async softDeleteAccount(id: string): Promise<any> {
