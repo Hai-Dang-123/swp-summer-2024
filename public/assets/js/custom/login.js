@@ -13,7 +13,7 @@ function login(){
         data: {email: email, password: password},
         success: function(response){
             if(response.status == 'success'){
-                window.location.href = '/auth/dashboard';
+                window.location.href = '/auth/home';
             }else{
                 alert(response.message);
             }
