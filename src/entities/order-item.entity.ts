@@ -1,38 +1,30 @@
-import { BaseEntity } from "src/common/base/entity.base";
-import { Column, Entity, ManyToOne } from "typeorm";
-import { OrderEntity } from "./order.entity";
-import { ProductEntity } from "./product.entity";
- 
+import { BaseEntity } from 'src/common/base/entity.base';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
+import { OrderEntity } from './order.entity';
+import { ProductEntity } from './product.entity';
+
 @Entity({
-    name: "ORDER_ITEM",
+  name: 'ORDER_ITEM',
 })
 export class OrderItemEntity extends BaseEntity {
+  @ManyToOne(() => OrderEntity, (order) => order.orderItems)
+  order: OrderEntity;
 
-    @ManyToOne(() => OrderEntity, order => order.id)
-    order: string;
+  @OneToOne(() => ProductEntity)
+  @JoinColumn()
+  product: ProductEntity;
 
-    @ManyToOne(() => ProductEntity, product => product.id)
-    product: string;
+  @Column({
+    name: 'price',
+    type: 'float',
+    nullable: false,
+  })
+  price: number;
 
-    @Column({
-        name: "name",
-        type: "varchar",
-        nullable: false,
-    })
-    name: string;
-
-    @Column({
-        name: "quantity",
-        type: "int",
-        nullable: false,
-    })
-    quantity: number;
-
-    @Column({
-        name: "price",
-        type: "float",
-        nullable: false,
-    })
-    price: number;
-
+  @Column({
+    name: 'note',
+    type: 'text',
+    nullable: true,
+  })
+  note: string;
 }

@@ -6,8 +6,15 @@ import { AuthModule } from './modules/auth/auth.module';
 import { StaffModule } from './modules/staff/staff.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { ClientModule } from './modules/client/client.module';
-import { CartModule } from './modules/cart/cart.module';
 import { ProductModule } from './modules/product/product.module';
+import { ProvinceModule } from './modules/province/province.module';
+import { ContactModule } from './modules/contact/contact.module';
+import { ContactService } from './modules/contact/contact.service';
+import { ContactController } from './modules/contact/contact.controller';
+import { OrderModule } from './modules/order/order.module';
+import { OrderItemModule } from './modules/orderItem/orderItem.module';
+import { SellModule } from './modules/sell/sell.module';
+import { ZaloPayModule } from './modules/zalo/zalo.module';
 import { SellRequestModule } from './modules/sellRequest/sell-request.module';
 
 
@@ -19,9 +26,17 @@ import { SellRequestModule } from './modules/sellRequest/sell-request.module';
     AdminModule,
     ClientModule,
     StaffModule,
-    CartModule,
     ProductModule,
+    ProvinceModule,
+    ContactModule,
+    OrderModule,
+    OrderItemModule,
+    SellModule,
+    // ImageModule,
+    ZaloPayModule,
     SellRequestModule,
   ],
+  providers: [ContactService],
+  controllers: [ContactController],
 })
 export class AppModule {}

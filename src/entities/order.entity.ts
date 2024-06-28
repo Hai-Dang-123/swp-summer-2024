@@ -1,99 +1,90 @@
-import { BaseEntity } from "src/common/base/entity.base";
-import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
-import { OrderItemEntity } from "./order-item.entity";
-import { VoucherEntity } from "./voucher.entity";
+import { BaseEntity } from 'src/common/base/entity.base';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { VoucherEntity } from './voucher.entity';
+import { AccountEntity } from './account.entity';
+import { OrderItemEntity } from './order-item.entity';
 
 export enum OrderStatus {
-    PENDING = 'PENDING',
-    PAID = 'PAID',
-    CANCELED = 'CANCELED',
-    EXPIRED = 'EXPIRED',
-    SHIPPING = 'SHIPPING',
-    COMPLETED = 'COMPLETED',
-    REFUND = 'REFUND',
-}   
+  PENDING = 'PENDING',
+  IN_DELIVERY = 'IN DELIVERY',
+  COMPLETED = 'COMPLETED',
+  CANCELED = 'CANCELED',
+}
 @Entity({
-    name: "ORDER",
+  name: 'ORDER',
 })
 export class OrderEntity extends BaseEntity {
+  @ManyToOne(() => AccountEntity, (account) => account.orders)
+  user: AccountEntity;
 
-    @Column({
-        name: "email",
-        type: "varchar",
-        length: 100,
-        nullable: false,
-    })
-    email: string;
+  @Column({
+    name: 'code',
+    type: 'varchar',
+    length: 8,
+    unique: true,
+    nullable: false,
+  })
+  code: string; //Code 8 kí tự generate bên frontend
 
-    @Column({
-        name: "phone",
-        type: "varchar",
-        length: 15,
-        nullable: false,
-    })
-    phone: string;
+  @Column({
+    name: 'total',
+    type: 'float',
+    nullable: false,
+  })
+  total: number;
 
-    @Column({
-        name: "username",
-        type: "varchar",
-        length: 100,
-        nullable: false,
-    })
-    username: string;
+  @Column({
+    name: 'contact',
+    type: 'simple-json',
+    nullable: false,
+  })
+  contact: {
+    email: '';
+    phone: '';
+  };
 
-    @Column({
-        name: "address",
-        type: "text",
-        nullable: false,
-    })
-    address: string;
+  @Column({
+    name: 'purchaseMethod',
+    type: 'varchar',
+    nullable: false,
+    default: 'offline',
+  })
+  purchaseMethod: string;
 
-    @Column({
-        name: "total",
-        type: "float",
-        nullable: false,
-    })
-    total: number;
+  @Column({
+    name: 'address',
+    type: 'varchar',
+    nullable: false,
+    default: '',
+  })
+  address: string;
 
-    @ManyToOne(() => VoucherEntity, voucher => voucher.id)
-    voucher: string;
+  @ManyToOne(() => VoucherEntity, (voucher) => voucher.id)
+  voucher: string;
 
-    @Column({
-        name: "status",
-        type: "enum",
-        enum: OrderStatus,
-        default: OrderStatus.PENDING,
-    })
-    status: OrderStatus;
+  @Column({
+    name: 'paidStatus',
+    type: 'boolean',
+    nullable: false,
+    default: false,
+  })
+  paidStatus: boolean;
 
-    @Column({
-        name: "app_trans_id",
-        type: 'varchar',
-    })
-    app_trans_id: string;
+  @Column({
+    name: 'status',
+    type: 'enum',
+    enum: OrderStatus,
+    default: OrderStatus.PENDING,
+  })
+  status: string;
 
-    @Column({
-        name: "zp_trans_id",
-        type: 'varchar',
-        nullable: true,
-    })
-    zp_trans_id: string;
+  @Column({
+    name: 'note',
+    type: 'text',
+    nullable: true,
+  })
+  note: string;
 
-    @Column({
-        name: "payment",
-        type: 'jsonb',
-        nullable: true,
-    })
-    payment: any;
-
-    @OneToMany(() => OrderItemEntity, orderItem => orderItem.order)
-    items: OrderItemEntity[];
-
-    @Column({
-        name: "note",
-        type: "text",
-        nullable: true,
-    })
-    note: string;
-
+  @OneToMany(() => OrderItemEntity, (orderItem) => orderItem.order)
+  orderItems: OrderItemEntity[];
 }

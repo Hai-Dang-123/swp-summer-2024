@@ -1,10 +1,10 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 export enum SellRequestStatus {
-  PENDING = 'pending',
-  APPROVED = 'approved',
-  REJECTED = 'rejected',
+  WITH_REPORT = 'WITH_REPORT',
+  WITHOUT_REPORT = 'WITHOUT_REPORT',
 }
+
 
 @Entity({
   name: "SELL_REQUEST",
@@ -71,7 +71,7 @@ export class SellRequest extends BaseEntity {
   @Column({
     type: 'enum',
     enum: SellRequestStatus,
-    default: SellRequestStatus.PENDING,
+    
   })
   status: SellRequestStatus;
 }

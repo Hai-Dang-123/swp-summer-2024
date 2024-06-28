@@ -38,5 +38,5 @@ export class CreateSellRequestDto {
   limitedEdition?: string;
 
   @IsEnum(SellRequestStatus)
-  status: SellRequestStatus; // Trạng thái của yêu cầu bán hàng
+  status: SellRequestStatus;
 }

@@ -2,8 +2,7 @@ import { Injectable, NotFoundException, InternalServerErrorException } from '@ne
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateSellRequestDto } from './create-sell-request.dto';
-import { SellRequestStatus } from 'src/entities/sell-request.entity';
-import { SellRequest } from 'src/entities/sell-request.entity';
+import { SellRequestStatus, SellRequest } from 'src/entities/sell-request.entity';
 
 @Injectable()
 export class SellRequestService {
@@ -25,8 +24,8 @@ export class SellRequestService {
       originalBox,
       paper,
       limitedEdition,
-      status: status || SellRequestStatus.PENDING,
-    } as Partial<SellRequest>); // Explicitly cast to Partial<SellRequest>
+      status,
+    } as Partial<SellRequest>);
 
     try {
       return await this.sellRequestRepository.save(sellRequest);
@@ -68,7 +67,6 @@ export class SellRequestService {
       throw new NotFoundException('Sell request not found');
     }
 
-    // Update fields from updatedSellRequestDto, including nullable fields
     const { watchName, name, phoneNumber, image, documents, priceWantToSell, originalBox, paper, limitedEdition, status } = updatedSellRequestDto;
 
     sellRequest.watchName = watchName !== undefined ? watchName : sellRequest.watchName;
@@ -80,7 +78,7 @@ export class SellRequestService {
     sellRequest.originalBox = originalBox !== undefined ? originalBox : sellRequest.originalBox;
     sellRequest.paper = paper !== undefined ? paper : sellRequest.paper;
     sellRequest.limitedEdition = limitedEdition !== undefined ? limitedEdition : sellRequest.limitedEdition;
-    sellRequest.status = status !== undefined ? status : sellRequest.status || SellRequestStatus.PENDING;
+    sellRequest.status = status !== undefined ? status : sellRequest.status;
 
     try {
       await this.sellRequestRepository.save(sellRequest);

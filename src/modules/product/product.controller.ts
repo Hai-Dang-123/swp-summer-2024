@@ -1,41 +1,134 @@
-// product.controller.ts
-import { Controller, Get, Param, NotFoundException, Render, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Body,
+  Patch,
+} from '@nestjs/common';
 import { ProductService } from './product.service';
-import { ProductEntity } from '../../entities/product.entity';
-import { Response } from 'express'; // Import Response để sử dụng để render view
+import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 
-@Controller('products')
+export enum ProductStatus {
+  IN_APPRAISAL = 'IN APPRAISAL',
+  AVAILABLE = 'AVAILABLE',
+  ORDERED = 'ORDERED',
+  SOLD = 'SOLD',
+}
+@Controller('product')
 export class ProductController {
-  constructor(private readonly productService: ProductService) { }
+  constructor(private readonly productService: ProductService) {}
 
-  @Get()
-  async getAllProducts(): Promise<ProductEntity[]> {
-    try {
-      return await this.productService.getAll();
-    } catch (error) {
-      console.error('Error:', error);
-      throw new NotFoundException('Error retrieving products');
+  @Get('')
+  findAll() {
+    return this.productService.findAll();
+  }
+
+  @Get('available')
+  findAllAvailable() {
+    return this.productService.findAllAvailable();
+  }
+
+  @Get('latest')
+  findLatest() {
+    return this.productService.findLatest();
+  }
+
+  @Get('featured')
+  getFeaturedList() {
+    return this.productService.getFeaturedList();
+  }
+
+  @Get('buy')
+  // @Render('buy/buy')
+  async getBuy() {
+    const products = await this.productService.findAll();
+    return { products };
+  }
+
+  @Get('user/:id')
+  // @Render('buy/buy')
+  getProductByUser(@Param('id') userId: string) {
+    return this.productService.findByUser(userId);
+  }
+
+  @Get('withRelated/:id')
+  //56c06978-b984-44f9-aff6-ee03a0da0787
+  findWithRelatedProducts(@Param('id') id: string) {
+    return this.productService.findOneWithRelated(id);
+  }
+
+  @Get('related/:id')
+  //56c06978-b984-44f9-aff6-ee03a0da0787
+  findRelatedProducts(@Param('id') id: string) {
+    return this.productService.findRelatedProducts(id);
+  }
+
+  @Get(':id') //56c06978-b984-44f9-aff6-ee03a0da0787
+  findProduct(@Param('id') id: string) {
+    return this.productService.findOne(id);
+  }
+
+  @Post()
+  async createProduct(
+    @Body()
+    product: {
+      owner: UUID;
+      name: string;
+      brand: string;
+      price: number;
+      description: string;
+      type: string;
+      image: string;
+      dialColor: string;
+      box: boolean;
+      papers: boolean;
+      waterResistance: number;
+      caseMaterial: string;
+      caseSize: number;
+      pastUsageTime: string;
+      yearOfProduction: string;
+      remainingInsurance: string;
+      status: ProductStatus;
+    },
+  ) {
+    const result = this.productService.createProduct(product);
+    if (result) {
+      return result;
+    } else {
+      return { message: 'Failed to create new product' };
     }
   }
 
-  @Get('/:id')
-  async getProductDetail(@Param('id') id: string, @Res() res: Response): Promise<void> {
-    try {
-      const product = await this.productService.getProductDetail(id);
-      if (!product) {
-        throw new NotFoundException('Product not found');
-      }
-    
-      res.render('viewDetailProduct', { product }); // Render viewDetailProduct với dữ liệu sản phẩm
-    } catch (error) {
-      console.error('Error:', error);
-      throw new Error('Failed to fetch product details');
-    }
+  @Patch(':id')
+  updateProduct(
+    @Param('id') id: string,
+    @Body()
+    update: {
+      owner: UUID;
+      name: string;
+      brand: string;
+      price: number;
+      description: string;
+      type: string;
+      image: string;
+      dialColor: string;
+      box: boolean;
+      papers: boolean;
+      waterResistance: number;
+      caseMaterial: string;
+      caseSize: number;
+      pastUsageTime: string;
+      yearOfProduction: string;
+      remainingInsurance: string;
+      status: ProductStatus;
+    },
+  ) {
+    const result = this.productService.updateProduct(id, update);
+    return result
+      ? result
+      : {
+          message: 'Failed to update product ',
+        };
   }
-
-  
-
-
-
-
 }

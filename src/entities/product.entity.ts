@@ -1,7 +1,7 @@
 import { BaseEntity } from 'src/common/base/entity.base';
-import { Column, Entity, ManyToOne, OneToMany, Unique } from 'typeorm';
-import { CategoryEntity } from './category.entity';
+import { Column, Entity, ManyToOne, OneToOne, Unique } from 'typeorm';
 import { AccountEntity } from './account.entity';
+import { OrderItemEntity } from './order-item.entity';
 
 export enum ProductStatus {
   IN_APPRAISAL = 'IN APPRAISAL',
@@ -14,7 +14,7 @@ export enum ProductStatus {
   name: 'PRODUCT',
 })
 export class ProductEntity extends BaseEntity {
-  @ManyToOne(() => AccountEntity, (account) => account.id)
+  @ManyToOne(() => AccountEntity, (account) => account.products)
   owner: AccountEntity;
 
   @Column({
@@ -25,13 +25,34 @@ export class ProductEntity extends BaseEntity {
   })
   name: string;
 
-  
+  @Column({
+    name: 'brand',
+    type: 'varchar',
+    nullable: false,
+    default: '',
+  })
+  brand: string;
+
+  @Column({
+    name: 'description',
+    type: 'text',
+    nullable: false,
+  })
+  description: string;
+
   @Column({
     type: 'varchar',
     nullable: false,
     name: 'image',
   })
   image: string;
+
+  @Column({
+    type: 'simple-array',
+    nullable: true,
+    name: 'imageSet',
+  })
+  imageSet: string[];
 
   @Column({
     name: 'price',
@@ -41,13 +62,6 @@ export class ProductEntity extends BaseEntity {
     nullable: false,
   })
   price: number;
-
-  @Column({
-    name: 'description',
-    type: 'text',
-    nullable: false,
-  })
-  description: string;
 
   @Column({
     name: 'type',
@@ -93,42 +107,40 @@ export class ProductEntity extends BaseEntity {
   @Column({
     name: 'caseMaterial',
     type: 'varchar',
-    length: 20,
     nullable: false,
+    default: 'Steel',
   })
   caseMaterial: string;
 
   @Column({
     name: 'caseSize',
-    type: 'varchar',
-    length: 20,
-    nullable: true,
+    type: 'decimal',
+    precision: 10,
+    nullable: false,
+    default: 0,
   })
-  caseSize: string;
+  caseSize: number;
 
   @Column({
     name: 'pastUsageTime',
-    type: 'varchar',
-    length: 20,
+    type: 'int',
     nullable: true,
   })
-  pastUsageTime: string;
+  pastUsageTime: number;
 
   @Column({
     name: 'yearOfProduction',
-    type: 'varchar',
-    length: 4,
+    type: 'int',
     nullable: true,
   })
-  yearOfProduction: string;
+  yearOfProduction: number;
 
   @Column({
     name: 'remainingInsurance',
-    type: 'varchar',
-    length: 20,
+    type: 'int',
     nullable: true,
   })
-  remainingInsurance: string;
+  remainingInsurance: number;
 
   @Column({
     name: 'status',
@@ -136,5 +148,8 @@ export class ProductEntity extends BaseEntity {
     enum: ProductStatus,
     default: ProductStatus.IN_APPRAISAL,
   })
-  status: ProductStatus;
+  status: string;
+
+  @OneToOne(() => OrderItemEntity, (orderItem) => orderItem.product)
+  orderItem: OrderItemEntity;
 }

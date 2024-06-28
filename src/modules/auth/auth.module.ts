@@ -9,27 +9,25 @@ import { AccountEntity } from '../../entities/account.entity';
 dotenv.config();
 
 @Module({
-    imports: [
-        JwtModule.register({
-            secret: process.env.JWT_SECRET_KEY,
-            signOptions: { expiresIn: '2h', algorithm: 'HS256' },
-        }),
-        TypeOrmModule.forFeature([AccountEntity]),
-    ],
-    controllers: [
-        AuthController,
-    ],
-    providers: [
-        {
-            provide: 'AUTH_SERVICE_TIENNT',
-            useClass: AuthService,
-        }
-    ],
-    exports: [
-        {
-            provide: 'AUTH_SERVICE_TIENNT',
-            useClass: AuthService,
-        }
-    ],
+  imports: [
+    JwtModule.register({
+      secret: process.env.JWT_SECRET_KEY,
+      signOptions: { expiresIn: '2h', algorithm: 'HS256' },
+    }),
+    TypeOrmModule.forFeature([AccountEntity]),
+  ],
+  controllers: [AuthController],
+  providers: [
+    {
+      provide: 'AUTH_SERVICE_TIENNT',
+      useClass: AuthService,
+    },
+  ],
+  exports: [
+    {
+      provide: 'AUTH_SERVICE_TIENNT',
+      useClass: AuthService,
+    },
+  ],
 })
-export class AuthModule { }
+export class AuthModule {}
