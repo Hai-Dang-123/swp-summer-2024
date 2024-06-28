@@ -1,11 +1,14 @@
-import { Controller,Get } from '@nestjs/common';
+import { Body, Controller,Post } from '@nestjs/common';
 import { ContactService } from './contact.service';
+import { ContactDto } from 'src/dto/contact.dto';
 
 @Controller('contact')
 export class ContactController {
     constructor(private readonly contactService : ContactService){}
-    @Get('report')
-    getReport(){
-        return this.contactService.getReport();
+    @Post('report')
+    async create(@Body() contactDto:ContactDto){
+        return this.contactService.create(contactDto);
     }
+
+    
 }

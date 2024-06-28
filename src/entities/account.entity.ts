@@ -61,9 +61,17 @@ export class AccountEntity extends BaseEntity {
     type: 'text',
     nullable: false,
     default:
-      'https://i.pinimg.com/736x/7e/a4/af/7ea4af7d8401d2b43ee841bfa2abe89d.jpg',
+      'https://i.pinimg.com/564x/c2/7e/b7/c27eb77c278f37d9a204bff5a661b83b.jpg',
   })
   avatar: string;
+
+  @Column({
+    name: 'Last_active',
+    type: 'timestamp',
+    nullable: true,
+    default: new Date(Date.now()),
+  })
+  lastActive: Date;
 
   @OneToMany(() => ProductEntity, (product) => product.owner)
   products: ProductEntity[];
