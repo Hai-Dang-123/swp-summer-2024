@@ -8,6 +8,7 @@ import {
   HttpStatus,
   Inject,
   Param,
+  Patch,
   Post,
   Put,
   Render,
@@ -33,6 +34,11 @@ export class AuthController {
   @Get('email/:email')
   getAccountByEmail(@Param('email') email: string) {
     return this.authService.getAccountByEmail(email);
+  }
+
+  @Patch('/active_status/:id')
+  updateActiveStatus(@Param('id') id: string) {
+    return this.authService.updateActiveStatus(id);
   }
 
   @Post('create-account')

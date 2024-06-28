@@ -27,6 +27,15 @@ export class ProductService {
     });
   }
 
+  async getBrandList(): Promise<ProductEntity[]> {
+    return await this.productRepository
+      .createQueryBuilder('product')
+      .select('brand')
+      .distinctOn(['product.brand'])
+      .orderBy('product.brand')
+      .execute();
+  }
+
   async getSearchList(key: string): Promise<ProductEntity[]> {
     const searched = await this.productRepository
       .createQueryBuilder('product')

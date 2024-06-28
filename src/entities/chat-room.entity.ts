@@ -3,6 +3,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToMany,
   OneToOne,
 } from 'typeorm';
@@ -13,7 +14,7 @@ import { ChatRoomToUserEntity } from './chat-room-to-user.entity';
   name: 'CHAT_ROOM',
 })
 export class ChatRoomEntity extends BaseEntity {
-  @OneToOne(() => ProductEntity)
+  @ManyToOne(() => ProductEntity)
   @JoinColumn()
   product: ProductEntity;
 
@@ -27,6 +28,7 @@ export class ChatRoomEntity extends BaseEntity {
     name: 'code',
     type: 'varchar',
     nullable: false,
+    unique: true,
   })
   code: string;
 }

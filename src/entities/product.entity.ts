@@ -1,7 +1,15 @@
 import { BaseEntity } from 'src/common/base/entity.base';
-import { Column, Entity, ManyToOne, OneToOne, Unique } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  Unique,
+} from 'typeorm';
 import { AccountEntity } from './account.entity';
 import { OrderItemEntity } from './order-item.entity';
+import { ChatRoomEntity } from './chat-room.entity';
 
 export enum ProductStatus {
   IN_APPRAISAL = 'IN APPRAISAL',
@@ -152,4 +160,7 @@ export class ProductEntity extends BaseEntity {
 
   @OneToOne(() => OrderItemEntity, (orderItem) => orderItem.product)
   orderItem: OrderItemEntity;
+
+  @OneToMany(() => ChatRoomEntity, (chatRoom) => chatRoom.product)
+  chatRooms: ChatRoomEntity[];
 }

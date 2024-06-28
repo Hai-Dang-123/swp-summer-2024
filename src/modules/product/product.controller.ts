@@ -32,6 +32,11 @@ export class ProductController {
     return this.productService.getFeaturedList();
   }
 
+  @Get('brand')
+  getBrandList() {
+    return this.productService.getBrandList();
+  }
+
   @Get('buy')
   // @Render('buy/buy')
   async getBuy() {
