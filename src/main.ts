@@ -3,7 +3,6 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { AppModule } from './app.module';
 import { UnauthorizedExceptionFilter } from './common/exception/unauthorized.exception';
-import connectToSocketServer from './config/socket.config';
 
 async function setupMain() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -12,8 +11,6 @@ async function setupMain() {
 
   const cors = require('cors');
   app.use(cors());
-
-  connectToSocketServer();
 
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));

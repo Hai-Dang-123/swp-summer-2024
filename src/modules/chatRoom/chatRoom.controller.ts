@@ -1,60 +1,54 @@
-import { Controller, Get, Param, Post, Body, Patch } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { ChatRoomService } from './chatRoom.service';
-import { AccountEntity } from 'src/entities/account.entity';
-import { ProductEntity } from 'src/entities/product.entity';
 import { UUID } from 'typeorm/driver/mongodb/bson.typings';
-
-@Controller('chat_room')
+@Controller('chatRoom')
 export class ChatRoomController {
   constructor(private readonly chatRoomService: ChatRoomService) {}
 
-  @Get()
-  findAll() {
-    return this.chatRoomService.findAll();
+  @Get('/chat_room_to_user')
+  getAllChatRoomToUser() {
+    return this.chatRoomService.getAllChatRoomToUser();
+  }
+
+  @Get('/user/:id')
+  getChatRoomByUser(@Param('id') id: string) {
+    return this.chatRoomService.getChatRoomByUser(id);
+  }
+
+  @Get('/butUser/:accountId/:chatRoomId')
+  getChatRoomByIdButAccount(
+    @Param('accountId') accountId: string,
+    @Param('chatRoomId') chatRoomId: string,
+  ) {
+    return this.chatRoomService.getChatRoomByIdButAccount(
+      accountId,
+      chatRoomId,
+    );
+  }
+
+  @Get('/butUser/code/:accountId/:code')
+  getChatRoomByCodeButAccount(
+    @Param('accountId') accountId: string,
+    @Param('code') code: string,
+  ) {
+    return this.chatRoomService.getChatRoomByCodeButAccount(accountId, code);
+  }
+
+  @Get(':id')
+  getChatRoomByCodeOrId(@Param('id') id: string) {
+    return this.chatRoomService.getChatRoomByCodeOrId(id);
   }
 
   @Post()
   createChatRoom(
-    @Body()
-    chatRoom: {
-      code: string;
-      participant: UUID;
-      productId: string;
-    },
+    @Body() data: { code: string; product: UUID; participants: string[] },
   ) {
-    const result = this.chatRoomService.createChatRoom(chatRoom);
-    return result
-      ? result
-      : {
-          message: 'Failed to create new chat room',
-        };
+    return this.chatRoomService.createChatRoom(data);
   }
 
-  @Get('/room/:id')
-  getChatRoomByRoom(@Param('id') code: string) {
-    return this.chatRoomService.getChatRoomByRoom(code);
-  }
-
-  @Get('/user/:id')
-  getChatRoomByParticipant(@Param('id') userId: string) {
-    return this.chatRoomService.getChatRoomByParticipant(userId);
-  }
-
-  @Get('/:id')
-  getChatRoomById(@Param('id') id: string) {
-    return this.chatRoomService.findOne(id);
-  }
-
-  @Patch(':id')
-  updateChatRoom(
-    @Param('id') id: string,
-    @Body()
-    update: {
-      code: string;
-      participants: AccountEntity[];
-      productId: string;
-    },
-  ) {
-    return this.chatRoomService.updateChatRoom(id, update);
+  @Delete(':id')
+  deleteChatRoom(@Param('id') id: string) {
+    return this.chatRoomService.deleteChatRoom(id);
   }
 }

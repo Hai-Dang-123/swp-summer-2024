@@ -15,7 +15,7 @@ import { OrderModule } from './modules/order/order.module';
 import { OrderItemModule } from './modules/orderItem/orderItem.module';
 import { SellModule } from './modules/sell/sell.module';
 import { ZaloPayModule } from './modules/zalo/zalo.module';
-import { MessageModule } from './modules/message/message.module';
+import { ChatModule } from './modules/chat/chat.module';
 import { ChatRoomModule } from './modules/chatRoom/chatRoom.module';
 
 @Module({
@@ -34,7 +34,7 @@ import { ChatRoomModule } from './modules/chatRoom/chatRoom.module';
     SellModule,
     // ImageModule,
     ZaloPayModule,
-    MessageModule,
+    ChatModule,
     ChatRoomModule,
   ],
   providers: [ContactService],
