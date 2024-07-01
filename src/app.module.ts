@@ -14,11 +14,12 @@ import { ContactController } from './modules/contact/contact.controller';
 import { OrderModule } from './modules/order/order.module';
 import { OrderItemModule } from './modules/orderItem/orderItem.module';
 import { SellModule } from './modules/sell/sell.module';
-import { ZaloPayModule } from './modules/zalo/zalo.module';
+// import { ZaloPayModule } from './modules/zalo/zalo.module';
 import { ChatModule } from './modules/chat/chat.module';
 import { ChatRoomModule } from './modules/chatRoom/chatRoom.module';
 import { SellerRequestModule } from './modules/sellerRequest/sellerRequest.module';
 import { ImageModule } from './modules/upload/image/image.module';
+import { ReportModule } from './modules/report/report.module';
 
 @Module({
   imports: [
@@ -35,7 +36,8 @@ import { ImageModule } from './modules/upload/image/image.module';
     OrderItemModule,
     SellModule,
     ImageModule,
-    ZaloPayModule,
+    ReportModule,
+    // ZaloPayModule,
     ChatModule,
     ChatRoomModule,
     SellerRequestModule,
