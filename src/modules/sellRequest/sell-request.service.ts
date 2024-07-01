@@ -12,18 +12,16 @@ export class SellRequestService {
   ) {}
 
   async createSellRequest(createSellRequestDto: CreateSellRequestDto): Promise<SellRequest> {
-    const { watchName, name, phoneNumber, image, documents, priceWantToSell, originalBox, paper, limitedEdition, status } = createSellRequestDto;
+    const {watchBrand, watchName, name, phoneNumber, image, documents, priceWantToSell, status } = createSellRequestDto;
 
     const sellRequest = this.sellRequestRepository.create({
+      watchBrand,
       watchName,
       name,
       phoneNumber,
       image,
       documents,
       priceWantToSell,
-      originalBox,
-      paper,
-      limitedEdition,
       status,
     } as Partial<SellRequest>);
 
@@ -67,17 +65,15 @@ export class SellRequestService {
       throw new NotFoundException('Sell request not found');
     }
 
-    const { watchName, name, phoneNumber, image, documents, priceWantToSell, originalBox, paper, limitedEdition, status } = updatedSellRequestDto;
+    const {watchBrand, watchName, name, phoneNumber, image, documents, priceWantToSell, status } = updatedSellRequestDto;
 
+    sellRequest.watchBrand = watchBrand !== undefined ? watchBrand : sellRequest.watchBrand
     sellRequest.watchName = watchName !== undefined ? watchName : sellRequest.watchName;
     sellRequest.name = name !== undefined ? name : sellRequest.name;
     sellRequest.phoneNumber = phoneNumber !== undefined ? phoneNumber : sellRequest.phoneNumber;
     sellRequest.image = image !== undefined ? image : sellRequest.image;
     sellRequest.documents = documents !== undefined ? documents : sellRequest.documents;
     sellRequest.priceWantToSell = priceWantToSell !== undefined ? priceWantToSell : sellRequest.priceWantToSell;
-    sellRequest.originalBox = originalBox !== undefined ? originalBox : sellRequest.originalBox;
-    sellRequest.paper = paper !== undefined ? paper : sellRequest.paper;
-    sellRequest.limitedEdition = limitedEdition !== undefined ? limitedEdition : sellRequest.limitedEdition;
     sellRequest.status = status !== undefined ? status : sellRequest.status;
 
     try {

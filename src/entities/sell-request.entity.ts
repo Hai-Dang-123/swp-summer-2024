@@ -14,6 +14,9 @@ export class SellRequest extends BaseEntity {
   id: number;
 
   @Column()
+  watchBrand: string;
+
+  @Column()
   watchName: string;
 
   @Column()
@@ -28,45 +31,11 @@ export class SellRequest extends BaseEntity {
   @Column()
   priceWantToSell: number;
 
-  @Column({ nullable: true })
-  originalBox?: string;
+  
 
   @Column({ nullable: true })
   documents?: string;
 
-  @Column({ nullable: true })
-  limitedEdition?: string;
-
-  @Column({ nullable: true })
-  paper?: string;
-
-  // Fields from ProductEntity (if needed)
-  @Column({ nullable: true })
-  description?: string;
-
-  @Column({ nullable: true })
-  type?: string;
-
-  @Column({ nullable: true })
-  dialColor?: string;
-
-  @Column({ nullable: true })
-  waterResistance?: number;
-
-  @Column({ nullable: true })
-  caseMaterial?: string;
-
-  @Column({ nullable: true })
-  caseSize?: string;
-
-  @Column({ nullable: true })
-  pastUsageTime?: string;
-
-  @Column({ nullable: true })
-  yearOfProduction?: string;
-
-  @Column({ nullable: true })
-  remainingInsurance?: string;
 
   @Column({
     type: 'enum',

@@ -13,7 +13,7 @@ import { ContactService } from './modules/contact/contact.service';
 import { ContactController } from './modules/contact/contact.controller';
 import { OrderModule } from './modules/order/order.module';
 import { OrderItemModule } from './modules/orderItem/orderItem.module';
-import { SellModule } from './modules/sell/sell.module';
+
 import { ZaloPayModule } from './modules/zalo/zalo.module';
 import { SellRequestModule } from './modules/sellRequest/sell-request.module';
 
@@ -31,7 +31,6 @@ import { SellRequestModule } from './modules/sellRequest/sell-request.module';
     ContactModule,
     OrderModule,
     OrderItemModule,
-    SellModule,
     // ImageModule,
     ZaloPayModule,
     SellRequestModule,

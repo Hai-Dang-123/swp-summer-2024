@@ -6,6 +6,10 @@ import { SellRequestStatus } from 'src/entities/sell-request.entity';
 
 
 export class CreateSellRequestDto {
+
+  @IsString()
+  watchBrand: string;
+
   @IsString()
   watchName: string;
 
@@ -25,17 +29,6 @@ export class CreateSellRequestDto {
   @IsNumber()
   priceWantToSell: number;
 
-  @IsOptional()
-  @IsString()
-  originalBox?: string;
-
-  @IsOptional()
-  @IsString()
-  paper?: string;
-
-  @IsOptional()
-  @IsString()
-  limitedEdition?: string;
 
   @IsEnum(SellRequestStatus)
   status: SellRequestStatus;
