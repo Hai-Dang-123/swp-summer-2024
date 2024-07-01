@@ -3,10 +3,13 @@ import { Column, Entity, ManyToMany, OneToMany, Unique } from 'typeorm';
 import { ProductEntity } from './product.entity';
 import { OrderEntity } from './order.entity';
 import { ChatRoomToUserEntity } from './chat-room-to-user.entity';
+import { SellerRequestEntity } from './sellerRequest.entity';
+import { ReportEntity } from './report.entity';
 
 export enum Role {
   admin = 'admin',
   staff = 'staff',
+  appraiser = 'appraiser',
   user = 'user',
 }
 
@@ -84,4 +87,13 @@ export class AccountEntity extends BaseEntity {
     (chatRoomToUser) => chatRoomToUser.participant,
   )
   chatRoomToUser: ChatRoomToUserEntity[];
+
+  @OneToMany(
+    () => SellerRequestEntity,
+    (sellerRequest) => sellerRequest.account,
+  )
+  sellerRequests: SellerRequestEntity[];
+
+  @OneToMany(() => ReportEntity, (report) => report.account)
+  reports: ReportEntity[];
 }
