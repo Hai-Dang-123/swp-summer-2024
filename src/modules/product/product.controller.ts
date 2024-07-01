@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Get,
-  Param,
-  Post,
-  Body,
-  Patch,
-} from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Patch } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 
@@ -39,11 +32,21 @@ export class ProductController {
     return this.productService.getFeaturedList();
   }
 
+  @Get('brand')
+  getBrandList() {
+    return this.productService.getBrandList();
+  }
+
   @Get('buy')
   // @Render('buy/buy')
   async getBuy() {
     const products = await this.productService.findAll();
     return { products };
+  }
+
+  @Get('/search/:key')
+  getSearchList(@Param('key') key: string) {
+    return this.productService.getSearchList(key);
   }
 
   @Get('user/:id')
@@ -64,7 +67,7 @@ export class ProductController {
     return this.productService.findRelatedProducts(id);
   }
 
-  @Get(':id') //56c06978-b984-44f9-aff6-ee03a0da0787
+  @Get(':id')
   findProduct(@Param('id') id: string) {
     return this.productService.findOne(id);
   }

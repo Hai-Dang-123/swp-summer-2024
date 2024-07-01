@@ -1,11 +1,15 @@
 import { BaseEntity } from 'src/common/base/entity.base';
-import { Column, Entity, OneToMany, Unique } from 'typeorm';
+import { Column, Entity, ManyToMany, OneToMany, Unique } from 'typeorm';
 import { ProductEntity } from './product.entity';
 import { OrderEntity } from './order.entity';
+import { ChatRoomToUserEntity } from './chat-room-to-user.entity';
+import { SellerRequestEntity } from './sellerRequest.entity';
+import { ReportEntity } from './report.entity';
 
 export enum Role {
   admin = 'admin',
   staff = 'staff',
+  appraiser = 'appraiser',
   user = 'user',
 }
 
@@ -60,13 +64,36 @@ export class AccountEntity extends BaseEntity {
     type: 'text',
     nullable: false,
     default:
-      'https://i.pinimg.com/736x/7e/a4/af/7ea4af7d8401d2b43ee841bfa2abe89d.jpg',
+      'https://i.pinimg.com/564x/c2/7e/b7/c27eb77c278f37d9a204bff5a661b83b.jpg',
   })
   avatar: string;
+
+  @Column({
+    name: 'Last_active',
+    type: 'timestamp',
+    nullable: true,
+    default: new Date(Date.now()),
+  })
+  lastActive: Date;
 
   @OneToMany(() => ProductEntity, (product) => product.owner)
   products: ProductEntity[];
 
   @OneToMany(() => OrderEntity, (order) => order.user)
   orders: OrderEntity[];
+
+  @OneToMany(
+    () => ChatRoomToUserEntity,
+    (chatRoomToUser) => chatRoomToUser.participant,
+  )
+  chatRoomToUser: ChatRoomToUserEntity[];
+
+  @OneToMany(
+    () => SellerRequestEntity,
+    (sellerRequest) => sellerRequest.account,
+  )
+  sellerRequests: SellerRequestEntity[];
+
+  @OneToMany(() => ReportEntity, (report) => report.account)
+  reports: ReportEntity[];
 }

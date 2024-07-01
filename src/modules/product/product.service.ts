@@ -2,20 +2,24 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from 'src/entities/product.entity';
 import { FindManyOptions, Not, Repository } from 'typeorm';
+import { ProductStatus } from './product.controller';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectRepository(ProductEntity)
     private productRepository: Repository<ProductEntity>,
-  ) {}
+  ) { }
+
+
 
   async findAll(): Promise<ProductEntity[]> {
-    return this.productRepository.find();
+    return await this.productRepository.find({
+      relations: ['owner'],
+    });
   }
-
   async findAllAvailable(): Promise<ProductEntity[]> {
-    return this.productRepository.find({
+    return await this.productRepository.find({
       where: {
         status: 'AVAILABLE',
       },
@@ -23,8 +27,28 @@ export class ProductService {
     });
   }
 
+  async getBrandList(): Promise<ProductEntity[]> {
+    return await this.productRepository
+      .createQueryBuilder('product')
+      .select('brand')
+      .distinctOn(['product.brand'])
+      .orderBy('product.brand')
+      .execute();
+  }
+
+  async getSearchList(key: string): Promise<ProductEntity[]> {
+    const searched = await this.productRepository
+      .createQueryBuilder('product')
+      .leftJoinAndSelect('product.owner', 'account')
+      .where('product.name ILIKE :key OR product.brand ILIKE :key', {
+        key: `%${key}%`,
+      })
+      .getMany();
+    return searched.filter((item) => item.status === 'AVAILABLE');
+  }
+
   async findOne(id: string): Promise<any | null> {
-    return this.productRepository.findOne({
+    return await this.productRepository.findOne({
       where: { id },
       relations: ['owner'],
     });
@@ -37,12 +61,16 @@ export class ProductService {
           id: userId,
         },
       },
+      relations: ['owner'],
+      order: {
+        createdAt: -1,
+      },
     });
   }
 
   async findOneWithRelated(id: string): Promise<any> {
     const product = await this.productRepository.findOne({
-      where: { id },
+      where: { id, status: ProductStatus.AVAILABLE },
       relations: ['owner'],
     });
 
@@ -83,6 +111,7 @@ export class ProductService {
           status: 'AVAILABLE',
         },
       ],
+      relations: ['owner'],
       take: 10,
     });
   }
