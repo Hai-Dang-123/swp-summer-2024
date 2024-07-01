@@ -69,6 +69,7 @@ export class ProductEntity extends BaseEntity {
     precision: 10,
     scale: 2,
     nullable: false,
+    default: 0,
   })
   price: number;
 
@@ -108,7 +109,7 @@ export class ProductEntity extends BaseEntity {
     name: 'waterResistance',
     type: 'decimal',
     precision: 10,
-    nullable: true,
+    nullable: false,
     default: 0,
   })
   waterResistance: number;
