@@ -1,4 +1,5 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { ProductEntity } from './product.entity';
 
 export enum SellRequestStatus {
   WITH_REPORT = 'WITH_REPORT',
@@ -10,6 +11,10 @@ export enum SellRequestStatus {
   name: "SELL_REQUEST",
 })
 export class SellRequest extends BaseEntity {
+
+  @ManyToOne(() => ProductEntity, (product) => product.sellerRequests)
+  product: ProductEntity;
+
   @PrimaryGeneratedColumn()
   id: number;
 

@@ -12,15 +12,16 @@ export class SellRequestService {
   ) {}
 
   async createSellRequest(createSellRequestDto: CreateSellRequestDto): Promise<SellRequest> {
-    const {watchBrand, watchName, name, phoneNumber, image, documents, priceWantToSell, status } = createSellRequestDto;
+    const {watchBrand, watchName, name, phoneNumber, documents,image, priceWantToSell, status } = createSellRequestDto;
 
     const sellRequest = this.sellRequestRepository.create({
       watchBrand,
       watchName,
       name,
       phoneNumber,
-      image,
+      
       documents,
+      image,
       priceWantToSell,
       status,
     } as Partial<SellRequest>);
@@ -48,31 +49,33 @@ export class SellRequestService {
     }
   }
 
-  async getSellRequestById(id: number): Promise<SellRequest> {
-    const sellRequest = await this.sellRequestRepository.findOne({ where: { id } });
-
+  async getSellRequestById(id: number): Promise<SellRequest>  {
+    const sellRequest = await this.sellRequestRepository.findOne({where : {id},  relations: ['product'] });
+  
     if (!sellRequest) {
       throw new NotFoundException('Sell request not found');
     }
-
+  
     return sellRequest;
   }
+  
 
   async updateSellRequest(id: number, updatedSellRequestDto: CreateSellRequestDto): Promise<SellRequest> {
-    const sellRequest = await this.sellRequestRepository.findOne({ where: { id } });
+    const sellRequest = await this.sellRequestRepository.findOne({where : {id}, relations: ['product']});
 
     if (!sellRequest) {
       throw new NotFoundException('Sell request not found');
     }
 
-    const {watchBrand, watchName, name, phoneNumber, image, documents, priceWantToSell, status } = updatedSellRequestDto;
+    const {watchBrand, watchName, name, phoneNumber,  documents,image, priceWantToSell, status } = updatedSellRequestDto;
 
     sellRequest.watchBrand = watchBrand !== undefined ? watchBrand : sellRequest.watchBrand
     sellRequest.watchName = watchName !== undefined ? watchName : sellRequest.watchName;
     sellRequest.name = name !== undefined ? name : sellRequest.name;
     sellRequest.phoneNumber = phoneNumber !== undefined ? phoneNumber : sellRequest.phoneNumber;
-    sellRequest.image = image !== undefined ? image : sellRequest.image;
+    
     sellRequest.documents = documents !== undefined ? documents : sellRequest.documents;
+    sellRequest.image = image !== undefined ? image : sellRequest.image;
     sellRequest.priceWantToSell = priceWantToSell !== undefined ? priceWantToSell : sellRequest.priceWantToSell;
     sellRequest.status = status !== undefined ? status : sellRequest.status;
 
