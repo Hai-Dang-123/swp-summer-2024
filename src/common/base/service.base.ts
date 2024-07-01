@@ -18,7 +18,7 @@ export class BaseService<Entity extends BaseEntity> {
     }
 
     getOne(id: string): Promise<Entity> {
-        if (!isUUID(id)) throw new HttpException('Id is incorrect', 400);
+        if (!isUUID(id)) throw new HttpException('Id is incorrect', 400);       
         return this.repo.findOne({ where: { id: id as any } });
     }
 

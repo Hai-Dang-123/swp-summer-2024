@@ -14,6 +14,7 @@ export class UserGuard implements CanActivate {
       const accessToken = (request?.headers?.authorization as string)?.split(' ')[1];
       var response = await this.AuthService.verifyUserToken(accessToken)
       if (response) {
+        
         return true;
       } else throw new UnauthorizedException();
     } catch (error) {

@@ -67,7 +67,7 @@ export class ProductController {
     return this.productService.findRelatedProducts(id);
   }
 
-  @Get(':id') //56c06978-b984-44f9-aff6-ee03a0da0787
+  @Get(':id')
   findProduct(@Param('id') id: string) {
     return this.productService.findOne(id);
   }

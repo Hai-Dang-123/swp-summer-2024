@@ -1,7 +1,22 @@
+import { IsNotEmpty,IsEmail,IsNumber } from "class-validator";
+
 export class CreateSellDto {
-    watchName: string;
-    name: string;
-    phoneNumber: string;
-    email: string;
-    imagePath: string;
+  @IsNotEmpty()
+  watchName: string;
+
+  @IsNotEmpty()
+  name: string;
+
+  @IsNotEmpty()
+  phoneNumber: string;
+
+  @IsEmail()
+  email: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  price: number;
+
+  @IsNotEmpty()
+  imagePath: string;
   }
