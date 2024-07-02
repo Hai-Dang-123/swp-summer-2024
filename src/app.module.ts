@@ -20,6 +20,7 @@ import { ChatRoomModule } from './modules/chatRoom/chatRoom.module';
 import { SellerRequestModule } from './modules/sellerRequest/sellerRequest.module';
 import { ImageModule } from './modules/upload/image/image.module';
 import { ReportModule } from './modules/report/report.module';
+import { FeedbackModule } from './modules/feedback/feedback.module';
 
 @Module({
   imports: [
@@ -36,7 +37,8 @@ import { ReportModule } from './modules/report/report.module';
     OrderItemModule,
     SellModule,
     ImageModule,
-    ReportModule,
+    ReportModule,   //report
+    FeedbackModule, //feedback
     // ZaloPayModule,
     ChatModule,
     ChatRoomModule,
