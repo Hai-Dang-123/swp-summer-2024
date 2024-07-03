@@ -21,7 +21,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 const url = process.env.FILE_PATH_STORAGE;
-const api_key = process.env.FILE_API_KEY;
+const api_key = process.env.API_KEY;
 
 @ApiTags('file')
 @Controller('file')
@@ -59,7 +59,6 @@ export class ImageController {
       throw new HttpException('Network response was not ok', 404);
     }
   }
-
   // get image to show
 
   @Get('image/:path')

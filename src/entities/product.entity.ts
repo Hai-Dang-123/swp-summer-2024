@@ -12,6 +12,7 @@ import { AccountEntity } from './account.entity';
 import { OrderItemEntity } from './order-item.entity';
 import { ChatRoomEntity } from './chat-room.entity';
 import { SellerRequestEntity } from './sellerRequest.entity';
+import { AppraisalReportEntity } from './appraisal-report.entity';
 
 export enum ProductStatus {
   IN_APPRAISAL = 'IN APPRAISAL',
@@ -173,4 +174,10 @@ export class ProductEntity extends BaseEntity {
     (sellerRequest) => sellerRequest.product,
   )
   sellerRequests: SellerRequestEntity[];
+
+  @OneToMany(
+    () => AppraisalReportEntity,
+    (appraisalReport) => appraisalReport.product,
+  )
+  appraisalReports: AppraisalReportEntity[];
 }

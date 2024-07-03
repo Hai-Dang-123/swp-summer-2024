@@ -3,7 +3,7 @@ import { Column, Entity, ManyToOne } from 'typeorm';
 import { AccountEntity } from './account.entity';
 
 @Entity({
-  name: 'Report',
+  name: 'REPORT',
 })
 export class ReportEntity extends BaseEntity {
   @ManyToOne(() => AccountEntity, (account) => account)
