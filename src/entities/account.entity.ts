@@ -78,6 +78,14 @@ export class AccountEntity extends BaseEntity {
   })
   lastActive: Date;
 
+  @Column({
+    name: 'status',
+    type: 'bool',
+    nullable: false,
+    default: true,
+  })
+  status: boolean;
+
   @OneToMany(() => ProductEntity, (product) => product.owner)
   products: ProductEntity[];
 
