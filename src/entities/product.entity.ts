@@ -2,6 +2,7 @@ import { BaseEntity } from 'src/common/base/entity.base';
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   OneToOne,
@@ -24,6 +25,7 @@ export enum ProductStatus {
 })
 export class ProductEntity extends BaseEntity {
   @ManyToOne(() => AccountEntity, (account) => account.products)
+  @JoinColumn()
   owner: AccountEntity;
 
   @Column({

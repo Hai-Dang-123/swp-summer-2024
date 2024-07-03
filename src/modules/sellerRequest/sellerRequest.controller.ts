@@ -30,6 +30,7 @@ export class SellerRequestController {
       product: UUID;
       type: string;
       update: Object;
+      status?: boolean;
     },
   ) {
     return this.sellerRequestService.createSellerRequest(data);

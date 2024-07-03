@@ -17,9 +17,9 @@ export class ProductController {
     return this.productService.findAll();
   }
 
-  @Get('available')
-  findAllAvailable() {
-    return this.productService.findAllAvailable();
+  @Get('available/:id')
+  findAllAvailable(@Param('id') userId: string) {
+    return this.productService.findAllAvailable(userId);
   }
 
   @Get('latest')
