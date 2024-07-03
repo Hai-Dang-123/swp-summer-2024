@@ -19,6 +19,7 @@ export enum ProductStatus {
   AVAILABLE = 'AVAILABLE',
   SOLD = 'SOLD',
   UPDATE_REQUESTED = 'UPDATE_REQUESTED',
+  CANCELED = 'CANCELED',
 }
 @Unique(['name'])
 @Entity({
