@@ -1,6 +1,7 @@
 // report.controller.ts
 import { Controller, Get, Post, Body, Param, Patch } from '@nestjs/common';
 import { ReportService } from './report.service';
+import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 
 @Controller('report')
 export class ReportController {
@@ -9,6 +10,24 @@ export class ReportController {
   @Get()
   findAllReports() {
     return this.reportService.findAllReports();
+  }
+
+  @Get('product')
+  getAllProductReports() {
+    return this.reportService.getAllProductReports();
+  }
+
+  @Get('user')
+  getAllUserReports() {
+    return this.reportService.getAllUserReports();
+  }
+
+  @Get('check/:userId/:reportedId')
+  checkAlreadyReported(
+    @Param('userId') userId: string,
+    @Param('reportedId') reportedId: string,
+  ) {
+    return this.reportService.checkAlreadyReported(userId, reportedId);
   }
 
   @Get(':id')
@@ -20,7 +39,7 @@ export class ReportController {
   async createReport(
     @Body()
     report: {
-      accountId: string;
+      account: UUID;
       on: string;
       reportedId: string;
       criteria: string[];

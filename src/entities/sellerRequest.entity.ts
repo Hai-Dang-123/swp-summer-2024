@@ -17,7 +17,7 @@ export class SellerRequestEntity extends BaseEntity {
   @Column({
     name: 'type',
     type: 'enum',
-    enum: ['update', 'delete'],
+    enum: ['create', 'update', 'delete'],
     nullable: false,
   })
   type: string;
@@ -35,4 +35,12 @@ export class SellerRequestEntity extends BaseEntity {
     nullable: true,
   })
   note: string;
+
+  @Column({
+    name: 'status',
+    type: 'bool',
+    nullable: false,
+    default: false,
+  })
+  status: boolean;
 }
