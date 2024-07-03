@@ -2,6 +2,7 @@ import { BaseEntity } from 'src/common/base/entity.base';
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   OneToOne,
@@ -11,6 +12,7 @@ import { AccountEntity } from './account.entity';
 import { OrderItemEntity } from './order-item.entity';
 import { ChatRoomEntity } from './chat-room.entity';
 import { SellerRequestEntity } from './sellerRequest.entity';
+import { AppraisalReportEntity } from './appraisal-report.entity';
 
 export enum ProductStatus {
   IN_APPRAISAL = 'IN APPRAISAL',
@@ -24,6 +26,7 @@ export enum ProductStatus {
 })
 export class ProductEntity extends BaseEntity {
   @ManyToOne(() => AccountEntity, (account) => account.products)
+  @JoinColumn()
   owner: AccountEntity;
 
   @Column({
@@ -69,6 +72,7 @@ export class ProductEntity extends BaseEntity {
     precision: 10,
     scale: 2,
     nullable: false,
+    default: 0,
   })
   price: number;
 
@@ -108,7 +112,7 @@ export class ProductEntity extends BaseEntity {
     name: 'waterResistance',
     type: 'decimal',
     precision: 10,
-    nullable: true,
+    nullable: false,
     default: 0,
   })
   waterResistance: number;
@@ -170,4 +174,10 @@ export class ProductEntity extends BaseEntity {
     (sellerRequest) => sellerRequest.product,
   )
   sellerRequests: SellerRequestEntity[];
+
+  @OneToMany(
+    () => AppraisalReportEntity,
+    (appraisalReport) => appraisalReport.product,
+  )
+  appraisalReports: AppraisalReportEntity[];
 }

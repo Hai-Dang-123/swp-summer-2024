@@ -6,6 +6,7 @@ import { ChatRoomToUserEntity } from './chat-room-to-user.entity';
 import { SellerRequestEntity } from './sellerRequest.entity';
 import { ReportEntity } from './report.entity';
 import { FeedbackEntity } from './feedback.entity';
+import { AppraisalReportEntity } from './appraisal-report.entity';
 
 export enum Role {
   admin = 'admin',
@@ -97,6 +98,12 @@ export class AccountEntity extends BaseEntity {
 
   @OneToMany(() => ReportEntity, (report) => report.account)
   reports: ReportEntity[];
+
+  @OneToMany(
+    () => AppraisalReportEntity,
+    (appraisalReport) => appraisalReport.appraiser,
+  )
+  appraisalReports: AppraisalReportEntity[];
 
   @OneToMany(() => FeedbackEntity, (feedback) => feedback.evaluator)
   sentFeedbacks: FeedbackEntity[];
