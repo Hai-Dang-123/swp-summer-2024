@@ -13,13 +13,14 @@ import { ContactService } from './modules/contact/contact.service';
 import { ContactController } from './modules/contact/contact.controller';
 import { OrderModule } from './modules/order/order.module';
 import { OrderItemModule } from './modules/orderItem/orderItem.module';
-
-
+// import { SellModule } from './modules/sell/sell.module';
+// import { ZaloPayModule } from './modules/zalo/zalo.module';
 import { ChatModule } from './modules/chat/chat.module';
 import { ChatRoomModule } from './modules/chatRoom/chatRoom.module';
 import { SellerRequestModule } from './modules/sellerRequest/sellerRequest.module';
 import { ImageModule } from './modules/upload/image/image.module';
-import { SellRequestModule } from './modules/sellRequest/sell-request.module';
+import { ReportModule } from './modules/report/report.module';
+import { FeedbackModule } from './modules/feedback/feedback.module';
 
 @Module({
   imports: [
@@ -34,8 +35,11 @@ import { SellRequestModule } from './modules/sellRequest/sell-request.module';
     ContactModule,
     OrderModule,
     OrderItemModule,
-    // ImageModule,
-    SellRequestModule,
+    // SellModule,
+    ImageModule,
+    ReportModule,   //report
+    FeedbackModule, //feedback
+    // ZaloPayModule,
     ChatModule,
     ChatRoomModule,
     SellerRequestModule,

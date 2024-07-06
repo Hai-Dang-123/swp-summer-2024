@@ -9,22 +9,32 @@ export class ProductService {
   constructor(
     @InjectRepository(ProductEntity)
     private productRepository: Repository<ProductEntity>,
-  ) { }
-
-
+  ) {}
 
   async findAll(): Promise<ProductEntity[]> {
     return await this.productRepository.find({
       relations: ['owner'],
+      order: {
+        updatedAt: -1,
+      },
     });
   }
-  async findAllAvailable(): Promise<ProductEntity[]> {
-    return await this.productRepository.find({
-      where: {
-        status: 'AVAILABLE',
-      },
-      relations: ['owner'],
-    });
+  async findAllAvailable(userId: string): Promise<ProductEntity[]> {
+    if (userId === 'null') {
+      return await this.productRepository.find({
+        where: {
+          status: 'AVAILABLE',
+        },
+        relations: ['owner'],
+      });
+    } else
+      return await this.productRepository.find({
+        where: {
+          status: 'AVAILABLE',
+          owner: Not(userId),
+        },
+        relations: ['owner'],
+      });
   }
 
   async getBrandList(): Promise<ProductEntity[]> {

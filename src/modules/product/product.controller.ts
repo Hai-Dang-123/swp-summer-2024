@@ -5,8 +5,9 @@ import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 export enum ProductStatus {
   IN_APPRAISAL = 'IN APPRAISAL',
   AVAILABLE = 'AVAILABLE',
-  ORDERED = 'ORDERED',
+  UPDATE_REQUESTED = 'UPDATE_REQUESTED',
   SOLD = 'SOLD',
+  CANCELED = 'CANCELED',
 }
 @Controller('product')
 export class ProductController {
@@ -17,9 +18,9 @@ export class ProductController {
     return this.productService.findAll();
   }
 
-  @Get('available')
-  findAllAvailable() {
-    return this.productService.findAllAvailable();
+  @Get('available/:id')
+  findAllAvailable(@Param('id') userId: string) {
+    return this.productService.findAllAvailable(userId);
   }
 
   @Get('latest')
@@ -89,9 +90,9 @@ export class ProductController {
       waterResistance: number;
       caseMaterial: string;
       caseSize: number;
-      pastUsageTime: string;
-      yearOfProduction: string;
-      remainingInsurance: string;
+      pastUsageTime: number;
+      yearOfProduction: number;
+      remainingInsurance: number;
       status: ProductStatus;
     },
   ) {
@@ -121,9 +122,9 @@ export class ProductController {
       waterResistance: number;
       caseMaterial: string;
       caseSize: number;
-      pastUsageTime: string;
-      yearOfProduction: string;
-      remainingInsurance: string;
+      pastUsageTime: number;
+      yearOfProduction: number;
+      remainingInsurance: number;
       status: ProductStatus;
     },
   ) {

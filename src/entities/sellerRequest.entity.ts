@@ -17,7 +17,7 @@ export class SellerRequestEntity extends BaseEntity {
   @Column({
     name: 'type',
     type: 'enum',
-    enum: ['update', 'delete'],
+    enum: ['create', 'update', 'delete'],
     nullable: false,
   })
   type: string;
@@ -28,6 +28,22 @@ export class SellerRequestEntity extends BaseEntity {
     nullable: true,
   })
   update: Object;
+
+  @Column({
+    name: 'details',
+    type: 'varchar',
+    nullable: true,
+  })
+  details: string;
+
+  @Column({
+    name: 'status',
+    type: 'enum',
+    enum: ['pending', 'approved', 'rejected'],
+    nullable: false,
+    default: 'pending',
+  })
+  status: string;
 
   @Column({
     name: 'note',

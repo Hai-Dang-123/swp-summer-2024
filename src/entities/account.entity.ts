@@ -1,10 +1,12 @@
 import { BaseEntity } from 'src/common/base/entity.base';
-import { Column, Entity, ManyToMany, OneToMany, Unique } from 'typeorm';
+import { Column, Entity, OneToMany, Unique } from 'typeorm';
 import { ProductEntity } from './product.entity';
 import { OrderEntity } from './order.entity';
 import { ChatRoomToUserEntity } from './chat-room-to-user.entity';
 import { SellerRequestEntity } from './sellerRequest.entity';
 import { ReportEntity } from './report.entity';
+import { FeedbackEntity } from './feedback.entity';
+import { AppraisalReportEntity } from './appraisal-report.entity';
 
 export enum Role {
   admin = 'admin',
@@ -76,6 +78,14 @@ export class AccountEntity extends BaseEntity {
   })
   lastActive: Date;
 
+  @Column({
+    name: 'status',
+    type: 'bool',
+    nullable: false,
+    default: true,
+  })
+  status: boolean;
+
   @OneToMany(() => ProductEntity, (product) => product.owner)
   products: ProductEntity[];
 
@@ -96,4 +106,16 @@ export class AccountEntity extends BaseEntity {
 
   @OneToMany(() => ReportEntity, (report) => report.account)
   reports: ReportEntity[];
+
+  @OneToMany(
+    () => AppraisalReportEntity,
+    (appraisalReport) => appraisalReport.appraiser,
+  )
+  appraisalReports: AppraisalReportEntity[];
+
+  @OneToMany(() => FeedbackEntity, (feedback) => feedback.evaluator)
+  sentFeedbacks: FeedbackEntity[];
+
+  @OneToMany(() => FeedbackEntity, (feedback) => feedback.evaluated)
+  receivedFeedbacks: FeedbackEntity[];
 }
