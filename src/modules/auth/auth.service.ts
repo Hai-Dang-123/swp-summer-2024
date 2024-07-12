@@ -226,6 +226,29 @@ export class AuthService {
       .getMany();
   }
 
+  async getTodayActiveAccounts() {
+    const accounts: AccountEntity[] = await this.getAllAccounts();
+    const todayDate = new Date(Date.now());
+    const today =
+      todayDate.getDate().toString() +
+      todayDate.getMonth().toString() +
+      todayDate.getFullYear().toString();
+    console.log('Today: ', today);
+
+    var temp: AccountEntity[] = [];
+    accounts.filter((acc: AccountEntity) => {
+      if (
+        acc.lastActive.getUTCDate().toString() +
+          acc.lastActive.getMonth().toString() +
+          acc.lastActive.getFullYear().toString() ===
+        today
+      ) {
+        temp.push(acc);
+      }
+    });
+    return temp;
+  }
+
   async updateActiveStatus(id: string): Promise<any> {
     const update = await this.repositoryAccount.update(id, {
       lastActive: new Date(Date.now()),
