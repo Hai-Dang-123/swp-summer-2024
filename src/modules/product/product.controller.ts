@@ -68,6 +68,11 @@ export class ProductController {
     return this.productService.findRelatedProducts(id);
   }
 
+  @Get('/status')
+  async findProductsInAppraisal() {
+    return this.productService.findProductsByStatus(ProductStatus.IN_APPRAISAL);
+  }
+
   @Get(':id')
   findProduct(@Param('id') id: string) {
     return this.productService.findOne(id);
