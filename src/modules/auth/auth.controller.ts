@@ -41,6 +41,11 @@ export class AuthController {
     return this.authService.getSearchList(key);
   }
 
+  @Get('/active_today')
+  getTodayActiveAccounts() {
+    return this.authService.getTodayActiveAccounts();
+  }
+
   @Get(':id')
   getAccountById(@Param('id') id: string) {
     return this.authService.getAccountById(id);

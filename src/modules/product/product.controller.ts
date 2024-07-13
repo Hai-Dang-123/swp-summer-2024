@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Body, Patch } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Patch, HttpException, HttpStatus } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 
@@ -68,6 +68,11 @@ export class ProductController {
     return this.productService.findRelatedProducts(id);
   }
 
+  @Get('/status')
+  async findProductsInAppraisal() {
+    return this.productService.findProductsByStatus(ProductStatus.IN_APPRAISAL);
+  }
+
   @Get(':id')
   findProduct(@Param('id') id: string) {
     return this.productService.findOne(id);
@@ -135,4 +140,7 @@ export class ProductController {
           message: 'Failed to update product ',
         };
   }
+
+  
+
 }
