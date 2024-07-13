@@ -46,10 +46,10 @@ export class AuthController {
     return this.authService.updateActiveStatus(id);
   }
 
-  @Patch(':id')
-  updateAccount(@Param('id') id: string, @Body() data: any) {
-    return this.authService.updateAccount(id, data);
-  }
+    @Patch(':id')
+    updateAccount(@Param('id') id: string, @Body() data: any) {
+      return this.authService.updateAccount(id, data);
+    }
 
   @Post('create-account')
   async register(
