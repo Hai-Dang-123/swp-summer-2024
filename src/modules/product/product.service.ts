@@ -172,4 +172,12 @@ export class ProductService {
   //   await this.productRepository.save(product);
   //   return product;
   // }
+  async findProductsByStatus(status: ProductStatus): Promise<any> {
+    return await this.productRepository.find({
+      where: {
+        status: status,   
+      },
+    });
+  }
+
 }
