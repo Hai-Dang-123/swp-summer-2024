@@ -61,7 +61,6 @@ export class ProductService {
     return await this.productRepository.findOne({
       where: { id },
       relations: ['owner'],
-      select: ['id', 'status', 'createdAt'],
     });
   }
 
