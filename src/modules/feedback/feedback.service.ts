@@ -79,6 +79,18 @@ export class FeedbackService {
     });
   }
 
+  async findByEvaluatorAndEvaluated(
+    evaluatedId: string,
+    evaluatorId: string,
+  ): Promise<any[]> {
+    return await this.feedbackRepository.find({
+      where: { evaluator: { id: evaluatorId }, evaluated: { id: evaluatedId } },
+      order: {
+        createdAt: -1,
+      },
+    });
+  }
+
   async showAverageRate(evaluatedId: string): Promise<any> {
     const feedbacks = await this.feedbackRepository.find({
       where: { evaluated: { id: evaluatedId } },

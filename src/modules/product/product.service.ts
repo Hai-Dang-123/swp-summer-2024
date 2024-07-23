@@ -107,16 +107,25 @@ export class ProductService {
       where: [
         {
           id: Not(product.id),
+          owner: {
+            id: Not(product.owner.id),
+          },
           dialColor: product.dialColor,
           status: 'AVAILABLE',
         },
         {
           id: Not(product.id),
+          owner: {
+            id: Not(product.owner.id),
+          },
           caseMaterial: product.caseMaterial,
           status: 'AVAILABLE',
         },
         {
           id: Not(product.id),
+          owner: {
+            id: Not(product.owner.id),
+          },
           type: product.type,
           status: 'AVAILABLE',
         },
@@ -175,9 +184,8 @@ export class ProductService {
   async findProductsByStatus(status: ProductStatus): Promise<any> {
     return await this.productRepository.find({
       where: {
-        status: status,   
+        status: status,
       },
     });
   }
-
 }
