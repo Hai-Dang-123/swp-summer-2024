@@ -122,8 +122,7 @@ export class AccountEntity extends BaseEntity {
 
   @OneToMany(() => FeedbackEntity, (feedback) => feedback.evaluated)
   receivedFeedbacks: FeedbackEntity[];
-  
-  @OneToMany(() => AppointmentEntity, appointment => appointment.account)
+
+  @OneToMany(() => AppointmentEntity, (appointment) => appointment.account)
   appointments: AppointmentEntity[];
-  product: ProductEntity;
 }

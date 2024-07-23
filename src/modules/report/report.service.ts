@@ -10,7 +10,6 @@ export class ReportService {
     @InjectRepository(ReportEntity)
     private reportRepository: Repository<ReportEntity>,
   ) {}
-  zz;
 
   async createReport(report: any): Promise<ReportEntity> {
     return this.reportRepository.save(report);
