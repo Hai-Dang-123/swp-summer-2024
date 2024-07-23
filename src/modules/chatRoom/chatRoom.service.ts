@@ -65,7 +65,7 @@ export class ChatRoomService {
       ],
       relations: ['participant', 'chatRoom', 'chatRoom.product'],
       order: {
-        updatedAt: 'desc',
+        updatedAt: -1,
       },
     });
   }

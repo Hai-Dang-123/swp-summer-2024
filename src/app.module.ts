@@ -14,7 +14,6 @@ import { ContactController } from './modules/contact/contact.controller';
 import { OrderModule } from './modules/order/order.module';
 import { OrderItemModule } from './modules/orderItem/orderItem.module';
 import { SellModule } from './modules/sell/sell.module';
-// import { ZaloPayModule } from './modules/zalo/zalo.module';
 import { ChatModule } from './modules/chat/chat.module';
 import { ChatRoomModule } from './modules/chatRoom/chatRoom.module';
 import { SellerRequestModule } from './modules/sellerRequest/sellerRequest.module';
@@ -22,6 +21,10 @@ import { ImageModule } from './modules/upload/image/image.module';
 import { ReportModule } from './modules/report/report.module';
 import { FeedbackModule } from './modules/feedback/feedback.module';
 import { AccountModule } from './modules/userAccount/userAccount.module';
+import { AppointmentService } from './modules/appointment/appointment.service';
+import { AppointmentModule } from './modules/appointment/appointment.module';
+import { AppointmentController } from './modules/appointment/appointment.controller';
+
 
 
 @Module({
@@ -39,13 +42,13 @@ import { AccountModule } from './modules/userAccount/userAccount.module';
     OrderItemModule,
     SellModule,
     ImageModule,
-    ReportModule,   //report
-    FeedbackModule, //feedback
-    // ZaloPayModule,
+    ReportModule,   
+    FeedbackModule, 
     ChatModule,
     ChatRoomModule,
     SellerRequestModule,
-    AccountModule
+    AccountModule,
+    AppointmentModule
   ],
   providers: [ContactService],
   controllers: [ContactController],

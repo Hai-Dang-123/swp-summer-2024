@@ -1,4 +1,13 @@
-import { Controller, Get, Param, Post, Body, Patch, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Body,
+  Patch,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { ProductService } from './product.service';
 import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 
@@ -8,6 +17,7 @@ export enum ProductStatus {
   UPDATE_REQUESTED = 'UPDATE_REQUESTED',
   SOLD = 'SOLD',
   CANCELED = 'CANCELED',
+  REMOVED = 'REMOVED',
 }
 @Controller('product')
 export class ProductController {
@@ -39,7 +49,6 @@ export class ProductController {
   }
 
   @Get('buy')
-  // @Render('buy/buy')
   async getBuy() {
     const products = await this.productService.findAll();
     return { products };
@@ -50,20 +59,25 @@ export class ProductController {
     return this.productService.getSearchList(key);
   }
 
+  @Get('/search-available/:key/:userId')
+  getSearchAvailableList(
+    @Param('key') key: string,
+    @Param('userId') userId: string,
+  ) {
+    return this.productService.getSearchAvailableList(key, userId);
+  }
+
   @Get('user/:id')
-  // @Render('buy/buy')
   getProductByUser(@Param('id') userId: string) {
     return this.productService.findByUser(userId);
   }
 
   @Get('withRelated/:id')
-  //56c06978-b984-44f9-aff6-ee03a0da0787
   findWithRelatedProducts(@Param('id') id: string) {
     return this.productService.findOneWithRelated(id);
   }
 
   @Get('related/:id')
-  //56c06978-b984-44f9-aff6-ee03a0da0787
   findRelatedProducts(@Param('id') id: string) {
     return this.productService.findRelatedProducts(id);
   }
@@ -140,7 +154,4 @@ export class ProductController {
           message: 'Failed to update product ',
         };
   }
-
-  
-
 }

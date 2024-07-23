@@ -47,12 +47,29 @@ export class ProductService {
   }
 
   async getSearchList(key: string): Promise<ProductEntity[]> {
-    const searched = await this.productRepository
+    return await this.productRepository
       .createQueryBuilder('product')
       .leftJoinAndSelect('product.owner', 'account')
       .where('product.name ILIKE :key OR product.brand ILIKE :key', {
         key: `%${key}%`,
       })
+      .getMany();
+  }
+
+  async getSearchAvailableList(
+    key: string,
+    userId: string,
+  ): Promise<ProductEntity[]> {
+    const searched = await this.productRepository
+      .createQueryBuilder('product')
+      .leftJoinAndSelect('product.owner', 'account')
+      .where(
+        'product.owner.id != :userId AND product.name ILIKE :key OR product.brand ILIKE :key',
+        {
+          key: `%${key}%`,
+          userId: userId,
+        },
+      )
       .getMany();
     return searched.filter((item) => item.status === 'AVAILABLE');
   }
@@ -61,7 +78,6 @@ export class ProductService {
     return await this.productRepository.findOne({
       where: { id },
       relations: ['owner'],
-      select: ['id','status','createdAt'],
     });
   }
 
@@ -71,10 +87,11 @@ export class ProductService {
         owner: {
           id: userId,
         },
+        status: Not(ProductStatus.REMOVED),
       },
       relations: ['owner'],
       order: {
-        createdAt: -1,
+        updatedAt: -1,
       },
     });
   }
@@ -108,16 +125,25 @@ export class ProductService {
       where: [
         {
           id: Not(product.id),
+          owner: {
+            id: Not(product.owner.id),
+          },
           dialColor: product.dialColor,
           status: 'AVAILABLE',
         },
         {
           id: Not(product.id),
+          owner: {
+            id: Not(product.owner.id),
+          },
           caseMaterial: product.caseMaterial,
           status: 'AVAILABLE',
         },
         {
           id: Not(product.id),
+          owner: {
+            id: Not(product.owner.id),
+          },
           type: product.type,
           status: 'AVAILABLE',
         },
@@ -129,18 +155,11 @@ export class ProductService {
 
   async getFeaturedList(): Promise<any | null> {
     return this.productRepository.find({
-      where: [
-        {
-          id: 'b965b951-16ca-4981-a84f-cfd16d2294c1',
-        },
-        {
-          id: 'fd8f8bcf-3fdf-4dd1-a00f-426235be8e1c',
-        },
-        {
-          id: '763075de-f40a-40fc-b50b-965e5abbd5a7',
-        },
-      ],
-      relations: ['owner'],
+      where: { status: ProductStatus.AVAILABLE },
+      order: {
+        price: -1,
+      },
+      take: 3,
     });
   }
 
@@ -154,7 +173,7 @@ export class ProductService {
         status: 'AVAILABLE',
       },
       order: {
-        createdAt: 'DESC',
+        createdAt: -1,
       },
       relations: ['owner'],
       take: 8,
@@ -162,7 +181,7 @@ export class ProductService {
   }
 
   async updateProduct(id: string, update: any): Promise<any> {
-    console.log(update)
+    console.log(update);
     return this.productRepository.update(id, update);
   }
 
@@ -183,9 +202,8 @@ export class ProductService {
   async findProductsByStatus(status: ProductStatus): Promise<any> {
     return await this.productRepository.find({
       where: {
-        status: status,   
+        status: status,
       },
     });
   }
-
 }
