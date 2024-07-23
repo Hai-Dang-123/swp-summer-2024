@@ -13,6 +13,7 @@ import { OrderItemEntity } from './order-item.entity';
 import { ChatRoomEntity } from './chat-room.entity';
 import { SellerRequestEntity } from './sellerRequest.entity';
 import { AppraisalReportEntity } from './appraisal-report.entity';
+import { AppointmentEntity } from './appointment.entity';
 
 export enum ProductStatus {
   IN_APPRAISAL = 'IN APPRAISAL',
@@ -20,6 +21,7 @@ export enum ProductStatus {
   SOLD = 'SOLD',
   UPDATE_REQUESTED = 'UPDATE_REQUESTED',
   CANCELED = 'CANCELED',
+  REMOVED = 'REMOVED',
 }
 @Entity({
   name: 'PRODUCT',
@@ -163,6 +165,13 @@ export class ProductEntity extends BaseEntity {
   })
   status: string;
 
+  @Column({
+    name: 'note',
+    type: 'text',
+    nullable: true,
+  })
+  note: string;
+
   @OneToOne(() => OrderItemEntity, (orderItem) => orderItem.product)
   orderItem: OrderItemEntity;
 
@@ -180,4 +189,7 @@ export class ProductEntity extends BaseEntity {
     (appraisalReport) => appraisalReport.product,
   )
   appraisalReports: AppraisalReportEntity[];
+
+  @OneToMany(() => AppointmentEntity, (appointment) => appointment.product)
+  appointments: AppointmentEntity[];
 }

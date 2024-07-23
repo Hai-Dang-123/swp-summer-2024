@@ -17,6 +17,7 @@ export enum ProductStatus {
   UPDATE_REQUESTED = 'UPDATE_REQUESTED',
   SOLD = 'SOLD',
   CANCELED = 'CANCELED',
+  REMOVED = 'REMOVED',
 }
 @Controller('product')
 export class ProductController {
@@ -56,6 +57,14 @@ export class ProductController {
   @Get('/search/:key')
   getSearchList(@Param('key') key: string) {
     return this.productService.getSearchList(key);
+  }
+
+  @Get('/search-available/:key/:userId')
+  getSearchAvailableList(
+    @Param('key') key: string,
+    @Param('userId') userId: string,
+  ) {
+    return this.productService.getSearchAvailableList(key, userId);
   }
 
   @Get('user/:id')

@@ -1,25 +1,34 @@
-import { Entity,Column, ManyToOne } from "typeorm";
-import { SellerRequestEntity } from "./sellerRequest.entity";
-import { ProductEntity } from "./product.entity";
-import { BaseEntity } from "src/common/base/entity.base";
-import { AccountEntity } from "./account.entity";
+import { Entity, Column, ManyToOne } from 'typeorm';
+import { ProductEntity } from './product.entity';
+import { BaseEntity } from 'src/common/base/entity.base';
+import { AccountEntity } from './account.entity';
 
-@Entity()
-export class AppointmentEntity extends BaseEntity  {
- 
-  @ManyToOne(() => AccountEntity)
+@Entity({
+  name: 'APPOINTMENT',
+})
+export class AppointmentEntity extends BaseEntity {
+  @ManyToOne(() => AccountEntity, (account) => account.appointments, {
+    eager: true,
+  })
   account: AccountEntity;
 
-  @ManyToOne(() => ProductEntity)
+  @ManyToOne(() => ProductEntity, (product) => product.appointments, {
+    eager: true,
+  })
   product: ProductEntity;
 
-  @Column({ type: 'timestamp' })
-  scheduleDate: Date;
+  @Column({
+    name: 'date',
+    type: 'varchar',
+    nullable: false,
+  })
+  date: string;
 
-  @Column({ 
-    type: 'enum', 
-    enum: ['scheduled', 'completed', 'cancelled'], 
-    default: 'scheduled' 
+  @Column({
+    name: 'status',
+    type: 'enum',
+    enum: ['scheduled', 'completed', 'cancelled'],
+    default: 'scheduled',
   })
   status: string;
 }

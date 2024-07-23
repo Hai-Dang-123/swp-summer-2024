@@ -47,12 +47,29 @@ export class ProductService {
   }
 
   async getSearchList(key: string): Promise<ProductEntity[]> {
-    const searched = await this.productRepository
+    return await this.productRepository
       .createQueryBuilder('product')
       .leftJoinAndSelect('product.owner', 'account')
       .where('product.name ILIKE :key OR product.brand ILIKE :key', {
         key: `%${key}%`,
       })
+      .getMany();
+  }
+
+  async getSearchAvailableList(
+    key: string,
+    userId: string,
+  ): Promise<ProductEntity[]> {
+    const searched = await this.productRepository
+      .createQueryBuilder('product')
+      .leftJoinAndSelect('product.owner', 'account')
+      .where(
+        'product.owner.id != :userId AND product.name ILIKE :key OR product.brand ILIKE :key',
+        {
+          key: `%${key}%`,
+          userId: userId,
+        },
+      )
       .getMany();
     return searched.filter((item) => item.status === 'AVAILABLE');
   }
@@ -70,10 +87,11 @@ export class ProductService {
         owner: {
           id: userId,
         },
+        status: Not(ProductStatus.REMOVED),
       },
       relations: ['owner'],
       order: {
-        createdAt: -1,
+        updatedAt: -1,
       },
     });
   }
@@ -155,7 +173,7 @@ export class ProductService {
         status: 'AVAILABLE',
       },
       order: {
-        createdAt: 'DESC',
+        createdAt: -1,
       },
       relations: ['owner'],
       take: 8,
