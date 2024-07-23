@@ -8,6 +8,7 @@ import { ReportEntity } from './report.entity';
 import { FeedbackEntity } from './feedback.entity';
 import { AppraisalReportEntity } from './appraisal-report.entity';
 import { ContactUsEntity } from './contact.entity';
+import { AppointmentEntity } from './appointment.entity';
 
 export enum Role {
   admin = 'admin',
@@ -121,4 +122,8 @@ export class AccountEntity extends BaseEntity {
 
   @OneToMany(() => FeedbackEntity, (feedback) => feedback.evaluated)
   receivedFeedbacks: FeedbackEntity[];
+  
+  @OneToMany(() => AppointmentEntity, appointment => appointment.account)
+  appointments: AppointmentEntity[];
+  product: ProductEntity;
 }
