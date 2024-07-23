@@ -67,6 +67,12 @@ export class ProductController {
     return this.productService.getSearchAvailableList(key, userId);
   }
 
+  @Get('user-available/:id')
+  getAvailableProductByUser(@Param('id') userId: string) {
+    return this.productService.findAvailableProductByUser(userId);
+  }
+
+
   @Get('user/:id')
   getProductByUser(@Param('id') userId: string) {
     return this.productService.findByUser(userId);

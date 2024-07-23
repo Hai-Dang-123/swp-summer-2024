@@ -81,6 +81,18 @@ export class ProductService {
     });
   }
 
+  async findAvailableProductByUser(userId: string): Promise<any | null> {
+    return this.productRepository.find({
+      where: {
+        owner: {
+          id: userId,
+        },
+        status: ProductStatus.AVAILABLE,
+      },
+      relations: ['owner'],
+    });
+  }
+
   async findByUser(userId: string): Promise<any | null> {
     return this.productRepository.find({
       where: {
