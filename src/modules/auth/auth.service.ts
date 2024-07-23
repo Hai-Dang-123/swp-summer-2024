@@ -258,6 +258,17 @@ export class AuthService {
     };
   }
 
+  async changePassword(id: string, data: { password: string }): Promise<any> {
+    const hashed = await this.hashPassword(data.password);
+    const update = await this.repositoryAccount.update(id, {
+      password: hashed,
+    });
+    return {
+      message: 'Updated active status successfully.',
+      metadata: update,
+    };
+  }
+
   async updateAccount(id: string, update: any) {
     return await this.repositoryAccount.update(id, update);
   }

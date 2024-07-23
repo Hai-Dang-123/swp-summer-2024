@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { AppointmentService } from './appointment.service';
 import { AppointmentEntity } from 'src/entities/appointment.entity';
 import { CreateAppointmentDto } from 'src/dto/appointment.dto';
@@ -24,5 +24,19 @@ export class AppointmentController {
     },
   ): Promise<AppointmentEntity> {
     return this.appointmentService.createAppointment(data);
+  }
+
+  @Patch(':id')
+  async updateAppointment(
+    @Param('id') id: string,
+    @Body()
+    updates: {
+      account: string;
+      product: string;
+      date: string;
+      status: string;
+    },
+  ) {
+    return this.appointmentService.updateAppointment(updates, id);
   }
 }

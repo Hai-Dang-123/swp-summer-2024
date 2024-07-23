@@ -23,4 +23,13 @@ export class AppointmentService {
   async createAppointment(data: any): Promise<AppointmentEntity> {
     return await this.appointmentRepository.save(data);
   }
+
+  async updateAppointment(updates: any, id: string): Promise<any> {
+    return await this.appointmentRepository.update(
+      {
+        id,
+      },
+      updates,
+    );
+  }
 }
