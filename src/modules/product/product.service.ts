@@ -127,6 +127,7 @@ export class ProductService {
     const product = await this.productRepository.findOne({
       where: {
         id: productId,
+        status: ProductStatus.AVAILABLE,
       },
     });
     if (!product) {

@@ -56,6 +56,17 @@ export class AuthController {
     return this.authService.updateActiveStatus(id);
   }
 
+  @Patch('/password/:id')
+  changePassword(
+    @Param('id') id: string,
+    @Body()
+    data: {
+      password: string;
+    },
+  ) {
+    return this.authService.changePassword(id, data);
+  }
+
   @Patch(':id')
   updateAccount(@Param('id') id: string, @Body() data: any) {
     return this.authService.updateAccount(id, data);
