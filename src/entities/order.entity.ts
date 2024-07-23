@@ -1,6 +1,5 @@
 import { BaseEntity } from 'src/common/base/entity.base';
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
-import { VoucherEntity } from './voucher.entity';
 import { AccountEntity } from './account.entity';
 import { OrderItemEntity } from './order-item.entity';
 
@@ -58,9 +57,6 @@ export class OrderEntity extends BaseEntity {
     default: '',
   })
   address: string;
-
-  @ManyToOne(() => VoucherEntity, (voucher) => voucher.id)
-  voucher: string;
 
   @Column({
     name: 'paidStatus',
